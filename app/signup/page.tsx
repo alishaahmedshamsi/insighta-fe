@@ -1,21 +1,21 @@
 "use client";
 import AuthLayout from "@/components/layouts/auth.layout";
-import { ILoginFields } from "@/types/type";
+import { IRegisterFields } from "@/types/type";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/validation";
+import { registerSchema } from "@/validation";
 import { useMutation } from "@tanstack/react-query";
-import { onLogin } from "@/services/apis";
+import { onRegister } from "@/services/apis";
 import { toast } from "sonner";
 import Image from "next/image";
 
-export default function Login() {
+export default function Signup() {
 	const router = useRouter();
 
 	const { mutateAsync, error, reset } = useMutation({
-		mutationFn: onLogin,
+		mutationFn: onRegister,
 
 		// onSuccess: Handle success if needed,
 		// onError: Handle error if needed,
@@ -37,9 +37,9 @@ export default function Login() {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting }, // isSubmitting for loading state
-	} = useForm<ILoginFields>({ resolver: zodResolver(loginSchema) });
+	} = useForm<IRegisterFields>({ resolver: zodResolver(registerSchema) });
 
-	const onSubmit: SubmitHandler<ILoginFields> = async (data) => {
+	const onSubmit: SubmitHandler<IRegisterFields> = async (data) => {
 		console.log(data);
 		const { success, response } = await mutateAsync(data);
 
@@ -47,15 +47,29 @@ export default function Login() {
 		if (response.user.role !== "admin")
 			return toast.error("Unauthorized Access!!!");
 
-		toast.success("Login success");
+		toast.success("Signup success");
 	};
 
 	return (
-		<AuthLayout title="Login" subText="Glad you're back!">
+		<AuthLayout title="Sign Up" subText="Glad you're back!">
 			<form
 				onSubmit={handleSubmit(onSubmit)}
 				className="flex items-start flex-col w-full"
 			>
+				<div className="mb-3 w-full">
+					<input
+						{...register("fullName")}
+						id="fullName"
+						type="fullName"
+						placeholder="Name"
+						className="input-form-fields w-full"
+					/>
+					{errors.fullName && (
+						<p className="text-red-500 mt-1 pt-2">
+							{errors.fullName.message}
+						</p>
+					)}
+				</div>
 				<div className="mb-3 w-full">
 					<input
 						{...register("email")}
@@ -106,15 +120,16 @@ export default function Login() {
 					className="w-full rounded-full bg-orange-500 py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-orange-400 focus:outline-none focus:ring focus:border-PrimaryColor"
 					type="submit"
 				>
-					Login
+					Sign Up
 				</button>
 
-				<div className="w-full mt-[20px]">
+				<div className="w-full mt-[20px] text-[#ccc] text-center mb-[20px] inline-block">
+					Already have an account? &nbsp;
 					<Link
-						href="/forget-password"
-						className="text-orange-500 block w-full text-center"
+						href="/"
+						className="inline w-full text-center underline"
 					>
-						Forgot Password?
+						<b>Login</b>
 					</Link>
 				</div>
 			</form>
@@ -140,16 +155,6 @@ export default function Login() {
 						width={600}
 						height={600}
 					/>
-				</Link>
-			</div>
-
-			<div className="w-full mt-[20px] text-[#ccc] text-center mb-[20px] inline-block">
-				Don't have an account? &nbsp;
-				<Link
-					href="/signup"
-					className="inline w-full text-center underline"
-				>
-					<b>Signup</b>
 				</Link>
 			</div>
 		</AuthLayout>
