@@ -1,11 +1,11 @@
 "use client";
 import AuthLayout from "@/components/layouts/auth.layout";
-import { IRegisterFields } from "@/types/type";
+import { IOTPField } from "@/types/type";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerSchema } from "@/validation";
+import { otpSchema } from "@/validation";
 import { useMutation } from "@tanstack/react-query";
 import { onRegister } from "@/services/apis";
 import { toast } from "sonner";
@@ -37,9 +37,9 @@ export default function optCode() {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting }, // isSubmitting for loading state
-	} = useForm<IRegisterFields>({ resolver: zodResolver(registerSchema) });
+	} = useForm<IOTPField>({ resolver: zodResolver(otpSchema) });
 
-	const onSubmit: SubmitHandler<IRegisterFields> = async (data) => {
+	const onSubmit: SubmitHandler<IOTPField> = async (data) => {
 		console.log(data);
 		const { success, response } = await mutateAsync(data);
 
@@ -51,28 +51,28 @@ export default function optCode() {
 	};
 
 	return (
-		<AuthLayout title="Sign Up" subText="Glad you're back!">
+		<AuthLayout title="Verify OTP" subText="Please enter OTP code.">
 			<form
 				onSubmit={handleSubmit(onSubmit)}
 				className="flex items-start flex-col w-full"
 			>
 				<div className="mb-3 w-full">
 					<input
-						{...register("email")}
-						id="email"
-						type="email"
-						placeholder="@mail.com"
+						{...register("otpCode")}
+						id="otpCode"
+						type="text"
+						placeholder="xxxxxx"
 						className="input-form-fields w-full"
 					/>
-					{errors.email && (
-						<p className="text-red-500 mt-1 pt-2">
-							{errors.email.message}
+					{errors.otpCode && (
+						<p className="text-brand-sea-green mt-1 pt-2">
+							{errors.otpCode.message}
 						</p>
 					)}
 				</div>
 
 				<button
-					className="w-full rounded-full bg-orange-500 py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-orange-400 focus:outline-none focus:ring focus:border-PrimaryColor"
+					className="w-full rounded-full bg-brand-sea-green py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
 					type="submit"
 				>
 					Verify

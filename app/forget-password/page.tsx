@@ -69,14 +69,14 @@ export default function forgetPassword() {
 						className="input-form-fields w-full"
 					/>
 					{errors.email && (
-						<p className="text-red-500 mt-1 pt-2">
+						<p className="text-brand-sea-green mt-1 pt-2">
 							{errors.email.message}
 						</p>
 					)}
 				</div>
 
 				<button
-					className="w-full rounded-full bg-orange-500 py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-orange-400 focus:outline-none focus:ring focus:border-PrimaryColor"
+					className="w-full rounded-full bg-brand-sea-green py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
 					type="submit"
 				>
 					Send Email
