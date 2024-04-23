@@ -12,8 +12,8 @@ const config: Config = {
 				"brand-dark-blue": "#000931",
 				"brand-sea-green": "#00C2FC",
 				"brand-pink": "#F22F7E",
-			},
-		},
+			}
+		}
 	},
 	plugins: [],
 };
