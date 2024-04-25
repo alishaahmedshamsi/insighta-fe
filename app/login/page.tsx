@@ -143,7 +143,7 @@ export default function Login() {
 				</Link>
 			</div>
 
-			<div className="w-full mt-[20px] text-[#ccc] text-center mb-[20px] inline-block">
+			{/* <div className="w-full mt-[20px] text-[#ccc] text-center mb-[20px] inline-block">
 				Don't have an account? &nbsp;
 				<Link
 					href="/signup"
@@ -151,7 +151,7 @@ export default function Login() {
 				>
 					<b>Signup</b>
 				</Link>
-			</div>
+			</div> */}
 		</AuthLayout>
 	);
 }

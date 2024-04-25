@@ -1,7 +1,7 @@
 "use client";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 // const leftSidebarLinks = [
 // 	{
@@ -31,15 +31,15 @@ import Image from "next/image";
 // ];
 
 export default function DashboardLayout({
-	mainSectionHeading,
+	// mainSectionHeading,
 	subjectList,
 	userDetails,
 	quickStartList,
-	// children,
-	pointsEarned,
+	children,
+	// pointsEarned,
 	leftSidebarLinks,
 }: {
-	mainSectionHeading: String;
+	// mainSectionHeading: String;
 	subjectList: Array<{
 		name: String;
 		duration: String;
@@ -54,9 +54,10 @@ export default function DashboardLayout({
 	quickStartList: Array<{
 		heading: String;
 		count: String;
+		link: String;
 	}>;
-	// children: React.ReactNode;
-	pointsEarned: String;
+	children: React.ReactNode;
+	// pointsEarned: String;
 	leftSidebarLinks: React.ReactNode;
 }) {
 	return (
@@ -77,93 +78,7 @@ export default function DashboardLayout({
 
 			{/* main container */}
 			<div className="main-containe col-span-3 overflow-y-auto px-[2em]">
-				<div className="cta-header-main pt-[3em]">
-					<div className="flex gap-[1em] w-full">
-						<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
-							<Image
-								alt=""
-								className="object-cover mx-auto w-[40%] h-auto"
-								src={"/assets/star.png"}
-								width={600}
-								height={600}
-							/>
-							<div className="flex justify-between w-full items-center mt-[1em]">
-								<h3 className="text-white font-semibold text-[1.5em]">
-									Points Earned
-								</h3>
-								<p className="text-[#581D7D] font-semibold text-[1.2em]">
-									⭐ {pointsEarned}
-								</p>
-							</div>
-						</div>
-						<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
-							<Image
-								alt=""
-								className="object-cover mx-auto w-[40%] h-auto"
-								src={"/assets/calendar.png"}
-								width={600}
-								height={600}
-							/>
-							<div className="flex justify-between w-full items-center mt-[1em]">
-								<h3 className="text-white font-semibold text-[1.5em]">
-									Calendar
-								</h3>
-								<p className="text-[#581D7D] font-semibold text-[1.2em]">
-									{new Date().getDate()}/{new Date().getMonth()+1}/{new Date().getFullYear()}
-								</p>
-							</div>
-						</div>
-						<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
-							<Image
-								alt=""
-								className="object-cover mx-auto w-[40%] h-auto"
-								src={"/assets/scoreboard.png"}
-								width={600}
-								height={600}
-							/>
-							<div className="flex justify-between w-full items-center mt-[1em]">
-								<h3 className="text-white font-semibold text-[1.5em]">
-									Grades
-								</h3>
-								<p className="text-[#581D7D] font-semibold text-[1.2em]">
-									B+
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<h3 className="font-semibold text-[#212121] align-middle text-[1.6em] mt-[2em] mb-[1em]">
-					{mainSectionHeading}
-				</h3>
-
-				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
-					{subjectList.map((subject) => {
-						return (
-							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
-								<div className="w-[80px]">
-									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
-										<Image
-											alt=""
-											className="object-contain w-[5em] inline"
-											src={"/assets/folder.png"}
-											width={600}
-											height={600}
-										/>
-									</div>
-								</div>
-								<div className="w-[75%]">
-									<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-										{subject.name}
-									</h4>
-									<p className="text-[#959BA5] text-[1em] align-middle">
-										{subject.duration}
-									</p>
-								</div>
-							</div>
-						);
-					})}
-				</div>
+				{children}
 			</div>
 
 			{/* right sidebar */}
@@ -222,27 +137,29 @@ export default function DashboardLayout({
 				<div className="bg-[#f7e3e367] rounded-[2em] p-[1em] mt-[1em] flex flex-col gap-[1em]">
 					{quickStartList.map((list) => {
 						return (
-							<div className="flex justify-center items-center w-full bg-white rounded-[1.5em] gap-[1em] px-[1em] py-[1em]">
-								<div className="w-[25%]">
-									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.3em] w-[100%] rounded-[.5em] ">
-										<Image
-											alt=""
-											className="object-contain w-[5em] inline"
-											src={"/assets/degree-cap.png"}
-											width={600}
-											height={600}
-										/>
+							<Link href={list.link.toString()}>
+								<div className="flex justify-center items-center w-full bg-white rounded-[1.5em] gap-[1em] px-[1em] py-[1em]">
+									<div className="w-[25%]">
+										<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.3em] w-[100%] rounded-[.5em] ">
+											<Image
+												alt=""
+												className="object-contain w-[5em] inline"
+												src={"/assets/degree-cap.png"}
+												width={600}
+												height={600}
+											/>
+										</div>
+									</div>
+									<div className="w-[75%]">
+										<h4 className="font-medium text-[#212121] align-middle text-[1.2em] leading-6">
+											{list.heading}
+										</h4>
+										<p className="text-[#959BA5] text-[1em] align-middle">
+											{list.count}
+										</p>
 									</div>
 								</div>
-								<div className="w-[75%]">
-									<h4 className="font-medium text-[#212121] align-middle text-[1.2em] leading-6">
-										{list.heading}
-									</h4>
-									<p className="text-[#959BA5] text-[1em] align-middle">
-										{list.count}
-									</p>
-								</div>
-							</div>
+							</Link>
 						);
 					})}
 				</div>

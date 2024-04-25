@@ -123,7 +123,7 @@ export default function Signup() {
 					Sign Up
 				</button>
 
-				<div className="w-full mt-[20px] text-[#ccc] text-center mb-[20px] inline-block">
+				{/* <div className="w-full mt-[20px] text-[#ccc] text-center mb-[20px] inline-block">
 					Already have an account? &nbsp;
 					<Link
 						href="/"
@@ -131,7 +131,7 @@ export default function Signup() {
 					>
 						<b>Login</b>
 					</Link>
-				</div>
+				</div> */}
 			</form>
 
 			<hr className="my-[20px] opacity-[.5]" />

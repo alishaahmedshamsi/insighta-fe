@@ -34,22 +34,22 @@ const quickStartList = [
 	{
 		heading: "Quiz",
 		count: "2 Quiz",
-		link: "/student-dashboard/quiz",
+		link: "/student-quiz",
 	},
 	{
 		heading: "Assignments",
 		count: "2 Assignments",
-		link: "/student-dashboard/assignments",
+		link: "/student-assignments",
 	},
 	{
 		heading: "Lectures",
 		count: "2 Lectures",
-		link: "/student-dashboard/lectures",
+		link: "/student-lectures",
 	},
 	{
 		heading: "Competition",
 		count: "2 Competition",
-		link: "/student-dashboard/competitions",
+		link: "/student-competitions",
 	},
 ];
 
@@ -142,15 +142,17 @@ const leftSidebarLinks = (
 	</div>
 );
 
-export default function StudentDashboard() {
+export default function StudentAssignments() {
 	const pointsEarned = 400;
-	const mainSectionHeading = "Subjects";
+	const mainSectionHeading = "Assignments";
 	return (
 		<>
 			<DashboardLayout
+				// mainSectionHeading={"Assignments"}
 				subjectList={subjectList}
 				userDetails={userDetails}
 				quickStartList={quickStartList}
+				// pointsEarned={"400"}
 				leftSidebarLinks={leftSidebarLinks}
 			>
 				<div className="cta-header-main pt-[3em]">
@@ -215,7 +217,89 @@ export default function StudentDashboard() {
 					{mainSectionHeading}
 				</h3>
 
-				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
+				<div className="rounded-[2em] flex flex-col gap-[2em]">
+					<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
+						English
+					</h3>
+					<div className="subject-assignments-container flex flex-col">
+						<div className="assignment flex flex-col rounded-[2em] border border-[#DBDBDB] bg-white p-[2em]">
+							<div className="assginment-details grid grid-cols-4 gap-5">
+								<div>
+									<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+										Title
+									</h5>
+									<h4 className="text-[#111] capitalize text-[1.2em]">
+										Assignment #1
+									</h4>
+								</div>
+								<div>
+									<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+										Deadline
+									</h5>
+									<h4 className="text-[#111] capitalize text-[1.2em]">
+										5 May 2024
+									</h4>
+								</div>
+								<div>
+									<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+										Total Marks
+									</h5>
+									<h4 className="text-[#111] capitalize text-[1.2em]">
+										10
+									</h4>
+								</div>
+								<div>
+									<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+										Obt. Marks
+									</h5>
+									<h4 className="text-[#111] capitalize text-[1.2em]">
+										8
+									</h4>
+								</div>
+								<div>
+									<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+										Status
+									</h5>
+									<h4 className="text-[#111] capitalize text-[1.2em]">
+										Not completed
+									</h4>{" "}
+									{/* Completed/Checked/Not Completed */}
+								</div>
+								<div>
+									<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+										Assignment
+									</h5>
+									<h4 className="text-[#111] underline capitalize text-[1.2em]">
+										<Link href="#">Download File</Link>
+									</h4>
+								</div>
+							</div>
+							<hr className="my-[1em]" />
+							<div className="upload-file-container">
+								<div>
+									<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+										Submit Assignment
+									</h5>
+									<h4 className="text-[#111] capitalize text-[1.2em] mb-[1em]">
+										Upload File
+									</h4>
+									<div className="grid grid-cols-4">
+										<input
+											type="file"
+											name="file"
+											id="file"
+											className="col-span-3 w-full border-2 border-[#777] border-dashed rounded-[2em] p-[.9em]"
+										/>
+										<button className="col-span-1 w-full rounded-[2em] bg-brand-sea-green py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor">
+											Upload
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{/* <div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
 					{subjectList.map((subject) => {
 						return (
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
@@ -241,7 +325,7 @@ export default function StudentDashboard() {
 							</div>
 						);
 					})}
-				</div>
+				</div> */}
 			</DashboardLayout>
 		</>
 	);

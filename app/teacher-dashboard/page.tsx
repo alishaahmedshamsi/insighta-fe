@@ -37,14 +37,17 @@ const quickStartList = [
 	{
 		heading: "Add Quiz",
 		count: "2 Quiz",
+		link: "add-teacher-quiz",
 	},
 	{
 		heading: "Add an Assignment",
 		count: "2 Assignments",
+		link: "add-teacher-assignments",
 	},
 	{
 		heading: "Add Lectures",
 		count: "2 Lectures",
+		link: "add-teacher-lectures",
 	},
 ];
 

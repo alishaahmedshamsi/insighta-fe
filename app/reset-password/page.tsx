@@ -114,15 +114,15 @@ export default function ResetPassword() {
 
 			<div className="w-full text-[#ccc] text-center mb-[20px] inline-block">
 				<Link href="/" className="inline w-full text-center underline">
-					<b>Login</b>
+					<b>Login to your Account</b>
 				</Link>
-				{" | "}
+				{/* {" | "}
 				<Link
 					href="/signup"
 					className="inline w-full text-center underline"
 				>
 					<b>Signup</b>
-				</Link>
+				</Link> */}
 			</div>
 
 			<div className="w-full flex justify-center gap-5">
