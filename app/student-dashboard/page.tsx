@@ -40,7 +40,7 @@ export default function StudentDashboard() {
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Subjects"}
-				pointsEarned={"400"}
+				// pointsEarned={"400"}
 				userDetails={userDetails}
 				quickStartList={STUDENT_QUICK_START_LIST}
 				leftSidebarLinks={studentLeftSidebarLinks()}

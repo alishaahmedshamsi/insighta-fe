@@ -113,8 +113,9 @@ export default function ResetPassword() {
 			<hr className="my-[20px] opacity-[.5]" />
 
 			<div className="w-full text-[#ccc] text-center mb-[20px] inline-block">
+				Remember Password?{" "}
 				<Link href="/" className="inline w-full text-center underline">
-					<b>Login to your Account</b>
+					<b>Login</b>
 				</Link>
 				{/* {" | "}
 				<Link

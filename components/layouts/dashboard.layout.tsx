@@ -30,13 +30,16 @@ import Link from "next/link";
 // 	},
 // ];
 
+const studentPoints = 400;
+const teacherPoints = 350;
+
 export default function DashboardLayout({
 	mainSectionHeading,
 	// subjectList,
 	userDetails,
 	quickStartList,
 	children,
-	pointsEarned,
+	// pointsEarned,
 	leftSidebarLinks,
 }: {
 	mainSectionHeading: String;
@@ -57,7 +60,7 @@ export default function DashboardLayout({
 		link: String;
 	}>;
 	children: React.ReactNode;
-	pointsEarned: String;
+	// pointsEarned: String;
 	leftSidebarLinks: React.ReactNode;
 }) {
 	return (
@@ -93,7 +96,10 @@ export default function DashboardLayout({
 									Points Earned
 								</h3>
 								<p className="text-[#581D7D] font-semibold text-[1.2em]">
-									⭐ {pointsEarned}
+									⭐{" "}
+									{userDetails.role === "Student"
+										? studentPoints
+										: teacherPoints}
 								</p>
 							</div>
 						</div>
@@ -117,41 +123,45 @@ export default function DashboardLayout({
 							</div>
 						</div>
 						{userDetails.role === "Student" ? (
-							<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
-								<Image
-									alt=""
-									className="object-cover mx-auto w-[40%] h-auto"
-									src={"/assets/scoreboard.png"}
-									width={600}
-									height={600}
-								/>
-								<div className="flex justify-between w-full items-center mt-[1em]">
-									<h3 className="text-white font-semibold text-[1.5em]">
-										Grades
-									</h3>
-									{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
+							<Link href="/student-dashboard/grades">
+								<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+									<Image
+										alt=""
+										className="object-cover mx-auto w-[40%] h-auto"
+										src={"/assets/scoreboard.png"}
+										width={600}
+										height={600}
+									/>
+									<div className="flex justify-between w-full items-center mt-[1em]">
+										<h3 className="text-white font-semibold text-[1.5em]">
+											Grades
+										</h3>
+										{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
 										B+
 									</p> */}
+									</div>
 								</div>
-							</div>
+							</Link>
 						) : (
-							<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
-								<Image
-									alt=""
-									className="object-cover mx-auto w-[40%] h-auto"
-									src={"/assets/scoreboard.png"}
-									width={600}
-									height={600}
-								/>
-								<div className="flex justify-between w-full items-center mt-[1em]">
-									<h3 className="text-white font-semibold text-[1.5em]">
-										Add Grades
-									</h3>
-									{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
+							<Link href="/teacher-dashboard/add-grades">
+								<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+									<Image
+										alt=""
+										className="object-cover mx-auto w-[40%] h-auto"
+										src={"/assets/scoreboard.png"}
+										width={600}
+										height={600}
+									/>
+									<div className="flex justify-between w-full items-center mt-[1em]">
+										<h3 className="text-white font-semibold text-[1.5em]">
+											Add Grades
+										</h3>
+										{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
 										B+
 									</p> */}
+									</div>
 								</div>
-							</div>
+							</Link>
 						)}
 					</div>
 				</div>

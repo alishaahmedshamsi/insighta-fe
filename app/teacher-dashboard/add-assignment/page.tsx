@@ -18,7 +18,7 @@ export default function TeacherDashboard() {
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Add Assignment"}
-				pointsEarned={"400"}
+				// pointsEarned={"400"}
 				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}

@@ -5,7 +5,7 @@ export const teacherLeftSidebarLinks = () => {
 	return (
 		<div className="quick-links-box w-[60%] flex flex-col mt-[2em]">
 			<Link
-				href="#"
+				href="/teacher-dashboard"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image

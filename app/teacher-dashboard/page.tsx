@@ -42,7 +42,7 @@ export default function TeacherDashboard() {
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Subjects"}
-				pointsEarned={"400"}
+				// pointsEarned={"400"}
 				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
