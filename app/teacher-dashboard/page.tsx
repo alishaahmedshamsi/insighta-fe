@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
+import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
+import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 
 const subjectList = [
 	{
@@ -33,126 +35,46 @@ const userDetails = {
 	qualification: "BA in English",
 };
 
-const quickStartList = [
-	{
-		heading: "Add Quiz",
-		count: "2 Quiz",
-		link: "add-teacher-quiz",
-	},
-	{
-		heading: "Add an Assignment",
-		count: "2 Assignments",
-		link: "add-teacher-assignments",
-	},
-	{
-		heading: "Add Lectures",
-		count: "2 Lectures",
-		link: "add-teacher-lectures",
-	},
-];
-
-const leftSidebarLinks = (
-	<div className="quick-links-box w-[60%] flex flex-col mt-[2em]">
-		<Link
-			href="#"
-			className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
-		>
-			<Image
-				alt=""
-				className="object-contain w-[1.3em] h-auto mr-[0.8em]"
-				src={"/assets/icons/user.png"}
-				width={600}
-				height={600}
-			/>{" "}
-			Profile
-		</Link>
-
-		<hr className="my-[50px] opacity-[.3] " />
-
-		<Link
-			href="#"
-			className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
-		>
-			<Image
-				alt=""
-				className="object-contain w-[1.3em] h-auto mr-[0.8em]"
-				src={"/assets/icons/home.png"}
-				width={600}
-				height={600}
-			/>{" "}
-			Dashboard
-		</Link>
-		<Link
-			href="#"
-			className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
-		>
-			<Image
-				alt=""
-				className="object-contain w-[1.3em] h-auto mr-[0.8em]"
-				src={"/assets/icons/date.png"}
-				width={600}
-				height={600}
-			/>{" "}
-			Schedule
-		</Link>
-		<Link
-			href="#"
-			className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
-		>
-			<Image
-				alt=""
-				className="object-contain w-[1.3em] h-auto mr-[0.8em]"
-				src={"/assets/icons/date.png"}
-				width={600}
-				height={600}
-			/>{" "}
-			Announcement
-		</Link>
-
-		<hr className="my-[50px] opacity-[.3] " />
-
-		<Link
-			href="#"
-			className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
-		>
-			<Image
-				alt=""
-				className="object-contain w-[1.3em] h-auto mr-[0.8em]"
-				src={"/assets/icons/set.png"}
-				width={600}
-				height={600}
-			/>{" "}
-			Settings
-		</Link>
-		<Link
-			href="#"
-			className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
-		>
-			<Image
-				alt=""
-				className="object-contain w-[1.3em] h-auto mr-[0.8em]"
-				src={"/assets/icons/log out.png"}
-				width={600}
-				height={600}
-			/>{" "}
-			Log Out
-		</Link>
-	</div>
-);
-
-export default function StudentDashboard() {
+export default function TeacherDashboard() {
+	// const pointsEarned = 400;
+	// const mainSectionHeading = "Subjects";
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={"Classes and Sections"}
-				subjectList={subjectList}
+				mainSectionHeading={"Subjects"}
+				pointsEarned={"400"}
 				userDetails={userDetails}
-				quickStartList={quickStartList}
-				pointsEarned={"350"}
-				leftSidebarLinks={leftSidebarLinks}
-			/>
-
-			{/* </DashboardLayout> */}
+				quickStartList={TEACHER_QUICK_START_LIST}
+				leftSidebarLinks={teacherLeftSidebarLinks()}
+			>
+				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
+					{subjectList.map((subject) => {
+						return (
+							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
+								<div className="w-[80px]">
+									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
+										<Image
+											alt=""
+											className="object-contain w-[5em] inline"
+											src={"/assets/folder.png"}
+											width={600}
+											height={600}
+										/>
+									</div>
+								</div>
+								<div className="w-[75%]">
+									<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
+										{subject.name}
+									</h4>
+									<p className="text-[#959BA5] text-[1em] align-middle">
+										{subject.duration}
+									</p>
+								</div>
+							</div>
+						);
+					})}
+				</div>
+			</DashboardLayout>
 		</>
 	);
 }

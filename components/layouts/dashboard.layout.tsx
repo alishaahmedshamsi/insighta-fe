@@ -31,19 +31,19 @@ import Link from "next/link";
 // ];
 
 export default function DashboardLayout({
-	// mainSectionHeading,
-	subjectList,
+	mainSectionHeading,
+	// subjectList,
 	userDetails,
 	quickStartList,
 	children,
-	// pointsEarned,
+	pointsEarned,
 	leftSidebarLinks,
 }: {
-	// mainSectionHeading: String;
-	subjectList: Array<{
-		name: String;
-		duration: String;
-	}>;
+	mainSectionHeading: String;
+	// subjectList: Array<{
+	// 	name: String;
+	// 	duration: String;subjectList
+	// }>;
 	userDetails: {
 		userName: String;
 		role: String;
@@ -57,13 +57,13 @@ export default function DashboardLayout({
 		link: String;
 	}>;
 	children: React.ReactNode;
-	// pointsEarned: String;
+	pointsEarned: String;
 	leftSidebarLinks: React.ReactNode;
 }) {
 	return (
 		<section className="relative grid h-[100vh] grid-cols-5 bg-[#F4F8FB]">
 			{/* left sidebar */}
-			<div className="left-sidebar bg-[#242730] col-span-1 rounded-r-[3em] flex items-center flex-col pt-[2em] overflow-y-auto">
+			<div className="left-sidebar bg-[#242730] col-span-1 rounded-r-[3em] flex items-center flex-col pt-[2em] overflow-y-auto mr-[1em]">
 				<div className="avatar-box w-[65%]">
 					<Image
 						alt=""
@@ -77,7 +77,89 @@ export default function DashboardLayout({
 			</div>
 
 			{/* main container */}
-			<div className="main-containe col-span-3 overflow-y-auto px-[2em]">
+			<div className="main-container col-span-3 overflow-y-auto px-[2em]">
+				<div className="cta-header-main pt-[3em]">
+					<div className="flex gap-[1em] w-full">
+						<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+							<Image
+								alt=""
+								className="object-cover mx-auto w-[40%] h-auto"
+								src={"/assets/star.png"}
+								width={600}
+								height={600}
+							/>
+							<div className="flex justify-between w-full items-center mt-[1em]">
+								<h3 className="text-white font-semibold text-[1.5em]">
+									Points Earned
+								</h3>
+								<p className="text-[#581D7D] font-semibold text-[1.2em]">
+									⭐ {pointsEarned}
+								</p>
+							</div>
+						</div>
+						<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+							<Image
+								alt=""
+								className="object-cover mx-auto w-[40%] h-auto"
+								src={"/assets/calendar.png"}
+								width={600}
+								height={600}
+							/>
+							<div className="flex justify-between w-full items-center mt-[1em]">
+								<h3 className="text-white font-semibold text-[1.5em]">
+									Calendar
+								</h3>
+								<p className="text-[#581D7D] font-semibold text-[1.2em]">
+									{new Date().getDate()}/
+									{new Date().getMonth() + 1}/
+									{new Date().getFullYear()}
+								</p>
+							</div>
+						</div>
+						{userDetails.role === "Student" ? (
+							<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+								<Image
+									alt=""
+									className="object-cover mx-auto w-[40%] h-auto"
+									src={"/assets/scoreboard.png"}
+									width={600}
+									height={600}
+								/>
+								<div className="flex justify-between w-full items-center mt-[1em]">
+									<h3 className="text-white font-semibold text-[1.5em]">
+										Grades
+									</h3>
+									{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
+										B+
+									</p> */}
+								</div>
+							</div>
+						) : (
+							<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+								<Image
+									alt=""
+									className="object-cover mx-auto w-[40%] h-auto"
+									src={"/assets/scoreboard.png"}
+									width={600}
+									height={600}
+								/>
+								<div className="flex justify-between w-full items-center mt-[1em]">
+									<h3 className="text-white font-semibold text-[1.5em]">
+										Add Grades
+									</h3>
+									{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
+										B+
+									</p> */}
+								</div>
+							</div>
+						)}
+					</div>
+				</div>
+
+				<h3 className="font-semibold text-[#212121] align-middle text-[1.6em] mt-[2em] mb-[1em]">
+					{mainSectionHeading}
+				</h3>
+
 				{children}
 			</div>
 
