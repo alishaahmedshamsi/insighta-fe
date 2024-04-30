@@ -48,3 +48,16 @@ export const STUDENT_QUICK_START_LIST = [
 		link: "/student-dashboard/competitions",
 	},
 ];
+
+export const SCHOOL_ADMIN_QUICK_START_LIST = [
+	{
+		heading: "Create Student",
+		count: "",
+		link: "/school-admin/create-student",
+	},
+	{
+		heading: "Create Teacher",
+		count: "",
+		link: "/school-admin/create-teacher",
+	},
+];

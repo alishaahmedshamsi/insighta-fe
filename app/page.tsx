@@ -382,7 +382,6 @@ export default function FrontPage() {
 						Top Faculty
 					</h3>
 
-
 					<div className="flex flex-col w-full">
 						<table>
 							<thead>

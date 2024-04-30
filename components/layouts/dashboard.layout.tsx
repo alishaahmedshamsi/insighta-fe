@@ -53,6 +53,7 @@ export default function DashboardLayout({
 		class?: String;
 		section?: String;
 		qualification?: String;
+		schoolName?: String;
 	};
 	quickStartList: Array<{
 		heading: String;
@@ -82,48 +83,131 @@ export default function DashboardLayout({
 			{/* main container */}
 			<div className="main-container col-span-3 overflow-y-auto px-[2em]">
 				<div className="cta-header-main pt-[3em]">
-					<div className="flex gap-[1em] w-full">
-						<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
-							<Image
-								alt=""
-								className="object-cover mx-auto w-[40%] h-auto"
-								src={"/assets/star.png"}
-								width={600}
-								height={600}
-							/>
-							<div className="flex justify-between w-full items-center mt-[1em]">
-								<h3 className="text-white font-semibold text-[1.5em]">
-									Points Earned
-								</h3>
-								<p className="text-[#581D7D] font-semibold text-[1.2em]">
-									⭐{" "}
-									{userDetails.role === "Student"
-										? studentPoints
-										: teacherPoints}
-								</p>
+					{userDetails.role === "Student" ||
+					userDetails.role === "Teacher" ? (
+						<div className="flex gap-[1em] w-full">
+							<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+								<Image
+									alt=""
+									className="object-cover mx-auto w-[40%] h-auto"
+									src={"/assets/star.png"}
+									width={600}
+									height={600}
+								/>
+								<div className="flex justify-between w-full items-center mt-[1em]">
+									<h3 className="text-white font-semibold text-[1.5em]">
+										Points Earned
+									</h3>
+									<p className="text-[#581D7D] font-semibold text-[1.2em]">
+										⭐{" "}
+										{userDetails.role === "Student"
+											? studentPoints
+											: teacherPoints}
+									</p>
+								</div>
 							</div>
-						</div>
-						<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
-							<Image
-								alt=""
-								className="object-cover mx-auto w-[40%] h-auto"
-								src={"/assets/calendar.png"}
-								width={600}
-								height={600}
-							/>
-							<div className="flex justify-between w-full items-center mt-[1em]">
-								<h3 className="text-white font-semibold text-[1.5em]">
-									Calendar
-								</h3>
-								<p className="text-[#581D7D] font-semibold text-[1.2em]">
-									{new Date().getDate()}/
-									{new Date().getMonth() + 1}/
-									{new Date().getFullYear()}
-								</p>
+							<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+								<Image
+									alt=""
+									className="object-cover mx-auto w-[40%] h-auto"
+									src={"/assets/calendar.png"}
+									width={600}
+									height={600}
+								/>
+								<div className="flex justify-between w-full items-center mt-[1em]">
+									<h3 className="text-white font-semibold text-[1.5em]">
+										Calendar
+									</h3>
+									<p className="text-[#581D7D] font-semibold text-[1.2em]">
+										{new Date().getDate()}/
+										{new Date().getMonth() + 1}/
+										{new Date().getFullYear()}
+									</p>
+								</div>
 							</div>
+							{userDetails.role === "Student" ? (
+								<Link href="/student-dashboard/grades">
+									<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+										<Image
+											alt=""
+											className="object-cover mx-auto w-[40%] h-auto"
+											src={"/assets/scoreboard.png"}
+											width={600}
+											height={600}
+										/>
+										<div className="flex justify-between w-full items-center mt-[1em]">
+											<h3 className="text-white font-semibold text-[1.5em]">
+												Grades
+											</h3>
+											{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
+										B+
+									</p> */}
+										</div>
+									</div>
+								</Link>
+							) : (
+								<Link href="/teacher-dashboard/add-grades">
+									<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+										<Image
+											alt=""
+											className="object-cover mx-auto w-[40%] h-auto"
+											src={"/assets/scoreboard.png"}
+											width={600}
+											height={600}
+										/>
+										<div className="flex justify-between w-full items-center mt-[1em]">
+											<h3 className="text-white font-semibold text-[1.5em]">
+												Add Grades
+											</h3>
+											{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
+										B+
+									</p> */}
+										</div>
+									</div>
+								</Link>
+							)}
 						</div>
-						{userDetails.role === "Student" ? (
-							<Link href="/student-dashboard/grades">
+					) : (
+						// School Admin
+						<div className="flex gap-[1em] w-full">
+							<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+								<Link href={"/school-admin/top-five"}>
+									<Image
+										alt=""
+										className="object-cover mx-auto w-[40%] h-auto"
+										src={"/assets/star.png"}
+										width={600}
+										height={600}
+									/>
+									<div className="flex justify-between w-full items-center mt-[1em]">
+										<h3 className="text-white font-semibold text-[1.5em]">
+											Top 5
+										</h3>
+									</div>
+								</Link>
+							</div>
+
+							<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+								<Image
+									alt=""
+									className="object-cover mx-auto w-[40%] h-auto"
+									src={"/assets/calendar.png"}
+									width={600}
+									height={600}
+								/>
+								<div className="flex justify-between w-full items-center mt-[1em]">
+									<h3 className="text-white font-semibold text-[1.5em]">
+										Calendar
+									</h3>
+									<p className="text-[#581D7D] font-semibold text-[1.2em]">
+										{new Date().getDate()}/
+										{new Date().getMonth() + 1}/
+										{new Date().getFullYear()}
+									</p>
+								</div>
+							</div>
+
+							<Link href="/school-admin/manage-points">
 								<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 									<Image
 										alt=""
@@ -134,7 +218,7 @@ export default function DashboardLayout({
 									/>
 									<div className="flex justify-between w-full items-center mt-[1em]">
 										<h3 className="text-white font-semibold text-[1.5em]">
-											Grades
+											Manage Points
 										</h3>
 										{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
 										B+
@@ -142,28 +226,8 @@ export default function DashboardLayout({
 									</div>
 								</div>
 							</Link>
-						) : (
-							<Link href="/teacher-dashboard/add-grades">
-								<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
-									<Image
-										alt=""
-										className="object-cover mx-auto w-[40%] h-auto"
-										src={"/assets/scoreboard.png"}
-										width={600}
-										height={600}
-									/>
-									<div className="flex justify-between w-full items-center mt-[1em]">
-										<h3 className="text-white font-semibold text-[1.5em]">
-											Add Grades
-										</h3>
-										{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
-										B+
-									</p> */}
-									</div>
-								</div>
-							</Link>
-						)}
-					</div>
+						</div>
+					)}
 				</div>
 
 				<h3 className="font-semibold text-[#212121] capitalize align-middle text-[1.6em] mt-[2em] mb-[1em]">
@@ -216,6 +280,13 @@ export default function DashboardLayout({
 							<div className="flex justify-evenly items-center w-full mt-[1em]">
 								<h3 className="font-medium text-[#212121] align-middle text-[1.3em]">
 									{userDetails.qualification}
+								</h3>
+							</div>
+						)}
+						{userDetails.role === "Admin" && (
+							<div className="flex justify-evenly items-center w-full mt-[1em]">
+								<h3 className="font-medium text-[#212121] align-middle text-[1.3em]">
+									{userDetails.schoolName}
 								</h3>
 							</div>
 						)}
