@@ -6,25 +6,6 @@ import Link from "next/link";
 import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 
-const subjectList = [
-	{
-		name: "English",
-		duration: "17 min",
-	},
-	{
-		name: "Maths",
-		duration: "17 min",
-	},
-	{
-		name: "Computer",
-		duration: "17 min",
-	},
-	{
-		name: "Science",
-		duration: "17 min",
-	},
-];
-
 const userDetails = {
 	userName: "Annie Leonchart",
 	role: "Student",

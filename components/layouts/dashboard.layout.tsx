@@ -166,7 +166,7 @@ export default function DashboardLayout({
 					</div>
 				</div>
 
-				<h3 className="font-semibold text-[#212121] align-middle text-[1.6em] mt-[2em] mb-[1em]">
+				<h3 className="font-semibold text-[#212121] capitalize align-middle text-[1.6em] mt-[2em] mb-[1em]">
 					{mainSectionHeading}
 				</h3>
 

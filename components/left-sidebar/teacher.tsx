@@ -21,7 +21,7 @@ export const teacherLeftSidebarLinks = () => {
 			<hr className="my-[50px] opacity-[.3] " />
 
 			<Link
-				href="#"
+				href="/teacher-dashboard"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image
