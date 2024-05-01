@@ -50,7 +50,9 @@ export default function StudentSubjects({
 			>
 				<div className="rounded-[2em] flex flex-col gap-[2em] pb-[2em]">
 					<div className="grid grid-cols-2 gap-[2em]">
-						<Link href="#">
+						<Link
+							href={`/student-dashboard/subject/${subject}/assignments`}
+						>
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">
 									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -70,7 +72,9 @@ export default function StudentSubjects({
 								</div>
 							</div>
 						</Link>
-						<Link href="#">
+						<Link
+							href={`/student-dashboard/subject/${subject}/quiz`}
+						>
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">
 									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">

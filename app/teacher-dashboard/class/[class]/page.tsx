@@ -88,7 +88,9 @@ export default function TeacherIndividualClass({
 			>
 				<div className="rounded-[2em] flex flex-col gap-[2em]">
 					<div className="grid grid-cols-2 gap-[2em]">
-						<Link href="#">
+						<Link
+							href={`/teacher-dashboard/class/${teacherClass}/assignments`}
+						>
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">
 									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -103,12 +105,14 @@ export default function TeacherIndividualClass({
 								</div>
 								<div className="w-[75%]">
 									<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-										Assignments
+										Manage Assignments
 									</h4>
 								</div>
 							</div>
 						</Link>
-						<Link href="#">
+						<Link
+							href={`/teacher-dashboard/class/${teacherClass}/quiz`}
+						>
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">
 									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -123,7 +127,7 @@ export default function TeacherIndividualClass({
 								</div>
 								<div className="w-[75%]">
 									<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-										Quiz
+										Manage Quiz
 									</h4>
 								</div>
 							</div>

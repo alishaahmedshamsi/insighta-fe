@@ -41,22 +41,6 @@ export default function SchoolAdminCreateStudent() {
 							/>
 						</div>
 						<div className="w-full flex flex-col">
-							<label htmlFor="class">Class</label>
-							<input
-								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-								id="class"
-								type="text"
-							/>
-						</div>
-						<div className="w-full flex flex-col">
-							<label htmlFor="section">Section</label>
-							<input
-								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-								id="section"
-								type="text"
-							/>
-						</div>
-						<div className="w-full flex flex-col">
 							<label htmlFor="email">Email</label>
 							<input
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
@@ -72,6 +56,23 @@ export default function SchoolAdminCreateStudent() {
 								type="text"
 							/>
 						</div>
+						<div className="w-full flex flex-col">
+							<label htmlFor="class">Class</label>
+							<input
+								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
+								id="class"
+								type="text"
+							/>
+						</div>
+						<div className="w-full flex flex-col">
+							<label htmlFor="section">Section</label>
+							<input
+								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
+								id="section"
+								type="text"
+							/>
+						</div>
+
 						<div className="w-full flex flex-col col-span-2">
 							<label htmlFor="subjects">Subjects</label>
 							<input
