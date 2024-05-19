@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -81,16 +80,21 @@ export default function DashboardLayout({
 			</div>
 
 			{/* main container */}
-			<div className="main-container col-span-3 overflow-y-auto px-[2em]">
+			<div
+				// className={`main-container col-span-3 overflow-y-auto px-[2em] ${
+				// 	isLoading ? "opacity-50" : "opacity-100"
+				// }`}
+				className={`main-container col-span-3 overflow-y-auto px-[2em]`}
+			>
 				<div className="cta-header-main pt-[3em]">
 					{userDetails.role === "Student" ||
 					userDetails.role === "Teacher" ? (
 						<div className="flex gap-[1em] w-full">
-							<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+							<div className="flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 								<Image
 									alt=""
 									className="object-cover mx-auto w-[40%] h-auto"
-									src={"/assets/star.png"}
+									src={"/assets/credit-card.png"}
 									width={600}
 									height={600}
 								/>
@@ -106,7 +110,7 @@ export default function DashboardLayout({
 									</p>
 								</div>
 							</div>
-							<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+							<div className="flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 								<Image
 									alt=""
 									className="object-cover mx-auto w-[40%] h-auto"
@@ -126,8 +130,8 @@ export default function DashboardLayout({
 								</div>
 							</div>
 							{userDetails.role === "Student" ? (
-								<Link href="/student-dashboard/grades">
-									<div className="flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
+								<Link href="#">
+									<div className="flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 										<Image
 											alt=""
 											className="object-cover mx-auto w-[40%] h-auto"
@@ -230,10 +234,19 @@ export default function DashboardLayout({
 					)}
 				</div>
 
+				{/* add greyish screen until the children loads  */}
+				{/* <Suspense fallback={<SkeletonLoader />}> */}
+
+				{/* <div className={`${isLoading ? "opacity-50" : "opacity-100"}`}>
+					<h3 className="font-semibold text-[#212121] capitalize align-middle text-[1.6em] mt-[2em] mb-[1em]">
+						{mainSectionHeading}
+					</h3>
+					{children}
+				</div> */}
+
 				<h3 className="font-semibold text-[#212121] capitalize align-middle text-[1.6em] mt-[2em] mb-[1em]">
 					{mainSectionHeading}
 				</h3>
-
 				{children}
 			</div>
 

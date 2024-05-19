@@ -27,6 +27,7 @@ import {
 	PhoneIcon,
 	PlayCircleIcon,
 } from "@heroicons/react/20/solid";
+import PointsBreakdown from "@/components/points-breakdown";
 
 function classNames(...classes: string[]) {
 	return classes.filter(Boolean).join(" ");
@@ -284,7 +285,13 @@ export default function FrontPage() {
 								</h4>
 
 								<span className="py-1 px-2 rounded-full text-[#333] text-[22px] bg-[#8640cd27] mt-4">
-									⭐ <span>500+ Points</span>
+									<PointsBreakdown
+										points={500}
+										assignmentPoints={100}
+										quizPoints={150}
+										lecturePoints={200}
+									/>
+									{/* ⭐ <span>500+ Points</span> */}
 								</span>
 							</div>
 						</div>
@@ -314,7 +321,13 @@ export default function FrontPage() {
 								</h4>
 
 								<span className="py-1 px-2 rounded-full text-[#333] text-[22px] bg-[#8640cd27] mt-4">
-									⭐ <span>500+ Points</span>
+									{/* ⭐ <span>500+ Points</span> */}
+									<PointsBreakdown
+										points={500}
+										assignmentPoints={100}
+										quizPoints={150}
+										lecturePoints={200}
+									/>
 								</span>
 							</div>
 						</div>
@@ -369,7 +382,13 @@ export default function FrontPage() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												{/* ⭐ 400+ Points */}
+												<PointsBreakdown
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>
@@ -427,7 +446,13 @@ export default function FrontPage() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												{/* ⭐ 400+ Points */}
+												<PointsBreakdown
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>

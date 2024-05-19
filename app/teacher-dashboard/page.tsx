@@ -8,27 +8,22 @@ import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 
 const classesList = [
 	{
-		name: "Class 5A",
+		name: "Class 5",
 		duration: "17 min",
 		classLink: "/teacher-dashboard/class/5",
 	},
 	{
-		name: "Class 5B",
-		duration: "17 min",
-		classLink: "/teacher-dashboard/class/5",
-	},
-	{
-		name: "Class 6B",
+		name: "Class 6",
 		duration: "17 min",
 		classLink: "/teacher-dashboard/class/6",
 	},
 	{
-		name: "Class 7A",
+		name: "Class 7",
 		duration: "17 min",
 		classLink: "/teacher-dashboard/class/7",
 	},
 	{
-		name: "Class 8B",
+		name: "Class 8",
 		duration: "17 min",
 		classLink: "/teacher-dashboard/class/8",
 	},

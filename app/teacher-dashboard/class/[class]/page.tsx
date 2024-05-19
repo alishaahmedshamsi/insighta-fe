@@ -5,6 +5,7 @@ import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
+import WatchLectureDialog from "@/components/watchLectureDialog";
 
 const userDetails = {
 	userName: "Annie Leonchart",
@@ -24,14 +25,16 @@ const allClassesLectures = [
 						description:
 							"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 						dateUploaded: "4 May 2024",
-						lectureFile: "#",
+						lectureFile:
+							"https://youtu.be/EFg3u_E6eHU?si=t0kV0D4ei0mSGT9w",
 					},
 					{
 						title: "Lecture #1",
 						description:
 							"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 						dateUploaded: "1 May 2024",
-						lectureFile: "#",
+						lectureFile:
+							"https://youtu.be/EFg3u_E6eHU?si=t0kV0D4ei0mSGT9w",
 					},
 				],
 			},
@@ -43,7 +46,8 @@ const allClassesLectures = [
 						description:
 							"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 						dateUploaded: "1 May 2024",
-						lectureFile: "#",
+						lectureFile:
+							"https://youtu.be/EFg3u_E6eHU?si=t0kV0D4ei0mSGT9w",
 					},
 				],
 			},
@@ -61,7 +65,8 @@ const allClassesLectures = [
 							"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 						dateUploaded: "1 May 2024",
 						status: "Not Completed",
-						lectureFile: "#",
+						lectureFile:
+							"https://youtu.be/EFg3u_E6eHU?si=t0kV0D4ei0mSGT9w",
 					},
 				],
 			},
@@ -241,14 +246,19 @@ export default function TeacherIndividualClass({
 																	Lecture File
 																</h5>
 																<h4 className="text-[#111] underline capitalize text-[1.2em]">
-																	<Link
+																	{/* <Link
 																		href={
 																			lecture.lectureFile
 																		}
 																	>
 																		Download
 																		File
-																	</Link>
+																	</Link> */}
+																	<WatchLectureDialog
+																		lectureFile={
+																			lecture.lectureFile
+																		}
+																	/>
 																</h4>
 															</div>
 															<div className="col-span-3">
