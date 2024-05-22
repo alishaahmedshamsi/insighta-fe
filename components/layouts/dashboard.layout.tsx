@@ -227,8 +227,8 @@ export default function DashboardLayout({
 									width={600}
 									height={600}
 								/>
-								<div className="flex justify-between w-full items-center mt-[1em]">
-									<h3 className="text-white font-semibold text-[1.5em]">
+								<div className="flex justify-start w-full mt-[1em]">
+									<h3 className="text-white w-full text-left font-semibold text-[1.5em]">
 										Create School
 									</h3>
 								</div>

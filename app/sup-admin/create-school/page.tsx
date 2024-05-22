@@ -32,22 +32,15 @@ export default function SchoolAdminCreateStudent() {
 							/>
 						</div>
 						<div className="w-full flex flex-col">
-							<label htmlFor="rollNo">Roll No</label>
+							<label htmlFor="schoolId">School ID</label>
 							<input
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-								id="rollNo"
+								id="schoolId"
 								type="text"
 							/>
 						</div>
-						<div className="w-full flex flex-col">
-							<label htmlFor="email">Email</label>
-							<input
-								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-								id="email"
-								type="text"
-							/>
-						</div>
-						<div className="w-full flex flex-col">
+						
+						<div className="w-full flex flex-col col-span-2">
 							<label htmlFor="password">Password</label>
 							<input
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
@@ -55,32 +48,7 @@ export default function SchoolAdminCreateStudent() {
 								type="text"
 							/>
 						</div>
-						<div className="w-full flex flex-col">
-							<label htmlFor="class">Class</label>
-							<input
-								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-								id="class"
-								type="text"
-							/>
-						</div>
-						<div className="w-full flex flex-col">
-							<label htmlFor="section">Section</label>
-							<input
-								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-								id="section"
-								type="text"
-							/>
-						</div>
-
-						<div className="w-full flex flex-col col-span-2">
-							<label htmlFor="subjects">Subjects</label>
-							<input
-								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-								id="subjects"
-								type="text"
-								placeholder="Maths, Physics, Chemistry"
-							/>
-						</div>
+						
 						<div>
 							<button className="col-span-1 w-full rounded-[1em] bg-brand-sea-green py-[.9em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor">
 								Create School

@@ -5,7 +5,7 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import Link from "next/link";
 import { SUPER_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 
-import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdmin";
+import { superAdminLeftSidebarLinks } from "@/components/left-sidebar/supAdmin";
 import PointsBreakdown from "@/components/points-breakdown";
 
 const userDetails = {
@@ -48,7 +48,7 @@ export default function SchoolAdminDashboard() {
 				// pointsEarned={"400"}
 				userDetails={userDetails}
 				quickStartList={SUPER_ADMIN_QUICK_START_LIST}
-				leftSidebarLinks={schoolAdminLeftSidebarLinks()}
+				leftSidebarLinks={superAdminLeftSidebarLinks()}
 			>
 				<div className="rounded-[2em] flex flex-col gap-[2em] pb-[2em]">
 					<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
