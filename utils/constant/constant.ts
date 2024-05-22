@@ -42,11 +42,7 @@ export const STUDENT_QUICK_START_LIST = [
 		count: "2 Lectures",
 		link: "/student-dashboard/lectures",
 	},
-	{
-		heading: "Competition",
-		count: "2 Competition",
-		link: "/student-dashboard/competitions",
-	},
+	
 ];
 
 export const SCHOOL_ADMIN_QUICK_START_LIST = [
@@ -59,5 +55,12 @@ export const SCHOOL_ADMIN_QUICK_START_LIST = [
 		heading: "Create Teacher",
 		count: "",
 		link: "/school-admin/create-teacher",
+	},
+];
+export const SUPER_ADMIN_QUICK_START_LIST = [
+	{
+		heading: "Create School",
+		count: "",
+		link: "/school-admin/create-school",
 	},
 ];

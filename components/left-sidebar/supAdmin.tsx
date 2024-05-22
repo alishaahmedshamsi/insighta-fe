@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export const teacherLeftSidebarLinks = () => {
+export const superAdminLeftSidebarLinks = () => {
 	return (
 		<div className="quick-links-box w-[60%] flex flex-col mt-[2em]">
 			<Link
-				href="/teacher-dashboard"
+				href="/sup-admin"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image
@@ -21,7 +21,7 @@ export const teacherLeftSidebarLinks = () => {
 			<hr className="my-[50px] opacity-[.3] " />
 
 			<Link
-				href="/teacher-dashboard"
+				href="/sup-admin"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image
@@ -46,8 +46,8 @@ export const teacherLeftSidebarLinks = () => {
 				/>{" "}
 				Schedule
 			</Link> */}
-			<Link
-				href="#"
+			{/* <Link
+				href="/school-admin/announcement"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image
@@ -58,7 +58,7 @@ export const teacherLeftSidebarLinks = () => {
 					height={600}
 				/>{" "}
 				Announcement
-			</Link>
+			</Link> */}
 
 			<hr className="my-[50px] opacity-[.3] " />
 

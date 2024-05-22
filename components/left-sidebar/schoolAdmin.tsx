@@ -33,7 +33,7 @@ export const schoolAdminLeftSidebarLinks = () => {
 				/>{" "}
 				Dashboard
 			</Link>
-			<Link
+			{/* <Link
 				href="#"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
@@ -45,9 +45,9 @@ export const schoolAdminLeftSidebarLinks = () => {
 					height={600}
 				/>{" "}
 				Schedule
-			</Link>
+			</Link> */}
 			<Link
-				href="#"
+				href="/school-admin/announcement"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image
@@ -62,7 +62,7 @@ export const schoolAdminLeftSidebarLinks = () => {
 
 			<hr className="my-[50px] opacity-[.3] " />
 
-			<Link
+			{/* <Link
 				href="#"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
@@ -74,7 +74,7 @@ export const schoolAdminLeftSidebarLinks = () => {
 					height={600}
 				/>{" "}
 				Settings
-			</Link>
+			</Link> */}
 			<Link
 				href="#"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"

@@ -5,6 +5,7 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import Link from "next/link";
 import { SCHOOL_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdmin";
+import PointsBreakdown from "@/components/points-breakdown";
 
 const userDetails = {
 	userName: "School Admin",
@@ -72,7 +73,17 @@ export default function SchoolAdminTopFive() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												<PointsBreakdown
+													userName="Waqqam Usman"
+													schoolName="Karachi Public School"
+													userRank={"1st"}
+													userClass={"5th Grade"}
+													role={"student"}
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>
@@ -103,7 +114,17 @@ export default function SchoolAdminTopFive() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												<PointsBreakdown
+													userName="Waqqam Usman"
+													schoolName="Karachi Public School"
+													userRank={"2nd"}
+													userClass={"5th Grade"}
+													role={"student"}
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>
@@ -134,7 +155,17 @@ export default function SchoolAdminTopFive() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												<PointsBreakdown
+													userName="Waqqam Usman"
+													schoolName="Karachi Public School"
+													userRank={"3rd"}
+													userClass={"5th Grade"}
+													role={"student"}
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>
@@ -165,7 +196,17 @@ export default function SchoolAdminTopFive() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												<PointsBreakdown
+													userName="Waqqam Usman"
+													schoolName="Karachi Public School"
+													userRank={"4th"}
+													userClass={"5th Grade"}
+													role={"student"}
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>
@@ -196,7 +237,17 @@ export default function SchoolAdminTopFive() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												<PointsBreakdown
+													userName="Waqqam Usman"
+													schoolName="Karachi Public School"
+													userRank={"5th"}
+													userClass={"5th Grade"}
+													role={"student"}
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>
@@ -255,7 +306,17 @@ export default function SchoolAdminTopFive() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												<PointsBreakdown
+													userName="Waqqam Usman"
+													schoolName="Karachi Public School"
+													userRank={"1st"}
+													qualification="BA in English Literature"
+													role={"teacher"}
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>
@@ -286,7 +347,17 @@ export default function SchoolAdminTopFive() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												<PointsBreakdown
+													userName="Waqqam Usman"
+													schoolName="Karachi Public School"
+													userRank={"2nd"}
+													qualification="BA in English Literature"
+													role={"teacher"}
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>
@@ -317,7 +388,17 @@ export default function SchoolAdminTopFive() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												<PointsBreakdown
+													userName="Waqqam Usman"
+													schoolName="Karachi Public School"
+													userRank={"3rd"}
+													qualification="BA in English Literature"
+													role={"teacher"}
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>
@@ -348,7 +429,17 @@ export default function SchoolAdminTopFive() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												<PointsBreakdown
+													userName="Waqqam Usman"
+													schoolName="Karachi Public School"
+													userRank={"4th"}
+													qualification="BA in English Literature"
+													role={"teacher"}
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>
@@ -379,7 +470,17 @@ export default function SchoolAdminTopFive() {
 									<td>
 										<div className="bg-white p-[20px] flex justify-center">
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
-												⭐ 400+ Points
+												<PointsBreakdown
+													userName="Waqqam Usman"
+													schoolName="Karachi Public School"
+													userRank={"5th"}
+													qualification="BA in English Literature"
+													role={"teacher"}
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
+												/>
 											</span>
 										</div>
 									</td>

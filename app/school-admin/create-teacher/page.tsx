@@ -15,6 +15,7 @@ export default function SchoolAdminCreateTeacher() {
 		qualification: "",
 		email: "",
 		password: "",
+		teacherId: "",
 		classes: [{ name: "", subjects: [""] }],
 	});
 
@@ -122,6 +123,17 @@ export default function SchoolAdminCreateTeacher() {
 							type="password"
 							name="password"
 							value={teacherData.password}
+							onChange={(e) => handleInputChange(e)}
+						/>
+					</div>
+					<div className="w-full flex flex-col">
+						<label htmlFor="teacherId">Teacher ID</label>
+						<input
+							className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
+							id="teacherId"
+							type="teacherId"
+							name="teacherId"
+							value={teacherData.teacherId}
 							onChange={(e) => handleInputChange(e)}
 						/>
 					</div>

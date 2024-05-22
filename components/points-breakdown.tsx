@@ -6,11 +6,23 @@ export default function PointsBreakdown({
 	assignmentPoints,
 	quizPoints,
 	lecturePoints,
+	userName,
+	schoolName,
+	userRank,
+	userClass,
+	qualification,
+	role,
 }: {
 	points: number;
 	assignmentPoints: number;
 	quizPoints: number;
 	lecturePoints: number;
+	userName: string;
+	schoolName: string;
+	userRank: string;
+	userClass?: string;
+	qualification?: string;
+	role: string;
 }) {
 	const [open, setOpen] = useState(false);
 
@@ -62,6 +74,32 @@ export default function PointsBreakdown({
 											<div className="text-center sm:text-left w-full">
 												<Dialog.Title
 													as="h3"
+													className="text-base text-[20px] font-semibold leading-6 text-gray-900 mb-2"
+												>
+													Details
+												</Dialog.Title>
+												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+													Name: {userName}
+												</p>
+												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+													School: {schoolName}
+												</p>
+												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+													Rank: {userRank}
+												</p>
+												{role === "student" ? (
+													<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+														Grade: {userClass}
+													</p>
+												) : (
+													<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+														Qualification:{" "}
+														{qualification}
+													</p>
+												)}
+
+												<Dialog.Title
+													as="h3"
 													className="text-base text-[20px] font-semibold leading-6 text-gray-900 mb-6"
 												>
 													Points Breakdown
@@ -86,9 +124,11 @@ export default function PointsBreakdown({
 															⭐ {lecturePoints}
 														</span>
 													</div>
-                                                    <hr />
+													<hr />
 													<div className="flex justify-between items-center w-full bg-[#fff] border border-[#eee] p-2 px-4 rounded-md">
-														<span className="font-semibold">Total Points</span>
+														<span className="font-semibold">
+															Total Points
+														</span>
 														<span className="font-semibold">
 															⭐ {points}
 														</span>

@@ -33,7 +33,7 @@ export const studentLeftSidebarLinks = () => {
 				/>{" "}
 				Dashboard
 			</Link>
-			<Link
+			{/* <Link
 				href="#"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
@@ -45,7 +45,7 @@ export const studentLeftSidebarLinks = () => {
 					height={600}
 				/>{" "}
 				Schedule
-			</Link>
+			</Link> */}
 			<Link
 				href="#"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
@@ -62,7 +62,7 @@ export const studentLeftSidebarLinks = () => {
 
 			<hr className="my-[50px] opacity-[.3] " />
 
-			<Link
+			{/* <Link
 				href="#"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
@@ -74,7 +74,7 @@ export const studentLeftSidebarLinks = () => {
 					height={600}
 				/>{" "}
 				Settings
-			</Link>
+			</Link> */}
 			<Link
 				href="#"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
