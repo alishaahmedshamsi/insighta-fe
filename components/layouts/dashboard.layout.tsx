@@ -67,7 +67,7 @@ export default function DashboardLayout({
 		if (userDetails.role === "Student" || userDetails.role === "Teacher") {
 			return (
 				<>
-					<div className="grid grid-cols-3  gap-[1em] w-full">
+					<div className="grid grid-cols-3 gap-[1em] w-full">
 						<div className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 							<Image
 								alt=""
@@ -382,7 +382,7 @@ export default function DashboardLayout({
 				<div className="bg-[#f7e3e367] rounded-[2em] p-[1em] mt-[1em] flex flex-col gap-[1em]">
 					{quickStartList.map((list) => {
 						return (
-							<Link href={list.link.toString()}>
+							<Link href={list.link.toString()} key={list.heading.toString()}>
 								<div className="flex justify-center items-center w-full bg-white rounded-[1.5em] gap-[1em] px-[1em] py-[1em]">
 									<div className="w-[25%]">
 										<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.3em] w-[100%] rounded-[.5em] ">

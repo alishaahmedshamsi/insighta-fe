@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { onLogin } from "@/services/apis";
 import { toast } from "sonner";
 import Image from "next/image";
+import { ROLES } from "@/utils";
 
 export default function Login() {
 	const router = useRouter();
@@ -26,11 +27,6 @@ export default function Login() {
 				reset();
 			}, 3000);
 		},
-
-		onSuccess: (data: any) => {
-			// localStorage.setItem("token", data.data.accessToken);
-			// router.push("/dashboard");
-		},
 	});
 
 	const {
@@ -39,15 +35,31 @@ export default function Login() {
 		formState: { errors, isSubmitting }, // isSubmitting for loading state
 	} = useForm<ILoginFields>({ resolver: zodResolver(loginSchema) });
 
-	const onSubmit: SubmitHandler<ILoginFields> = async (data) => {
-		console.log(data);
+	const onSubmit: SubmitHandler<ILoginFields> = async (data, e) => {
+		if (e) {
+			e?.preventDefault();
+		}
+		// console.log(data);
 		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
-		if (response.user.role !== "admin")
-			return toast.error("Unauthorized Access!!!");
+		if (success) toast.success("Login successful");
 
-		toast.success("Login success");
+		console.log(response.data.data.user.role);
+		localStorage.setItem("accessToken", response.data.data.accessToken);
+		if (response.data.data.user.role == ROLES.ADMIN) {
+			console.log(response.data.accessToken);
+
+			router.push("/sup-admin");
+		}
+		if (response.data.data.user.role == ROLES.SCHOOL) {
+			router.push("/school-admin");
+		}
+		if (response.data.data.user.role == ROLES.USER) {
+			router.push("/student-dashboard");
+		}
+		// const role = response
+		// switch()
 	};
 
 	return (

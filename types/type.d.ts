@@ -9,6 +9,9 @@ export interface IRegisterFields {
 	email: string;
 	password: string;
 	fullName: string;
+	role: string;
+	classes?: number[];
+	section?: string[];
 }
 
 export interface IResetPassword {

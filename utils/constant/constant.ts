@@ -64,3 +64,11 @@ export const SUPER_ADMIN_QUICK_START_LIST = [
 		link: "/sup-admin/create-school",
 	},
 ];
+
+
+export const ROLES = Object.freeze({
+	ADMIN: 'admin',
+	USER: 'student',
+	TEACHER: 'teacher',
+	SCHOOL: 'school',
+  });

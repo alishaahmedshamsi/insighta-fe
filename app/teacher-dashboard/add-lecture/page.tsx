@@ -6,29 +6,6 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 
-const subjectList = [
-	{
-		name: "Class 5A",
-		duration: "17 min",
-	},
-	{
-		name: "Class 5B",
-		duration: "17 min",
-	},
-	{
-		name: "Class 6B",
-		duration: "17 min",
-	},
-	{
-		name: "Class 7A",
-		duration: "17 min",
-	},
-	{
-		name: "Class 8B",
-		duration: "17 min",
-	},
-];
-
 const userDetails = {
 	userName: "Annie Leonchart",
 	role: "Teacher",

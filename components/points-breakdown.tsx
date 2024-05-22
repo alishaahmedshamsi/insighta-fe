@@ -13,10 +13,10 @@ export default function PointsBreakdown({
 	qualification,
 	role,
 }: {
-	points: number;
-	assignmentPoints: number;
-	quizPoints: number;
-	lecturePoints: number;
+	points: string;
+	assignmentPoints: string;
+	quizPoints: string;
+	lecturePoints: string;
 	userName: string;
 	schoolName: string;
 	userRank: string;
@@ -30,7 +30,7 @@ export default function PointsBreakdown({
 
 	return (
 		<>
-			<span className="cursor-pointer" onClick={() => setOpen(true)}>
+			<span className="cursor-pointer" onClick={() => setOpen(!open)}>
 				⭐ {points} Points
 			</span>
 			<Transition.Root show={open} as={Fragment}>

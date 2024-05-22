@@ -1,8 +1,17 @@
 import { z } from "zod";
 
 const registerSchema = z.object({
+	fullName: z.string(),
 	email: z.string().email(),
 	password: z.string().min(6),
+});
+
+const registerStudentSchema = z.object({
+	fullName: z.string(),
+	email: z.string().email(),
+	password: z.string().min(6),
+	class: z.number(),
+	section: z.string(),
 });
 
 const resetPasswordSchema = z.object({
@@ -25,6 +34,7 @@ const forgotPasswordSchema = z.object({
 
 export {
 	registerSchema,
+	registerStudentSchema,
 	loginSchema,
 	forgotPasswordSchema,
 	otpSchema,
