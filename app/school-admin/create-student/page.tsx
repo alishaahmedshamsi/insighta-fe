@@ -8,11 +8,10 @@ import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdm
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, registerStudentSchema } from "@/validation";
+import { registerStudentSchema } from "@/validation";
 import { useMutation } from "@tanstack/react-query";
 import { onRegister } from "@/services/apis";
 import { toast } from "sonner";
-import { ROLES } from "@/utils";
 import { IRegisterFields } from "@/types/type";
 
 const userDetails = {
@@ -49,6 +48,8 @@ export default function SchoolAdminCreateStudent() {
 		}
 		// console.log(data);
 		data.role = "student";
+		data.classes = data.classes?.map(Number) ?? []; // Ensure classes are numbers
+		data.section = data.section?.map(String) ?? []; // Ensure classes are numbers
 		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
@@ -125,7 +126,7 @@ export default function SchoolAdminCreateStudent() {
 							<input
 								// {...register("classes")}
 								{...register("classes", {
-									valueAsNumber: true,
+									setValueAs: (v) => v.split(",").map(Number),
 								})}
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="classInput"
@@ -138,7 +139,9 @@ export default function SchoolAdminCreateStudent() {
 						<div className="w-full flex flex-col">
 							<label htmlFor="section">Section</label>
 							<input
-								{...register("section")}
+								{...register("section", {
+									setValueAs: (v) => v.split(",").map(String),
+								})}
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="section"
 								type="text"

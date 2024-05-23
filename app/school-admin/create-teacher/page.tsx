@@ -4,6 +4,14 @@ import { SCHOOL_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdmin";
 import { ChangeEvent, useState } from "react";
 
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerStudentSchema } from "@/validation";
+import { useMutation } from "@tanstack/react-query";
+import { onRegister } from "@/services/apis";
+import { toast } from "sonner";
+import { IRegisterFields } from "@/types/type";
+
 const userDetails = {
 	userName: "School Admin",
 	role: "Admin",
@@ -126,7 +134,7 @@ export default function SchoolAdminCreateTeacher() {
 							onChange={(e) => handleInputChange(e)}
 						/>
 					</div>
-					<div className="w-full flex flex-col">
+					{/* <div className="w-full flex flex-col">
 						<label htmlFor="teacherId">Teacher ID</label>
 						<input
 							className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
@@ -136,7 +144,7 @@ export default function SchoolAdminCreateTeacher() {
 							value={teacherData.teacherId}
 							onChange={(e) => handleInputChange(e)}
 						/>
-					</div>
+					</div> */}
 				</div>
 
 				{teacherData.classes.map((classItem, classIndex) => (

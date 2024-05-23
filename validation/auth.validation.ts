@@ -10,8 +10,17 @@ const registerStudentSchema = z.object({
 	fullName: z.string(),
 	email: z.string().email(),
 	password: z.string().min(6),
-	classes: z.number(),
-	section: z.string(),
+	classes: z.array(z.number()),
+	section: z.array(z.string()),
+});
+
+const registerTeacherSchema = z.object({
+	fullName: z.string(),
+	qualification: z.string(),
+	email: z.string().email(),
+	password: z.string().min(6),
+	classes: z.array(z.number()),
+	section: z.array(z.string()),
 });
 
 const resetPasswordSchema = z.object({
@@ -35,6 +44,7 @@ const forgotPasswordSchema = z.object({
 export {
 	registerSchema,
 	registerStudentSchema,
+	registerTeacherSchema,
 	loginSchema,
 	forgotPasswordSchema,
 	otpSchema,
