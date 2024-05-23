@@ -10,7 +10,7 @@ const registerStudentSchema = z.object({
 	fullName: z.string(),
 	email: z.string().email(),
 	password: z.string().min(6),
-	class: z.number(),
+	classes: z.number(),
 	section: z.string(),
 });
 

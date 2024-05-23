@@ -48,14 +48,16 @@ export default function Login() {
 		console.log(response.data.data.user.role);
 		localStorage.setItem("accessToken", response.data.data.accessToken);
 		if (response.data.data.user.role == ROLES.ADMIN) {
-			console.log(response.data.accessToken);
+			console.log(response.data.data.accessToken);
 
 			router.push("/sup-admin");
 		}
 		if (response.data.data.user.role == ROLES.SCHOOL) {
+			console.log(response.data.data.accessToken);
 			router.push("/school-admin");
 		}
 		if (response.data.data.user.role == ROLES.USER) {
+			console.log(response.data.data.accessToken);
 			router.push("/student-dashboard");
 		}
 		// const role = response

@@ -28,7 +28,7 @@ export const onRegister = async (data: IRegisterFields) => {
 	try {
 		const response = await api.post("/auth/register", data, {
 			headers: {
-				Authorization: `bearer ${localStorage.getItem("accessToken")}`,
+				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
 			},
 		});
 

@@ -52,7 +52,8 @@ export default function SchoolAdminCreateStudent() {
 		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
-		if (success) toast.success("Student created successful");
+		// if (success) toast.success("Student created successful");
+		toast.success("Student created successful");
 
 		// console.log(response.data.data.user.role);
 		// if (response.data.data.user.role == ROLES.ADMIN) {
@@ -86,6 +87,9 @@ export default function SchoolAdminCreateStudent() {
 								id="name"
 								type="text"
 							/>
+							{errors.fullName && (
+								<span>{errors.fullName.message}</span>
+							)}
 						</div>
 						<div className="w-full flex flex-col">
 							<label htmlFor="rollNo">Roll No</label>
@@ -103,6 +107,9 @@ export default function SchoolAdminCreateStudent() {
 								id="email"
 								type="text"
 							/>
+							{errors.password && (
+								<span>{errors.password.message}</span>
+							)}
 						</div>
 						<div className="w-full flex flex-col">
 							<label htmlFor="password">Password</label>
@@ -117,19 +124,28 @@ export default function SchoolAdminCreateStudent() {
 							<label htmlFor="classInput">Class</label>
 							<input
 								// {...register("classes")}
+								{...register("classes", {
+									valueAsNumber: true,
+								})}
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="classInput"
-								type="text"
+								type="number"
 							/>
+							{errors.classes && (
+								<span>{errors.classes.message}</span>
+							)}
 						</div>
 						<div className="w-full flex flex-col">
 							<label htmlFor="section">Section</label>
 							<input
-								// {...register("section")}
+								{...register("section")}
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="section"
 								type="text"
 							/>
+							{errors.section && (
+								<span>{errors.section.message}</span>
+							)}
 						</div>
 
 						<div className="w-full flex flex-col col-span-2">
@@ -147,7 +163,13 @@ export default function SchoolAdminCreateStudent() {
 								value="Create Student"
 								className="col-span-1 w-full rounded-[1em] bg-brand-sea-green py-[.9em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
 							/>
-							{/* Create Student */}
+							{/* <button
+								// type="submit"
+								// value="Create Student"
+								className="col-span-1 w-full rounded-[1em] bg-brand-sea-green py-[.9em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
+							>
+								Create Student
+							</button> */}
 						</div>
 					</form>
 				</div>
