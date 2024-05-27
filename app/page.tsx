@@ -142,13 +142,13 @@ export default function FrontPage() {
 			<HeaderComponent />
 
 			<section
-				className={`my-0 mx-auto flex flex-col justify-center items-center w-[100%] h-[100vh] relative z-0 bg-brand-dark-blue overflow-hidden`}
+				className={`my-0 mx-auto flex flex-col justify-center items-center w-[100%] h-[100vh] relative z-0 bg-[#000931] overflow-hidden`}
 			>
 				<span id="bg-circle-gradient-1"></span>
 				<span id="bg-circle-gradient-2"></span>
 				<div className="flex flex-col items-center p-[10px] relative my-0 mx-auto w-[min(100%_-_20px,1250px)]">
 					<div className="text-wrapper sm:w-[650px] flex flex-col justify-center items-center">
-						<h3 className="subheading text-white relative font-bold sm:text-[20px] leading-[2em] text-center tracking-[0.3em] uppercase text-off_white">
+						<h3 className="text-white relative font-bold sm:text-[20px] leading-[2em] text-center tracking-[0.3em] uppercase text-off_white">
 							Insighta
 						</h3>
 						<h1 className="font-bold my-2 text-[35px] sm:text-[60px] leading-tight text-center text-white">
@@ -173,7 +173,7 @@ export default function FrontPage() {
 				className={`bg-[#F4F8FB] my-0 mx-auto flex flex-col justify-center items-center w-[100%] py-[100px] px-[10px] relative overflow-hidden`}
 			>
 				<div className="flex flex-col items-center p-[10px] relative my-0 mx-auto w-[min(100%_-_20px,1250px)]">
-					<h2 className="font-bold my-2 text-[35px] sm:text-[50px] leading-tight text-center text-brand-dark-blue">
+					<h2 className="font-bold my-2 text-[35px] sm:text-[50px] leading-tight text-center text-[#000931]">
 						Ranking Board
 					</h2>
 
@@ -210,10 +210,10 @@ export default function FrontPage() {
 										userRank={"1st"}
 										userClass={"5th Grade"}
 										role={"student"}
-										points={"500"}
-										assignmentPoints={"100"}
-										quizPoints={"150"}
-										lecturePoints={"200"}
+										points={500}
+										assignmentPoints={100}
+										quizPoints={150}
+										lecturePoints={200}
 									/>
 									{/* ⭐ <span>500+ Points</span> */}
 								</span>
@@ -254,10 +254,10 @@ export default function FrontPage() {
 											"BA in English Literature"
 										}
 										role={"teacher"}
-										points={"500"}
-										assignmentPoints={"100"}
-										quizPoints={"150"}
-										lecturePoints={"200"}
+										points={500}
+										assignmentPoints={100}
+										quizPoints={150}
+										lecturePoints={200}
 									/>
 								</span>
 							</div>
@@ -320,10 +320,10 @@ export default function FrontPage() {
 													userRank={"2nd"}
 													userClass={"5th Grade"}
 													role={"student"}
-													points={"500"}
-													assignmentPoints={"100"}
-													quizPoints={"150"}
-													lecturePoints={"200"}
+													points={500}
+										assignmentPoints={100}
+										quizPoints={150}
+										lecturePoints={200}
 												/>
 											</span>
 										</div>
@@ -391,10 +391,10 @@ export default function FrontPage() {
 													userRank={"2nd"}
 													qualification="BA in English Literature"
 													role={"teacher"}
-													points={"500"}
-													assignmentPoints={"100"}
-													quizPoints={"150"}
-													lecturePoints={"200"}
+													points={500}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
 												/>
 											</span>
 										</div>

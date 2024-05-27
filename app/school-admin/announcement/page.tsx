@@ -6,13 +6,8 @@ import Link from "next/link";
 import { SCHOOL_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdmin";
 
-import { date } from "zod";
 
-const userDetails = {
-	userName: "School Admin",
-	role: "Admin",
-	schoolName: "Karachi Public School",
-};
+import useAuthStore from "@/store/auth/auth.store";
 
 const previousAnnouncements = [
 	{
@@ -46,12 +41,19 @@ const previousAnnouncements = [
 ];
 
 export default function Component() {
+	const router = useRouter();
+    const user = useAuthStore((state) => state.user);
+		
+	if(!user) {
+			router.push('/login')
+		}
+      
 	return (
 		<>
 			<DashboardLayout
 				mainSectionHeading={"All announcements"}
 				// pointsEarned={"400"}
-				userDetails={userDetails}
+				userDetails={{role: user?.role!, userName: user?.fullname!, schoolName: user?.school!}}
 				quickStartList={SCHOOL_ADMIN_QUICK_START_LIST}
 				leftSidebarLinks={schoolAdminLeftSidebarLinks()}
 			>

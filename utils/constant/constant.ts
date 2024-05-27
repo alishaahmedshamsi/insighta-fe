@@ -56,6 +56,16 @@ export const SCHOOL_ADMIN_QUICK_START_LIST = [
 		count: "",
 		link: "/school-admin/create-teacher",
 	},
+	{
+		heading: "Create Class",
+		count: "",
+		link: "/school-admin/create-class",
+	},
+	{
+		heading: "Create Subject",
+		count: "",
+		link: "/school-admin/create-subject",
+	},
 ];
 export const SUPER_ADMIN_QUICK_START_LIST = [
 	{

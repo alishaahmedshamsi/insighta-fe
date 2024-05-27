@@ -13,10 +13,10 @@ export default function PointsBreakdown({
 	qualification,
 	role,
 }: {
-	points: string;
-	assignmentPoints: string;
-	quizPoints: string;
-	lecturePoints: string;
+	points: number;
+	assignmentPoints: number;
+	quizPoints: number;
+	lecturePoints: number;
 	userName: string;
 	schoolName: string;
 	userRank: string;

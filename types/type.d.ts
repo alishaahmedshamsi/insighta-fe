@@ -39,17 +39,44 @@ export interface IResetFields {
 
 // export type ResetPassword = z.infer<typeof ResetPasswordSchema>
 
-export interface IApiResponse<T> {
-	message: string;
-	data: T;
-	paginationData?: IPaginationData;
-}
-
-export interface IPaginationData {
-	total: number;
-	limit: number;
-	page: number;
-	pages: number;
+export interface IPagination {
+	currentPage: number;
 	hasNextPage: boolean;
 	hasPrevPage: boolean;
-}
+	nextPage: number | null;
+	perPage: number;
+	prevPage: number | null;
+	totalItems: number;
+	totalPages: number;
+  }
+  
+  export interface ApiResponse<T> {
+	data: T[];
+	pagination: Pagination;
+  }
+
+  export interface IClasses{
+	_id:string
+	className:number[]
+  }
+  export interface IClass{
+	_id:string
+	className:number
+  }
+
+export  interface IUser  {
+	fullname: string;
+	email: string;
+	qualification: string;
+	address: string;
+	password: string;
+	role: ROLES;
+	classes: IClass[];
+	section: string[];
+	school: ObjectId;
+	otp: number;
+	otpExpiry: Date;
+	points: ObjectId;
+	createdAt?: Date;
+	updatedAt?: Date;
+  }

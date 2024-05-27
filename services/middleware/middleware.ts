@@ -12,7 +12,7 @@ api.interceptors.request.use(
 	async (config) => {
 		const accessToken = getAccessToken();
 		console.log(accessToken);
-		// config.headers.Authorization = accessToken;
+		config.headers.Authorization = `Bearer ${accessToken}`;
 		// config.headers.accessToken = accessToken;
 		return config;
 	},

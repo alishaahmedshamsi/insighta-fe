@@ -1,33 +1,11 @@
 "use client";
+import { fetchCurrentUser } from "@/services/apis";
+import { IUser } from "@/types/type";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-
-// const leftSidebarLinks = [
-// 	{
-// 		imgSource: "/assets/icons/user.png",
-// 		linkText: "Profile",
-// 	},
-// 	{
-// 		imgSource: "/assets/icons/user.png",
-// 		linkText: "Dashboard",
-// 	},
-// 	{
-// 		imgSource: "/assets/icons/user.png",
-// 		linkText: "Schedule",
-// 	},
-// 	{
-// 		imgSource: "/assets/icons/user.png",
-// 		linkText: "Announcement",
-// 	},
-// 	{
-// 		imgSource: "/assets/icons/user.png",
-// 		linkText: "Setting",
-// 	},
-// 	{
-// 		imgSource: "/assets/icons/user.png",
-// 		linkText: "Log Out",
-// 	},
-// ];
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const studentPoints = 400;
 const teacherPoints = 350;
@@ -63,8 +41,21 @@ export default function DashboardLayout({
 	// pointsEarned: String;
 	leftSidebarLinks: React.ReactNode;
 }) {
+
+	const router = useRouter()
+	const { data:user, isLoading } = useQuery({
+		queryKey: ["current-user"],
+		queryFn: () => fetchCurrentUser(),
+	  });
+
+	useEffect(() => {
+		if (!user) {
+			router.push("/login");
+		}
+	}, [user]);
+
 	const topBoxes = () => {
-		if (userDetails.role === "Student" || userDetails.role === "Teacher") {
+		if (user.role === "student" || user.role === "teacher") {
 			return (
 				<>
 					<div className="grid grid-cols-3 gap-[1em] w-full">
@@ -82,7 +73,7 @@ export default function DashboardLayout({
 								</h3>
 								<p className="text-[#581D7D] font-semibold text-[1.2em]">
 									⭐{" "}
-									{userDetails.role === "Student"
+									{user.role === "student"
 										? studentPoints
 										: teacherPoints}
 								</p>
@@ -107,7 +98,7 @@ export default function DashboardLayout({
 								</p>
 							</div>
 						</div>
-						{userDetails.role === "Student" ? (
+						{user.role === "student" ? (
 							<Link href="#">
 								<div className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 									<Image
@@ -151,7 +142,7 @@ export default function DashboardLayout({
 					</div>
 				</>
 			);
-		} else if (userDetails.role === "Admin") {
+		} else if (user.role === "school") {
 			return (
 				<>
 					<div className="grid grid-cols-3  gap-[1em] w-full">
@@ -333,20 +324,20 @@ export default function DashboardLayout({
 					</div>
 
 					<div className="bg-white rounded-[2em] p-[2em] flex flex-col items-center pt-[3em]">
-						<h3 className="font-medium text-[#212121] align-middle text-[1.6em]">
-							{userDetails.userName}
+						<h3 className="font-medium text-[#212121] align-middle text-lg">
+							{user.fullname}
 						</h3>
 						<p className="text-[#959BA5] text-[1em] align-middle">
-							{userDetails.role}
+							{user.role}
 						</p>
-						{userDetails.role === "Student" ? (
+						{user.role === "student" ? (
 							<div className="flex justify-evenly items-center w-full mt-[1em]">
 								<div className="flex flex-col items-center">
 									<p className="text-[#959BA5] text-[1.2em] align-middle">
 										Class
 									</p>
 									<p className="font-bold text-[#212121] align-middle text-[2em]">
-										{userDetails.class}
+										{user.class}
 									</p>
 								</div>
 								<div className="flex flex-col items-center">
@@ -354,21 +345,21 @@ export default function DashboardLayout({
 										Section
 									</p>
 									<p className="font-bold text-[#212121] align-middle text-[2em]">
-										{userDetails.section}
+										{user.section}
 									</p>
 								</div>
 							</div>
 						) : (
 							<div className="flex justify-evenly items-center w-full mt-[1em]">
 								<h3 className="font-medium text-[#212121] align-middle text-[1.3em]">
-									{userDetails.qualification}
+									{user.qualification}
 								</h3>
 							</div>
 						)}
-						{userDetails.role === "Admin" && (
+						{user.role === "school" && (
 							<div className="flex justify-evenly items-center w-full mt-[1em]">
 								<h3 className="font-medium text-[#212121] align-middle text-[1.3em]">
-									{userDetails.schoolName}
+									{user.school}
 								</h3>
 							</div>
 						)}

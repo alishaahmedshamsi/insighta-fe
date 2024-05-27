@@ -11,10 +11,12 @@ import { onLogin } from "@/services/apis";
 import { toast } from "sonner";
 import Image from "next/image";
 import { ROLES } from "@/utils";
+import useAuthStore from "@/store/auth/auth.store";
 
 export default function Login() {
 	const router = useRouter();
-
+	
+	const setUser = useAuthStore((state) => state.setUser);
 	const { mutateAsync, error, reset } = useMutation({
 		mutationFn: onLogin,
 
@@ -45,7 +47,8 @@ export default function Login() {
 		if (!success) return toast.error(response);
 		if (success) toast.success("Login successful");
 
-		console.log(response.data.data.user.role);
+		// console.log(response.data.data.user.role);
+		setUser(response.data.data.user)
 		localStorage.setItem("accessToken", response.data.data.accessToken);
 		if (response.data.data.user.role == ROLES.ADMIN) {
 			console.log(response.data.data.accessToken);

@@ -6,20 +6,29 @@ import Link from "next/link";
 import { SCHOOL_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdmin";
 import PointsBreakdown from "@/components/points-breakdown";
+import useAuthStore from "@/store/auth/auth.store";
+import withAuth from "@/components/hoc/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCurrentUser } from "@/services/apis";
 
-const userDetails = {
-	userName: "School Admin",
-	role: "Admin",
-	schoolName: "Karachi Public School",
-};
 
-export default function SchoolAdminDashboard() {
+
+function SchoolAdminDashboard() {
+	const router = useRouter();
+	
+	const { data:user, isLoading } = useQuery({
+		queryKey: ["current-user"],
+		queryFn: () => fetchCurrentUser(),
+	  });
+
+	  if(!user) return router.push('/login')
+
 	return (
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Dashboard"}
 				// pointsEarned={"400"}
-				userDetails={userDetails}
+				userDetails={{role: user?.role!, userName: user?.fullname!, schoolName: user?.school!}}
 				quickStartList={SCHOOL_ADMIN_QUICK_START_LIST}
 				leftSidebarLinks={schoolAdminLeftSidebarLinks()}
 			>
@@ -29,6 +38,7 @@ export default function SchoolAdminDashboard() {
 					</h3>
 					<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
 						{" "}
+						<Link href={'/school-admin/students'}>
 						<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 							<div className="w-[80px]">
 								<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -50,6 +60,8 @@ export default function SchoolAdminDashboard() {
 								</p>
 							</div>
 						</div>
+						</Link>
+						<Link href={'/school-admin/teachers'}>
 						<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 							<div className="w-[80px]">
 								<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -65,6 +77,28 @@ export default function SchoolAdminDashboard() {
 							<div className="w-[75%]">
 								<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
 									Total Teachers
+								</h4>
+								<p className="text-[#959BA5] text-[1em] align-middle">
+									45
+								</p>
+							</div>
+						</div>
+						</Link>
+						<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
+							<div className="w-[80px]">
+								<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
+									<Image
+										alt=""
+										className="object-contain w-[5em] inline"
+										src={"/assets/folder.png"}
+										width={600}
+										height={600}
+									/>
+								</div>
+							</div>
+							<div className="w-[75%]">
+								<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
+									Total Classes
 								</h4>
 								<p className="text-[#959BA5] text-[1em] align-middle">
 									45
@@ -120,8 +154,55 @@ export default function SchoolAdminDashboard() {
 							</div>
 						</Link>
 					</div>
+				
 					<hr className="my-[1em]" />
-
+					<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
+						Create Subjects & Classes
+					</h3>
+					<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
+						{" "}
+						<Link href="/school-admin/create-class">
+							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
+								<div className="w-[80px]">
+									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
+										<Image
+											alt=""
+											className="object-contain w-[5em] inline"
+											src={"/assets/degree-cap.png"}
+											width={600}
+											height={600}
+										/>
+									</div>
+								</div>
+								<div className="w-[75%]">
+									<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
+										Create Class
+									</h4>
+								</div>
+							</div>
+						</Link>
+						<Link href="/school-admin/create-subject">
+							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
+								<div className="w-[80px]">
+									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
+										<Image
+											alt=""
+											className="object-contain w-[5em] inline"
+											src={"/assets/degree-cap.png"}
+											width={600}
+											height={600}
+										/>
+									</div>
+								</div>
+								<div className="w-[75%]">
+									<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
+										Create Subject
+									</h4>
+								</div>
+							</div>
+						</Link>
+					</div>
+					<hr className="my-[1em]" />
 					<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
 						Top 5 Students
 					</h3>
@@ -591,3 +672,5 @@ export default function SchoolAdminDashboard() {
 		</>
 	);
 }
+
+export default SchoolAdminDashboard;
