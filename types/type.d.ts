@@ -8,7 +8,7 @@ export interface ILoginFields {
 export interface IRegisterFields {
 	email: string;
 	password: string;
-	fullName: string;
+	fullname: string;
 	role: string;
 	classes?: number[];
 	section?: string[];

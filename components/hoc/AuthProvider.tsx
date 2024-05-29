@@ -9,6 +9,7 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
 
     useEffect(() => {
       const user = getUser(); 
+      console.log('user', user);
 
       if (!user) {
         router.replace('/login'); // Redirect to login page if user is not authenticated

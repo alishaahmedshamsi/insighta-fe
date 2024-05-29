@@ -10,25 +10,49 @@ import useAuthStore from "@/store/auth/auth.store";
 import withAuth from "@/components/hoc/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCurrentUser } from "@/services/apis";
-
-
+import { useEffect } from "react";
 
 function SchoolAdminDashboard() {
+	// const router = useRouter();
+
+	// const { data:user, isLoading } = useQuery({
+	// 	queryKey: ["current-user"],
+	// 	queryFn: () => fetchCurrentUser(),
+	//   });
+
+	//   if(!user) return router.push('/login')
+
 	const router = useRouter();
-	
-	const { data:user, isLoading } = useQuery({
+
+	const { data: user, isLoading } = useQuery({
 		queryKey: ["current-user"],
 		queryFn: () => fetchCurrentUser(),
-	  });
+	});
 
-	  if(!user) return router.push('/login')
+	useEffect(() => {
+		if (!isLoading && !user) {
+			router.push("/login");
+		}
+	}, [isLoading, user, router]);
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
+	if (!user) {
+		return null; // or a loading spinner, or redirecting message
+	}
 
 	return (
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Dashboard"}
 				// pointsEarned={"400"}
-				userDetails={{role: user?.role!, userName: user?.fullname!, schoolName: user?.school!}}
+				userDetails={{
+					role: user?.role!,
+					userName: user?.fullname!,
+					schoolName: user?.school!,
+				}}
 				quickStartList={SCHOOL_ADMIN_QUICK_START_LIST}
 				leftSidebarLinks={schoolAdminLeftSidebarLinks()}
 			>
@@ -38,51 +62,51 @@ function SchoolAdminDashboard() {
 					</h3>
 					<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
 						{" "}
-						<Link href={'/school-admin/students'}>
-						<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
-							<div className="w-[80px]">
-								<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
-									<Image
-										alt=""
-										className="object-contain w-[5em] inline"
-										src={"/assets/folder.png"}
-										width={600}
-										height={600}
-									/>
+						<Link href={"/school-admin/students"}>
+							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
+								<div className="w-[80px]">
+									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
+										<Image
+											alt=""
+											className="object-contain w-[5em] inline"
+											src={"/assets/folder.png"}
+											width={600}
+											height={600}
+										/>
+									</div>
+								</div>
+								<div className="w-[75%]">
+									<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
+										Total Students
+									</h4>
+									<p className="text-[#959BA5] text-[1em] align-middle">
+										250
+									</p>
 								</div>
 							</div>
-							<div className="w-[75%]">
-								<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-									Total Students
-								</h4>
-								<p className="text-[#959BA5] text-[1em] align-middle">
-									250
-								</p>
-							</div>
-						</div>
 						</Link>
-						<Link href={'/school-admin/teachers'}>
-						<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
-							<div className="w-[80px]">
-								<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
-									<Image
-										alt=""
-										className="object-contain w-[5em] inline"
-										src={"/assets/folder.png"}
-										width={600}
-										height={600}
-									/>
+						<Link href={"/school-admin/teachers"}>
+							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
+								<div className="w-[80px]">
+									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
+										<Image
+											alt=""
+											className="object-contain w-[5em] inline"
+											src={"/assets/folder.png"}
+											width={600}
+											height={600}
+										/>
+									</div>
+								</div>
+								<div className="w-[75%]">
+									<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
+										Total Teachers
+									</h4>
+									<p className="text-[#959BA5] text-[1em] align-middle">
+										45
+									</p>
 								</div>
 							</div>
-							<div className="w-[75%]">
-								<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-									Total Teachers
-								</h4>
-								<p className="text-[#959BA5] text-[1em] align-middle">
-									45
-								</p>
-							</div>
-						</div>
 						</Link>
 						<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 							<div className="w-[80px]">
@@ -154,7 +178,7 @@ function SchoolAdminDashboard() {
 							</div>
 						</Link>
 					</div>
-				
+
 					<hr className="my-[1em]" />
 					<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
 						Create Subjects & Classes

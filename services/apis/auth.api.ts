@@ -32,6 +32,8 @@ export const onRegister = async (data: IRegisterFields) => {
 			},
 		});
 
+		console.log("data: ", data);
+
 		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
 			return { success: false, response: response.data.message };
 		}

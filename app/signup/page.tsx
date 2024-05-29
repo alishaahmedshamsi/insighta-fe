@@ -58,15 +58,15 @@ export default function Signup() {
 			>
 				<div className="mb-3 w-full">
 					<input
-						{...register("fullName")}
+						{...register("fullname")}
 						id="fullName"
 						type="fullName"
 						placeholder="Name"
 						className="input-form-fields w-full"
 					/>
-					{errors.fullName && (
+					{errors.fullname && (
 						<p className="text-brand-sea-green mt-1 pt-2">
-							{errors.fullName.message}
+							{errors.fullname.message}
 						</p>
 					)}
 				</div>

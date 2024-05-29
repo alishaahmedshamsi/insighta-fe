@@ -83,13 +83,13 @@ export default function SchoolAdminCreateStudent() {
 						<div className="w-full flex flex-col">
 							<label htmlFor="name">Name</label>
 							<input
-								{...register("fullName")}
+								{...register("fullname")}
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="name"
 								type="text"
 							/>
-							{errors.fullName && (
-								<span>{errors.fullName.message}</span>
+							{errors.fullname && (
+								<span>{errors.fullname.message}</span>
 							)}
 						</div>
 						<div className="w-full flex flex-col">

@@ -10,6 +10,10 @@ import { useEffect } from "react";
 const studentPoints = 400;
 const teacherPoints = 350;
 
+export const capitalizeFirstLetter = (str: string) => {
+	return str.replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
 export default function DashboardLayout({
 	mainSectionHeading,
 	// subjectList,
@@ -41,18 +45,43 @@ export default function DashboardLayout({
 	// pointsEarned: String;
 	leftSidebarLinks: React.ReactNode;
 }) {
+	const router = useRouter();
+	// const { data: user, isLoading } = useQuery({
+	// 	queryKey: ["current-user"],
+	// 	queryFn: () => fetchCurrentUser(),
+	// });
 
-	const router = useRouter()
-	const { data:user, isLoading } = useQuery({
+	// useEffect(() => {
+	// 	if (!user) {
+	// 		router.push("/login");
+	// 	}
+	// }, [user]);
+
+	const {
+		data: user,
+		isLoading,
+		isError,
+	} = useQuery({
 		queryKey: ["current-user"],
-		queryFn: () => fetchCurrentUser(),
-	  });
+		queryFn: fetchCurrentUser,
+	});
 
 	useEffect(() => {
-		if (!user) {
+		if (!isLoading && !user) {
 			router.push("/login");
 		}
-	}, [user]);
+	}, [user, isLoading, router]);
+
+	if (isLoading) {
+		return <div>Loading...</div>; // You can replace this with a loading spinner if you prefer
+	}
+
+	if (isError || !user) {
+		return <div>Error loading user data</div>;
+	}
+
+	console.log("user ", user);
+	console.log("user.role ", user?.role);
 
 	const topBoxes = () => {
 		if (user.role === "student" || user.role === "teacher") {
@@ -325,10 +354,12 @@ export default function DashboardLayout({
 
 					<div className="bg-white rounded-[2em] p-[2em] flex flex-col items-center pt-[3em]">
 						<h3 className="font-medium text-[#212121] align-middle text-lg">
-							{user.fullname}
+							{capitalizeFirstLetter(user.fullname)}
+							{/* abc */}
 						</h3>
 						<p className="text-[#959BA5] text-[1em] align-middle">
-							{user.role}
+							{capitalizeFirstLetter(user.role)}
+							{/* abc */}
 						</p>
 						{user.role === "student" ? (
 							<div className="flex justify-evenly items-center w-full mt-[1em]">
@@ -337,7 +368,7 @@ export default function DashboardLayout({
 										Class
 									</p>
 									<p className="font-bold text-[#212121] align-middle text-[2em]">
-										{user.class}
+										{user.classes.map((cls: { className: any; }) => cls.className).join(", ")}
 									</p>
 								</div>
 								<div className="flex flex-col items-center">
@@ -345,7 +376,7 @@ export default function DashboardLayout({
 										Section
 									</p>
 									<p className="font-bold text-[#212121] align-middle text-[2em]">
-										{user.section}
+										{user.section[0].toUpperCase()}
 									</p>
 								</div>
 							</div>
@@ -373,7 +404,10 @@ export default function DashboardLayout({
 				<div className="bg-[#f7e3e367] rounded-[2em] p-[1em] mt-[1em] flex flex-col gap-[1em]">
 					{quickStartList.map((list) => {
 						return (
-							<Link href={list.link.toString()} key={list.heading.toString()}>
+							<Link
+								href={list.link.toString()}
+								key={list.heading.toString()}
+							>
 								<div className="flex justify-center items-center w-full bg-white rounded-[1.5em] gap-[1em] px-[1em] py-[1em]">
 									<div className="w-[25%]">
 										<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.3em] w-[100%] rounded-[.5em] ">

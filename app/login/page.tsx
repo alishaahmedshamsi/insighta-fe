@@ -38,9 +38,9 @@ export default function Login() {
 	} = useForm<ILoginFields>({ resolver: zodResolver(loginSchema) });
 
 	const onSubmit: SubmitHandler<ILoginFields> = async (data, e) => {
-		if (e) {
-			e?.preventDefault();
-		}
+		// if (e) {
+		// 	e?.preventDefault();
+		// }
 		// console.log(data);
 		const { success, response } = await mutateAsync(data);
 

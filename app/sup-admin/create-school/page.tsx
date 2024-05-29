@@ -18,7 +18,7 @@ const userDetails = {
 	role: "Super Admin",
 };
 
-export default function SchoolAdminCreateStudent() {
+export default function Component() {
 	const { mutateAsync, error, reset } = useMutation({
 		mutationFn: onRegister,
 
@@ -32,6 +32,8 @@ export default function SchoolAdminCreateStudent() {
 			}, 3000);
 		},
 	});
+
+
 	const {
 		register,
 		handleSubmit,
@@ -39,13 +41,14 @@ export default function SchoolAdminCreateStudent() {
 	} = useForm<IRegisterFields>({ resolver: zodResolver(registerSchema) });
 
 	const onSubmit: SubmitHandler<IRegisterFields> = async (data, e) => {
-		if (e) {
-			e?.preventDefault();
-		}
-		// console.log(data);
+		// if (e) {
+		// 	e?.preventDefault();
+		// }
+		console.log("data", data);
 		data.role = "school";
 		const { success, response } = await mutateAsync(data);
-
+		
+		console.log("data", data);
 		if (!success) return toast.error(response);
 		if (success) toast.success("School created successful");
 
@@ -75,7 +78,7 @@ export default function SchoolAdminCreateStudent() {
 						<div className="w-full flex flex-col">
 							<label htmlFor="name">Name</label>
 							<input
-								{...register("fullName")}
+								{...register("fullname")}
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="name"
 								type="text"

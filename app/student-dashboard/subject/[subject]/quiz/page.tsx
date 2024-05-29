@@ -15,7 +15,7 @@ const userDetails = {
 
 const allQuiz = [
 	{
-		title: "Assignment #1",
+		title: "Quiz #1",
 		deadline: "5 May 2024",
 		totalMarks: "10",
 		obtMarks: "--",
@@ -40,7 +40,7 @@ const allQuiz = [
 		],
 	},
 	{
-		title: "Assignment #2",
+		title: "Quiz #2",
 		deadline: "1 May 2024",
 		totalMarks: "10",
 		obtMarks: "8",
@@ -86,7 +86,7 @@ export default function StudentSubjectQuiz({
 				<div className="rounded-[2em] flex flex-col gap-[2em] pb-[2em]">
 					<div className="flex flex-col gap-6">
 						<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
-							Assignments
+							Quiz
 						</h3>
 						{allQuiz.map((quiz, index) => (
 							<div

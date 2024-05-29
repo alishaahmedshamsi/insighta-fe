@@ -1,13 +1,13 @@
 import { z } from "zod";
 
 const registerSchema = z.object({
-	fullName: z.string(),
+	fullname: z.string(),
 	email: z.string().email(),
 	password: z.string().min(6),
 });
 
 const registerStudentSchema = z.object({
-	fullName: z.string(),
+	fullname: z.string(),
 	email: z.string().email(),
 	password: z.string().min(6),
 	classes: z.array(z.number()),
@@ -15,7 +15,7 @@ const registerStudentSchema = z.object({
 });
 
 const registerTeacherSchema = z.object({
-	fullName: z.string(),
+	fullname: z.string(),
 	qualification: z.string(),
 	email: z.string().email(),
 	password: z.string().min(6),
