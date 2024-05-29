@@ -68,7 +68,7 @@ export default function page() {
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Fruits</SelectLabel>
-            {data.data.map((item) => (
+            {data.data?.map((item) => (
               <SelectItem key={item._id} value={String(item.className)}>
                 {item.className}
               </SelectItem>
