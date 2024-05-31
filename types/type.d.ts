@@ -76,6 +76,8 @@ export  interface IUser  {
 	school: ObjectId;
 	otp: number;
 	otpExpiry: Date;
+	profilePicture: string;
+	location:string
 	points: ObjectId;
 	createdAt?: Date;
 	updatedAt?: Date;

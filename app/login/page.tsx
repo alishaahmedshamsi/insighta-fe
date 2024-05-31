@@ -39,16 +39,12 @@ export default function Login() {
 	} = useForm<ILoginFields>({ resolver: zodResolver(loginSchema) });
 
 	const onSubmit: SubmitHandler<ILoginFields> = async (data, e) => {
-		// if (e) {
-		// 	e?.preventDefault();
-		// }
-		// console.log(data);
+		
 		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
 		if (success) toast.success("Login successful");
 
-		// console.log(response.data.data.user.role);
 		setUser(response.data.data.user)
 		localStorage.setItem("accessToken", response.data.data.accessToken);
 		Cookies.set("accessToken", response.data.data.accessToken, { expires: 7 });
@@ -161,16 +157,6 @@ export default function Login() {
 					/>
 				</Link>
 			</div>
-
-			{/* <div className="w-full mt-[20px] text-[#ccc] text-center mb-[20px] inline-block">
-				Don't have an account? &nbsp;
-				<Link
-					href="/signup"
-					className="inline w-full text-center underline"
-				>
-					<b>Signup</b>
-				</Link>
-			</div> */}
 		</AuthLayout>
 	);
 }

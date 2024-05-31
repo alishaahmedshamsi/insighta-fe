@@ -4,8 +4,6 @@ import { IUser } from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 const studentPoints = 400;
 const teacherPoints = 350;
@@ -16,18 +14,13 @@ export const capitalizeFirstLetter = (str: string) => {
 
 export default function DashboardLayout({
 	mainSectionHeading,
-	// subjectList,
 	userDetails,
 	quickStartList,
 	children,
-	// pointsEarned,
 	leftSidebarLinks,
 }: {
 	mainSectionHeading: String;
-	// subjectList: Array<{
-	// 	name: String;
-	// 	duration: String;subjectList
-	// }>;
+	
 	userDetails?: {
 		userName: String;
 		role: String;
@@ -44,26 +37,19 @@ export default function DashboardLayout({
 	children: React.ReactNode;
 	leftSidebarLinks: React.ReactNode;
 }) {
-	const router = useRouter();
-
 
 	const {
 		data: user,
 		isLoading,
 		isError,
-	} = useQuery({
+	  } = useQuery<IUser, Error>({
 		queryKey: ["current-user"],
 		queryFn: fetchCurrentUser,
-	});
+	  });
 
-	useEffect(() => {
-		if (!isLoading && !user) {
-			router.push("/login");
-		}
-	}, [user, isLoading, router]);
 
 	if (isLoading) {
-		return <div>Loading...</div>; // You can replace this with a loading spinner if you prefer
+		return <div>Loading...</div>; 
 	}
 
 	if (isError || !user) {
@@ -296,7 +282,7 @@ export default function DashboardLayout({
 					<Image
 						alt=""
 						className="object-cover w-[60%] h-auto"
-						src={"/assets/dashboard-avatar.png"}
+						src={user.profilePicture || "/assets/avatar.png"}
 						width={600}
 						height={600}
 					/>
@@ -323,8 +309,8 @@ export default function DashboardLayout({
 					<div className="avatar-box w-[100%]">
 						<Image
 							alt=""
-							className="object-cover mx-auto w-[40%] h-auto -mb-[2em] mt-[1em]"
-							src={"/assets/dashboard-avatar.png"}
+							className="object-cover mx-auto w-[40%] h-auto -mb-[2em] mt-[1em] rounded-full"
+							src={user.profilePicture}
 							width={600}
 							height={600}
 						/>
