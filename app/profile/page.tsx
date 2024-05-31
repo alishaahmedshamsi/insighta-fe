@@ -7,6 +7,7 @@ import { teacherLeftSidebarLinks } from '@/components/left-sidebar/teacher'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { GalleryUpload } from '@/components/upload/GalleryUpload'
+import { useCurrentUser } from '@/hooks/user.hook'
 import { fetchCurrentUser } from '@/services/apis'
 import { SCHOOL_ADMIN_QUICK_START_LIST, STUDENT_QUICK_START_LIST, SUPER_ADMIN_QUICK_START_LIST, TEACHER_QUICK_START_LIST } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
@@ -16,25 +17,16 @@ import React, { useState } from 'react'
 export default function Page() {
   
   const router = useRouter();
-    const [coverFile, setCoverFile] = useState();
+
+  const [coverFile, setCoverFile] = useState();
   const [cover, setCover] = useState("");
-  const {
-		data: user,
-		isLoading,
-		isError,
-	} = useQuery({
-		queryKey: ["current-user"],
-		queryFn: fetchCurrentUser,
-	});
+  
+  const {user,isError,isLoading} = useCurrentUser()
 
-  if(isLoading){
-    return <div>Loading...</div>
-  }
+  if(isLoading) return <div>Loading...</div>
+  if(isError || !user) return <div>{isError || "user doesnt exist"}</div>
 
-  if(isError){
-    return <div>Error...</div>
-  }
-
+  
   return (
     <DashboardLayout
       mainSectionHeading={"Profile"}
