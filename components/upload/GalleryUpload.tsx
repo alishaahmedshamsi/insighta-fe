@@ -1,20 +1,19 @@
 import { convertImage } from "@/lib/utils";
-import { X } from "lucide-react";
 import Image from "next/image";
-import React from 'react';
+import React, { useState } from 'react';
 
 export const GalleryUpload = ({
-  image,
   setFile,
+  cover,
   setImage,
   id,
   placeholder,
-}:any) => {
-  const handleFileChange = async (file:any) => {
+}: any) => {
+  const handleFileChange = async (file: File) => {
     try {
-      setFile(file);
+      setFile(file); // Update the coverFile state with the selected file
       const base64Image = await convertImage(file);
-      setImage(base64Image);
+      setImage(base64Image); // Update the cover state with the base64 image
     } catch (error) {
       console.error("Error:", error);
     }
@@ -22,21 +21,13 @@ export const GalleryUpload = ({
 
   return (
     <div className="relative my-2 sm:w-[160px] w-[160px] h-[160px] flex items-center justify-center">
-      {image && (
-        <div 
-          className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 cursor-pointer"
-          onClick={() => setImage(null)}
-        >
-          <X size={16} />
-        </div>
-      )}
       <label
         htmlFor={id}
         className="cursor-pointer w-full h-full flex items-center justify-center rounded-full flex-col bg-[#F0F0F0] border-2 border-primary"
       >
-        {image ? (
+        {cover ? (
           <Image
-            src={image}
+            src={cover}
             alt="Profile Picture"
             width={160}
             height={160}
@@ -56,7 +47,7 @@ export const GalleryUpload = ({
         id={id}
         className="hidden"
         accept="image/*"
-        onChange={(e) => handleFileChange(e.target.files?.[0])}
+        onChange={(e) => e.target.files && handleFileChange(e.target.files[0])}
       />
     </div>
   );

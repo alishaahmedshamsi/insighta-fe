@@ -17,12 +17,8 @@ import Cookies from "js-cookie";
 export default function Login() {
 	const router = useRouter();
 	
-	const setUser = useAuthStore((state) => state.setUser);
 	const { mutateAsync, error, reset } = useMutation({
 		mutationFn: onLogin,
-
-		// onSuccess: Handle success if needed,
-		// onError: Handle error if needed,
 
 		onError: (error) => {
 			console.log(error.message);
@@ -45,7 +41,6 @@ export default function Login() {
 		if (!success) return toast.error(response);
 		if (success) toast.success("Login successful");
 
-		setUser(response.data.data.user)
 		localStorage.setItem("accessToken", response.data.data.accessToken);
 		Cookies.set("accessToken", response.data.data.accessToken, { expires: 7 });
 		if (response.data.data.user.role == ROLES.ADMIN) {

@@ -1,4 +1,4 @@
-import { ILoginFields, IRegisterFields } from "@/types/type";
+import { ILoginFields, IRegisterFields, IUserUpdate } from "@/types/type";
 import api from "../middleware/middleware";
 import { STATUS } from "@/utils";
 import Cookies from "js-cookie";
@@ -72,20 +72,4 @@ export const logout = async () =>{
 	} catch (error:any) {
 			throw new Error(error?.response?.data?.message ?? error.message.data)
 	}	
-}
-
-export const updateUser = async () =>{
-	try {
-		const response = await api.put('/user/')
-		if(response.status === STATUS.UNPROCESSABLE_ENTITY){
-			return {success: false, error: response.data.message}
-		}
-		if(response.status === STATUS.BAD_REQUEST){
-			return {success: false, error: response.data.message}
-		}
-	
-		return {success: true, response: response.data}
-	} catch (error:any) {
-		return {success: false, response: error?.response?.data?.message ?? error.message.data}
-	}
 }

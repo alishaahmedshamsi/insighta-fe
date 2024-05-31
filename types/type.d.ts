@@ -90,3 +90,8 @@ export interface ISchoolInfo {
 	teacherCount:number
 	_id:string
 }
+
+export interface IUserUpdate {
+	fullname: string;
+	location:string
+  }
