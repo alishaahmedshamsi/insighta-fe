@@ -1,20 +1,29 @@
 "use client";
+import Image from "next/image";
+import React from "react";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { SUPER_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 import { superAdminLeftSidebarLinks } from "@/components/left-sidebar/supAdmin";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {  registerSchema } from "@/validation";
+import { loginSchema, registerSchema } from "@/validation";
 import { useMutation } from "@tanstack/react-query";
 import { onRegister } from "@/services/apis";
 import { toast } from "sonner";
 import { IRegisterFields } from "@/types/type";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
-
+const userDetails = {
+	userName: "Admin",
+	role: "Super Admin",
+};
 
 export default function Component() {
+	const [formDetails, setFormDetails] = React.useState({
+		fullname: "",
+		email: "",
+		password: "",
+	});
+
 	const { mutateAsync, error, reset } = useMutation({
 		mutationFn: onRegister,
 		onError: (error) => {
@@ -35,9 +44,24 @@ export default function Component() {
 		console.log("data", data);
 		data.role = "school";
 		const { success, response } = await mutateAsync(data);
-		
+
+		console.log("data", data);
 		if (!success) return toast.error(response);
 		if (success) toast.success("School created successful");
+
+		setFormDetails({
+			fullname: "",
+			email: "",
+			password: "",
+		});
+
+		// console.log(response.data.data.user.role);
+		// if (response.data.data.user.role == ROLES.ADMIN) {
+		// 	localStorage.setItem("accessToken", response.data.accessToken);
+		// 	console.log(response.data.accessToken);
+		// }
+		// const role = response
+		// switch()
 	};
 
 	return (
@@ -47,61 +71,69 @@ export default function Component() {
 				quickStartList={SUPER_ADMIN_QUICK_START_LIST}
 				leftSidebarLinks={superAdminLeftSidebarLinks()}
 			>
-				 <div className="rounded-lg p-6 bg-white shadow-md">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block font-medium text-gray-700">
-                Name
-              </label>
-              <Input
-                {...register("fullname")}
-                className="rounded-md border border-gray-300 bg-white px-4 py-2 w-full"
-                id="name"
-                type="text"
-              />
-              {errors.fullname && (
-                <span className="text-red-500">{errors.fullname.message}</span>
-              )}
-            </div>
-			<div>
-              <label htmlFor="name" className="block font-medium text-gray-700">
-                Email
-              </label>
-              <Input
-                {...register("email")}
-                className="rounded-md border border-gray-300 bg-white px-4 py-2 w-full"
-                id="name"
-                type="text"
-              />
-              {errors.email && (
-                <span className="text-red-500">{errors.email.message}</span>
-              )}
-            </div>
-			<div>
-              <label htmlFor="name" className="block font-medium text-gray-700">
-                password
-              </label>
-              <Input
-                {...register("password")}
-                className="rounded-md border border-gray-300 bg-white px-4 py-2 w-full"
-                id="name"
-                type="text"
-              />
-              {errors.password && (
-                <span className="text-red-500">{errors.password.message}</span>
-              )}
-            </div>
-            {/* Repeat similar structure for other form fields */}
-            
-            <div className="flex justify-end">
-              <Button
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Creating..." : "Create School"}
-              </Button>
-            </div>
-          </form>
-        </div>
+				<div className="rounded-[2em] flex flex-col gap-[2em] pb-[2em]">
+					<form
+						action=""
+						onSubmit={handleSubmit(onSubmit)}
+						className="grid grid-cols-2 gap-[1em]"
+					>
+						<div className="w-full flex flex-col">
+							<label htmlFor="name">Name</label>
+							<input
+								{...register("fullname")}
+								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
+								id="name"
+								type="text"
+								value={formDetails.fullname}
+								onChange={(e) => {
+									setFormDetails({
+										...formDetails,
+										fullname: e.target.value,
+									});
+								}}
+							/>
+						</div>
+						<div className="w-full flex flex-col">
+							<label htmlFor="schoolId">Email</label>
+							<input
+								{...register("email")}
+								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
+								id="schoolId"
+								type="text"
+								value={formDetails.email}
+								onChange={(e) => {
+									setFormDetails({
+										...formDetails,
+										email: e.target.value,
+									});
+								}}
+							/>
+						</div>
+
+						<div className="w-full flex flex-col col-span-2">
+							<label htmlFor="password">Password</label>
+							<input
+								{...register("password")}
+								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
+								id="password"
+								type="text"
+								value={formDetails.password}
+								onChange={(e) => {
+									setFormDetails({
+										...formDetails,
+										password: e.target.value,
+									});
+								}}
+							/>
+						</div>
+
+						<div>
+							<button className="col-span-1 w-full rounded-[1em] bg-brand-sea-green py-[.9em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor">
+								Create School
+							</button>
+						</div>
+					</form>
+				</div>
 			</DashboardLayout>
 		</>
 	);
