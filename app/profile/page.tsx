@@ -28,8 +28,7 @@ export default function Page() {
 
   const { user, isError, isLoading } = useCurrentUser()
 
-
-  const { mutateAsync, error, reset } = useMutation({
+    const { mutateAsync, error, reset } = useMutation({
     mutationFn: updateUser,
 
     onError: (error) => {

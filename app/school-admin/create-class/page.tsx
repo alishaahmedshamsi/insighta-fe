@@ -9,32 +9,12 @@ import { Button } from "@/components/ui/button";
 import useAuthStore from "@/store/auth/auth.store";
 import { useRouter } from "next/navigation";
 
-const userDetails = {
-	userName: "School Admin",
-	role: "Admin",
-	schoolName: "Karachi Public School",
-};
+
 
 export default function ClassCreate() {
 	const [classInput, setClassInput] = useState("");
 	const [error, setError] = useState("");
-	const router = useRouter();
-	const user = useAuthStore((state) => state.user);
-
-	if (!user) {
-		router.push("/login");
-	}
-
-	// const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-	// 	const value = e.target.value;
-
-	// 	if (/^(10|[1-9])$/.test(value) || value === "") {
-	// 		setClassInput(value);
-	// 		setError("");
-	// 	} else {
-	// 		setError("Please enter a single digit (1-9) or 10.");
-	// 	}
-	// };
+	
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
@@ -47,29 +27,7 @@ export default function ClassCreate() {
 		}
 	};
 
-	// const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-	// 	e.preventDefault();
-
-	// 	const inputNumber = Number(classInput);
-
-	// 	if (
-	// 		classInput === "" ||
-	// 		!Number.isInteger(inputNumber) ||
-	// 		inputNumber < 1 ||
-	// 		inputNumber > 10
-	// 	) {
-	// 		setError("Please enter a single digit (1-9) or 10.");
-	// 	} else {
-	// 		// setError("");
-	// 		// const { response, success } = await createClass(Number(classInput));
-	// 		// if (!success) return toast.error(response);
-	// 		// if (success) toast.success("Class Created successfully");
-	// 		setError("");
-	// 		const { response, success } = await createClass(inputNumber);
-	// 		if (!success) return toast.error(response);
-	// 		toast.success("Class Created successfully");
-	// 	}
-	// };
+	
 
 	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -97,12 +55,6 @@ export default function ClassCreate() {
 	return (
 		<DashboardLayout
 			mainSectionHeading={"Create Class"}
-			// pointsEarned={"400"}
-			userDetails={{
-				role: user?.role!,
-				userName: user?.fullname!,
-				schoolName: user?.school!,
-			}}
 			quickStartList={SCHOOL_ADMIN_QUICK_START_LIST}
 			leftSidebarLinks={schoolAdminLeftSidebarLinks()}
 		>

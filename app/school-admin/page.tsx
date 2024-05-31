@@ -6,53 +6,18 @@ import Link from "next/link";
 import { SCHOOL_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdmin";
 import PointsBreakdown from "@/components/points-breakdown";
-import useAuthStore from "@/store/auth/auth.store";
-import withAuth from "@/components/hoc/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCurrentUser } from "@/services/apis";
 import { useEffect } from "react";
 
 function SchoolAdminDashboard() {
-	// const router = useRouter();
-
-	// const { data:user, isLoading } = useQuery({
-	// 	queryKey: ["current-user"],
-	// 	queryFn: () => fetchCurrentUser(),
-	//   });
-
-	//   if(!user) return router.push('/login')
-
-	const router = useRouter();
-
-	const { data: user, isLoading } = useQuery({
-		queryKey: ["current-user"],
-		queryFn: () => fetchCurrentUser(),
-	});
-
-	useEffect(() => {
-		if (!isLoading && !user) {
-			router.push("/login");
-		}
-	}, [isLoading, user, router]);
-
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
-
-	if (!user) {
-		return null; // or a loading spinner, or redirecting message
-	}
-
+	
 	return (
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Dashboard"}
 				// pointsEarned={"400"}
-				userDetails={{
-					role: user?.role!,
-					userName: user?.fullname!,
-					schoolName: user?.school!,
-				}}
+				
 				quickStartList={SCHOOL_ADMIN_QUICK_START_LIST}
 				leftSidebarLinks={schoolAdminLeftSidebarLinks()}
 			>

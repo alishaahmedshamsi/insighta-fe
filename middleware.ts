@@ -11,6 +11,7 @@ export function middleware(request: NextRequest) {
     "/sup-admin",
     "/teacher-dashboard",
     "/student-dashboard",
+    "/school-admin/create-class",
   ];
 
   const isPublicPath = publicPaths.includes(path);

@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { capitalizeFirstLetter } from "@/lib/utils";
-
+import defaultUserPicture from "@/public/assets/default.jpg";
 export default function DashboardLayout({
 	mainSectionHeading,
 	quickStartList,
@@ -279,7 +279,7 @@ export default function DashboardLayout({
 					<Image
 						alt=""
 						className="object-cover w-[60%] h-auto rounded-full"
-						src={user.profilePicture || "/assets/avatar.png"}
+						src={user.profilePicture || defaultUserPicture}
 						width={600}
 						height={600}
 					/>
@@ -323,7 +323,7 @@ export default function DashboardLayout({
 						<Image
 							alt=""
 							className="object-cover mx-auto w-[40%] h-auto -mb-[2em] mt-[1em] rounded-full"
-							src={user.profilePicture}
+							src={user.profilePicture || defaultUserPicture}
 							width={600}
 							height={600}
 						/>
