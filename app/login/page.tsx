@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import Image from "next/image";
 import { ROLES } from "@/utils";
 import useAuthStore from "@/store/auth/auth.store";
+import Cookies from "js-cookie";
 
 export default function Login() {
 	const router = useRouter();
@@ -50,6 +51,7 @@ export default function Login() {
 		// console.log(response.data.data.user.role);
 		setUser(response.data.data.user)
 		localStorage.setItem("accessToken", response.data.data.accessToken);
+		Cookies.set("accessToken", response.data.data.accessToken, { expires: 7 });
 		if (response.data.data.user.role == ROLES.ADMIN) {
 			console.log(response.data.data.accessToken);
 

@@ -6,9 +6,9 @@ export interface ILoginFields {
 }
 
 export interface IRegisterFields {
+	fullname: string;
 	email: string;
 	password: string;
-	fullname: string;
 	role: string;
 	classes?: number[];
 	section?: string[];
@@ -80,3 +80,11 @@ export  interface IUser  {
 	createdAt?: Date;
 	updatedAt?: Date;
   }
+
+export interface ISchoolInfo {
+	fullname:string,
+	email:string
+	studentCount:number
+	teacherCount:number
+	_id:string
+}

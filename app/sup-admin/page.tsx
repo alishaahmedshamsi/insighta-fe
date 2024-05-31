@@ -1,46 +1,34 @@
 "use client";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import Link from "next/link";
 import { SUPER_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 
 import { superAdminLeftSidebarLinks } from "@/components/left-sidebar/supAdmin";
-import PointsBreakdown from "@/components/points-breakdown";
+import { useQuery } from "@tanstack/react-query";
+import { ApiResponse, ISchoolInfo } from "@/types/type";
+import { fetchSchoolsInfo } from "@/services/apis/school.api";
+import { GraduationCapIcon, User } from "lucide-react";
 
 const userDetails = {
 	userName: "Admin",
 	role: "Super Admin",
 };
 
-const schoolList = [
-	{
-		name: "Karachi Public School",
-		address: "Karachi, Pakistan",
-	},
-	{
-		name: "Karachi Public School",
-		address: "Karachi, Pakistan",
-	},
-	{
-		name: "Karachi Public School",
-		address: "Karachi, Pakistan",
-	},
-	{
-		name: "Karachi Public School",
-		address: "Karachi, Pakistan",
-	},
-	{
-		name: "Karachi Public School",
-		address: "Karachi, Pakistan",
-	},
-	{
-		name: "Karachi Public School",
-		address: "Karachi, Pakistan",
-	},
-];
 
 export default function SchoolAdminDashboard() {
+	
+    const {
+		isLoading,
+		data,
+		error
+	  }: { data: ApiResponse<ISchoolInfo> | undefined; error: any; isLoading: boolean } =
+		useQuery({
+		  queryKey: ["fetch-classes"],
+		  queryFn: () => fetchSchoolsInfo(),
+		});
+
+		
 	return (
 		<>
 			<DashboardLayout
@@ -70,7 +58,7 @@ export default function SchoolAdminDashboard() {
 									Total Schools
 								</h4>
 								<p className="text-[#959BA5] text-[1em] align-middle">
-									250
+									{data?.data.length}
 								</p>
 							</div>
 						</div>
@@ -102,7 +90,7 @@ export default function SchoolAdminDashboard() {
 					</h3>
 
 					<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
-						{schoolList.map((school, index) => (
+						{data?.data.map((school, index) => (
 							<div
 								key={index}
 								className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]"
@@ -120,11 +108,19 @@ export default function SchoolAdminDashboard() {
 								</div>
 								<div className="w-[75%]">
 									<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-										{school.name}
+										{school.fullname}
 									</h4>
 									<p className="text-[#959BA5] text-[1em] align-middle">
-										{school.address}
+										{school.email}
 									</p>
+									<div className="flex gap-2">
+									<User size={20}/>
+										{school.studentCount}
+									</div>
+									<div className="flex gap-2">
+									<GraduationCapIcon size={20}/>
+										{school.teacherCount}
+									</div>
 								</div>
 							</div>
 						))}

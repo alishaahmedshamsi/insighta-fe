@@ -88,3 +88,12 @@ export const fetchUsers = async ({
 		throw new Error(error ?? error.message.data);
 	}
 };
+
+export const fetchSchoolsInfo = async () => {
+	try {
+		const response = await api.get("/admin/school");
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+}

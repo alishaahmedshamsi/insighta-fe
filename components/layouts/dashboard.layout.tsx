@@ -28,7 +28,7 @@ export default function DashboardLayout({
 	// 	name: String;
 	// 	duration: String;subjectList
 	// }>;
-	userDetails: {
+	userDetails?: {
 		userName: String;
 		role: String;
 		class?: String;
@@ -42,20 +42,10 @@ export default function DashboardLayout({
 		link: String;
 	}>;
 	children: React.ReactNode;
-	// pointsEarned: String;
 	leftSidebarLinks: React.ReactNode;
 }) {
 	const router = useRouter();
-	// const { data: user, isLoading } = useQuery({
-	// 	queryKey: ["current-user"],
-	// 	queryFn: () => fetchCurrentUser(),
-	// });
 
-	// useEffect(() => {
-	// 	if (!user) {
-	// 		router.push("/login");
-	// 	}
-	// }, [user]);
 
 	const {
 		data: user,
@@ -316,22 +306,10 @@ export default function DashboardLayout({
 
 			{/* main container */}
 			<div
-				// className={`main-container col-span-3 overflow-y-auto px-[2em] ${
-				// 	isLoading ? "opacity-50" : "opacity-100"
-				// }`}
+			
 				className={`main-container col-span-3 overflow-y-auto px-[2em] pb-[2em]`}
 			>
 				<div className="cta-header-main pt-[3em]">{topBoxes()}</div>
-
-				{/* add greyish screen until the children loads  */}
-				{/* <Suspense fallback={<SkeletonLoader />}> */}
-
-				{/* <div className={`${isLoading ? "opacity-50" : "opacity-100"}`}>
-					<h3 className="font-semibold text-[#212121] capitalize align-middle text-[1.6em] mt-[2em] mb-[1em]">
-						{mainSectionHeading}
-					</h3>
-					{children}
-				</div> */}
 
 				<h3 className="font-semibold text-[#212121] capitalize align-middle text-[1.6em] mt-[2em] mb-[1em]">
 					{mainSectionHeading}
