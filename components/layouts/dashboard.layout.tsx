@@ -1,16 +1,10 @@
 "use client";
-import { fetchCurrentUser } from "@/services/apis";
+import { fetchCurrentUser, logout } from "@/services/apis";
 import { IUser } from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-
-const studentPoints = 400;
-const teacherPoints = 350;
-
-export const capitalizeFirstLetter = (str: string) => {
-	return str.replace(/\b\w/g, (char) => char.toUpperCase());
-};
+import { capitalizeFirstLetter } from "@/lib/utils";
 
 export default function DashboardLayout({
 	mainSectionHeading,
@@ -19,7 +13,7 @@ export default function DashboardLayout({
 	leftSidebarLinks,
 }: {
 	mainSectionHeading: String;
-	
+
 	userDetails?: {
 		userName: String;
 		role: String;
@@ -41,22 +35,26 @@ export default function DashboardLayout({
 		data: user,
 		isLoading,
 		isError,
-	  } = useQuery<IUser, Error>({
+	} = useQuery<IUser, Error>({
 		queryKey: ["current-user"],
 		queryFn: fetchCurrentUser,
-	  });
+	});
 
 
 	if (isLoading) {
-		return <div>Loading...</div>; 
+		return <div>Loading...</div>;
 	}
 
 	if (isError || !user) {
 		return <div>Error loading user data</div>;
 	}
 
-	console.log("user ", user);
-	console.log("user.role ", user?.role);
+	const handleLogout = async () => {
+		await logout()
+		window.location.href = "/login";
+	};
+	const studentPoints = 400;
+	const teacherPoints = 350;
 
 	const topBoxes = () => {
 		if (user.role === "student" || user.role === "teacher") {
@@ -287,29 +285,27 @@ export default function DashboardLayout({
 					/>
 				</div>
 				<div className="quick-links-box w-[60%] flex flex-col mt-[2em]">
-				{leftSidebarLinks}
-				<Link
-				href="#"
-				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
-			>
-				<Image
-					alt=""
-					className="object-contain w-[1.3em] h-auto mr-[0.8em]"
-					src={"/assets/icons/log out.png"}
-					width={600}
-					height={600}
-				/>{" "}
-				Log Out
-			</Link>
-		</div>
+					{leftSidebarLinks}
+					<button
+						onClick={handleLogout}
+						className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
+					>
+						<Image
+							alt=""
+							className="object-contain w-[1.3em] h-auto mr-[0.8em]"
+							src={"/assets/icons/log out.png"}
+							width={600}
+							height={600}
+						/>{" "}
+						Log Out
+					</button>
+				</div>
 
-				
-				
 			</div>
 
 			{/* main container */}
 			<div
-			
+
 				className={`main-container col-span-3 overflow-y-auto px-[2em] pb-[2em]`}
 			>
 				<div className="cta-header-main pt-[3em]">{topBoxes()}</div>

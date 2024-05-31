@@ -10,10 +10,6 @@ import { ApiResponse, ISchoolInfo } from "@/types/type";
 import { fetchSchoolsInfo } from "@/services/apis/school.api";
 import { GraduationCapIcon, User } from "lucide-react";
 
-const userDetails = {
-	userName: "Admin",
-	role: "Super Admin",
-};
 
 
 export default function SchoolAdminDashboard() {
@@ -28,13 +24,15 @@ export default function SchoolAdminDashboard() {
 		  queryFn: () => fetchSchoolsInfo(),
 		});
 
-		
-	return (
+		if(isLoading){
+			return <div>Loading...</div>
+		}
+
+		return (
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Dashboard"}
 				// pointsEarned={"400"}
-				userDetails={userDetails}
 				quickStartList={SUPER_ADMIN_QUICK_START_LIST}
 				leftSidebarLinks={superAdminLeftSidebarLinks()}
 			>

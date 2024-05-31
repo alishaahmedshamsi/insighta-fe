@@ -19,3 +19,11 @@ export const convertImage = async (file: File): Promise<string> => {
 
   return reader.result as string;
 };
+
+
+export const capitalizeFirstLetter = (str: string | undefined | null): string => {
+  if (!str) {
+    return '';
+  }
+  return str.replace(/\b\w/g, (char) => char.toUpperCase());
+};

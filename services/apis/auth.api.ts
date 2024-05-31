@@ -1,7 +1,7 @@
 import { ILoginFields, IRegisterFields } from "@/types/type";
 import api from "../middleware/middleware";
 import { STATUS } from "@/utils";
-
+import Cookies from "js-cookie";
 export const onLogin = async (data: ILoginFields) => {
 	try {
 		const response = await api.post("/auth/login", data);
@@ -67,8 +67,8 @@ export const fetchCurrentUser = async () =>{
 export const logout = async () =>{
 	try {
 		const response = await api.post('/auth/logout')
-		console.log(response);
-		
+		localStorage.removeItem('accessToken')
+		Cookies.remove('accessToken')
 	} catch (error:any) {
 			throw new Error(error?.response?.data?.message ?? error.message.data)
 	}	
