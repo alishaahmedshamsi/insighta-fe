@@ -6,10 +6,6 @@ import { SCHOOL_ADMIN_QUICK_START_LIST } from "@/utils";
 import { createClass } from "@/services/apis/school.api";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import useAuthStore from "@/store/auth/auth.store";
-import { useRouter } from "next/navigation";
-
-
 
 export default function ClassCreate() {
 	const [classInput, setClassInput] = useState("");
@@ -26,8 +22,6 @@ export default function ClassCreate() {
 			setError("Please enter a single digit (1-9) or 10.");
 		}
 	};
-
-	
 
 	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

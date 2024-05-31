@@ -9,7 +9,7 @@ export const schoolAdminLeftSidebarLinks = () => {
 	return (
 		<>
 			<Link
-				href="/school-admin/profile"
+				href="/profile"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image

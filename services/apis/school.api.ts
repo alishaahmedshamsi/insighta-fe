@@ -1,45 +1,6 @@
 import api from "../middleware/middleware";
 import { STATUS } from "@/utils";
 
-// export const createClass = async (classes: number) => {
-// 	try {
-// 		const response = await api.post("/school/class-create", {
-// 			className: classes,
-// 		});
-
-// 		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
-// 			return { success: false, response: response.data.message };
-// 		}
-// 		if (response.status === STATUS.BAD_REQUEST) {
-// 			return { success: false, response: response.data.message };
-// 		}
-
-// 		return { success: true, response: response.data };
-// 	} catch (error: any) {
-// 		console.log(error);
-// 		return { success: false, response: error.response.data.message };
-// 	}
-// };
-
-// export const createClass = async (className: number) => {
-// 	try {
-// 		const response = await api.post("/school/class-create", { className });
-// 		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
-// 			return { success: false, response: response.data.message };
-// 		}
-// 		if (response.status === STATUS.BAD_REQUEST) {
-// 			return { success: false, response: response.data.message };
-// 		}
-// 		return { success: true, response: response.data };
-// 	} catch (error: any) {
-// 		console.log(error);
-// 		return {
-// 			success: false,
-// 			response: error.response?.data?.message || "An error occurred",
-// 		};
-// 	}
-// };
-
 export const createClass = async (className: number) => {
 	try {
 		const response = await api.post("/school/class-create", { className });
@@ -62,7 +23,8 @@ export const createClass = async (className: number) => {
 export const fetchClasses = async () => {
 	try {
 		const response = await api.get("/school/get-classes");
-		return response.data.data;
+		console.log(response.data.data);
+		return response.data;
 	} catch (error: any) {
 		throw new Error(error ?? error.message.data);
 	}
@@ -95,5 +57,21 @@ export const fetchSchoolsInfo = async () => {
 		return response.data.data;
 	} catch (error: any) {
 		throw new Error(error ?? error.message.data);
+	}
+}
+
+export const  createSubject = async (data: any) => {
+	try {
+		const response = await api.post("/school/subject-create", data);
+		if (response.status === STATUS.UNPROCESSABLE_ENTITY || response.status === STATUS.BAD_REQUEST) {
+			return { success: false, response: response.data.message };
+		}
+		return { success: true, response: response.data };
+	} catch (error: any) {
+		console.error(error);
+		return {
+			success: false,
+			response: error.response?.data?.message || "An error occurred",
+		};
 	}
 }
