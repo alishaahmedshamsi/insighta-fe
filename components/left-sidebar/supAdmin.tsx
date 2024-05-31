@@ -36,19 +36,7 @@ export const superAdminLeftSidebarLinks = () => {
 			
 
 			<hr className="my-[50px] opacity-[.3] " />
-			<Link
-				href="/login"
-				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
-			>
-				<Image
-					alt=""
-					className="object-contain w-[1.3em] h-auto mr-[0.8em]"
-					src={"/assets/icons/log out.png"}
-					width={600}
-					height={600}
-				/>{" "}
-				Log Out
-			</Link>
+			
 		</div>
 	);
 };

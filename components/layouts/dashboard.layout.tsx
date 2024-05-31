@@ -14,7 +14,6 @@ export const capitalizeFirstLetter = (str: string) => {
 
 export default function DashboardLayout({
 	mainSectionHeading,
-	userDetails,
 	quickStartList,
 	children,
 	leftSidebarLinks,
@@ -281,13 +280,31 @@ export default function DashboardLayout({
 				<div className="avatar-box w-[65%]">
 					<Image
 						alt=""
-						className="object-cover w-[60%] h-auto"
+						className="object-cover w-[60%] h-auto rounded-full"
 						src={user.profilePicture || "/assets/avatar.png"}
 						width={600}
 						height={600}
 					/>
 				</div>
+				<div className="quick-links-box w-[60%] flex flex-col mt-[2em]">
 				{leftSidebarLinks}
+				<Link
+				href="#"
+				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
+			>
+				<Image
+					alt=""
+					className="object-contain w-[1.3em] h-auto mr-[0.8em]"
+					src={"/assets/icons/log out.png"}
+					width={600}
+					height={600}
+				/>{" "}
+				Log Out
+			</Link>
+		</div>
+
+				
+				
 			</div>
 
 			{/* main container */}
