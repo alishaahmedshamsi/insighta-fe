@@ -1,142 +1,12 @@
 "use client";
-import AuthLayout from "@/components/layouts/auth.layout";
-import { ILoginFields } from "@/types/type";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/validation";
-import { useMutation } from "@tanstack/react-query";
-import { onLogin } from "@/services/apis";
-import { toast } from "sonner";
 import Image from "next/image";
 
-import { Fragment, useState } from "react";
-import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
-import {
-	ArrowPathIcon,
-	Bars3Icon,
-	ChartPieIcon,
-	CursorArrowRaysIcon,
-	FingerPrintIcon,
-	SquaresPlusIcon,
-	XMarkIcon,
-} from "@heroicons/react/24/outline";
-import {
-	ChevronDownIcon,
-	PhoneIcon,
-	PlayCircleIcon,
-} from "@heroicons/react/20/solid";
+
 import PointsBreakdown from "@/components/points-breakdown";
 import HeaderComponent from "@/components/header.component";
-import RankTableComponent from "@/components/rank-table.component";
 
-function classNames(...classes: string[]) {
-	return classes.filter(Boolean).join(" ");
-}
 
 export default function FrontPage() {
-	// const router = useRouter();
-
-	// const { mutateAsync, error, reset } = useMutation({
-	// 	mutationFn: onLogin,
-
-	// 	// onSuccess: Handle success if needed,
-	// 	// onError: Handle error if needed,
-
-	// 	onError: (error) => {
-	// 		console.log(error.message);
-	// 		setTimeout(() => {
-	// 			reset();
-	// 		}, 3000);
-	// 	},
-
-	// 	onSuccess: (data: any) => {
-	// 		// localStorage.setItem("token", data.data.accessToken);
-	// 		// router.push("/dashboard");
-	// 	},
-	// });
-
-	// const {
-	// 	register,
-	// 	handleSubmit,
-	// 	formState: { errors, isSubmitting }, // isSubmitting for loading state
-	// } = useForm<ILoginFields>({ resolver: zodResolver(loginSchema) });
-
-	// const onSubmit: SubmitHandler<ILoginFields> = async (data) => {
-	// 	console.log(data);
-	// 	const { success, response } = await mutateAsync(data);
-
-	// 	if (!success) return toast.error(response);
-	// 	if (response.user.role !== "admin")
-	// 		return toast.error("Unauthorized Access!!!");
-
-	// 	toast.success("Login success");
-	// };
-
-	const topRankTeachers = [
-		{
-			userName: "Waqqam Usman",
-			schoolName: "Karachi Public School",
-			gender: "male",
-			userRank: "1st",
-			qualification: "B",
-			role: "teacher",
-			points: "400",
-			assignmentPoints: "100",
-			quizPoints: "150",
-			lecturePoints: "150",
-		},
-		{
-			userName: "Waqqam Usman",
-			schoolName: "Karachi Public School",
-			gender: "male",
-			userRank: "2nd",
-			qualification: "B",
-			role: "teacher",
-			points: "400",
-			assignmentPoints: "100",
-			quizPoints: "150",
-			lecturePoints: "150",
-		},
-		{
-			userName: "Waqqam Usman",
-			schoolName: "Karachi Public School",
-			gender: "male",
-			userRank: "3rd",
-			qualification: "B",
-			role: "teacher",
-			points: "400",
-			assignmentPoints: "100",
-			quizPoints: "150",
-			lecturePoints: "150",
-		},
-		{
-			userName: "Waqqam Usman",
-			schoolName: "Karachi Public School",
-			gender: "male",
-			userRank: "4th",
-			qualification: "B",
-			role: "teacher",
-			points: "400",
-			assignmentPoints: "100",
-			quizPoints: "150",
-			lecturePoints: "150",
-		},
-		{
-			userName: "Waqqam Usman",
-			schoolName: "Karachi Public School",
-			gender: "male",
-			userRank: "5th",
-			qualification: "B",
-			role: "teacher",
-			points: "400",
-			assignmentPoints: "100",
-			quizPoints: "150",
-			lecturePoints: "150",
-		},
-	];
-
 	return (
 		<>
 			<HeaderComponent />
@@ -337,7 +207,6 @@ export default function FrontPage() {
 						Top Faculty
 					</h3>
 
-					{/* <RankTableComponent topRankers={topRankTeachers} /> */}
 
 					<div className="flex flex-col w-full">
 						<table>

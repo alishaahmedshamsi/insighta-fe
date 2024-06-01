@@ -64,6 +64,7 @@ export interface IPagination {
   }
 
 export  interface IUser  {
+	_id:string
 	fullname: string;
 	email: string;
 	qualification: string;

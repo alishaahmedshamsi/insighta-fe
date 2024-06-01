@@ -13,22 +13,22 @@ import { GraduationCapIcon, User } from "lucide-react";
 
 
 export default function SchoolAdminDashboard() {
-	
-    const {
+
+	const {
 		isLoading,
 		data,
 		error
-	  }: { data: ApiResponse<ISchoolInfo> | undefined; error: any; isLoading: boolean } =
+	}: { data: ApiResponse<ISchoolInfo> | undefined; error: any; isLoading: boolean } =
 		useQuery({
-		  queryKey: ["fetch-classes"],
-		  queryFn: () => fetchSchoolsInfo(),
+			queryKey: ["fetch-classes"],
+			queryFn: () => fetchSchoolsInfo(),
 		});
 
-		if(isLoading){
-			return <div>Loading...</div>
-		}
+	if (isLoading) {
+		return <div>Loading...</div>
+	}
 
-		return (
+	return (
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Dashboard"}
@@ -60,7 +60,7 @@ export default function SchoolAdminDashboard() {
 								</p>
 							</div>
 						</div>
-						<Link href="/sup-admin/create-school">
+						<Link href="/sup-admin/create-school/">
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">
 									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -112,11 +112,11 @@ export default function SchoolAdminDashboard() {
 										{school.email}
 									</p>
 									<div className="flex gap-2">
-									<User size={20}/>
+										<User size={20} />
 										{school.studentCount}
 									</div>
 									<div className="flex gap-2">
-									<GraduationCapIcon size={20}/>
+										<GraduationCapIcon size={20} />
 										{school.teacherCount}
 									</div>
 								</div>
