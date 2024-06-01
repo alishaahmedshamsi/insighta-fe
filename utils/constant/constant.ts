@@ -11,17 +11,14 @@ export const STATUS = Object.freeze({
 export const TEACHER_QUICK_START_LIST = [
 	{
 		heading: "Add Quiz",
-		count: "2 Quiz",
 		link: "/teacher-dashboard/add-quiz",
 	},
 	{
 		heading: "Add an Assignment",
-		count: "2 Assignments",
 		link: "/teacher-dashboard/add-assignment",
 	},
 	{
 		heading: "Add Lectures",
-		count: "2 Lectures",
 		link: "/teacher-dashboard/add-lectures",
 	},
 ];
@@ -29,56 +26,46 @@ export const TEACHER_QUICK_START_LIST = [
 export const STUDENT_QUICK_START_LIST = [
 	{
 		heading: "Quiz",
-		count: "2 Quiz",
 		link: "/student-dashboard/quiz",
 	},
 	{
 		heading: "Assignments",
-		count: "2 Assignments",
 		link: "/student-dashboard/assignments",
 	},
 	{
 		heading: "Lectures",
-		count: "2 Lectures",
 		link: "/student-dashboard/lectures",
 	},
-	
 ];
 
 export const SCHOOL_ADMIN_QUICK_START_LIST = [
 	{
 		heading: "Create Student",
-		count: "",
 		link: "/school-admin/create-student",
 	},
 	{
 		heading: "Create Teacher",
-		count: "",
 		link: "/school-admin/create-teacher",
 	},
 	{
 		heading: "Create Class",
-		count: "",
 		link: "/school-admin/create-class",
 	},
 	{
 		heading: "Create Subject",
-		count: "",
 		link: "/school-admin/create-subject",
 	},
 ];
 export const SUPER_ADMIN_QUICK_START_LIST = [
 	{
 		heading: "Create School",
-		count: "",
 		link: "/sup-admin/create-school",
 	},
 ];
 
-
 export const ROLES = Object.freeze({
-	ADMIN: 'admin',
-	USER: 'student',
-	TEACHER: 'teacher',
-	SCHOOL: 'school',
-  });
+	ADMIN: "admin",
+	USER: "student",
+	TEACHER: "teacher",
+	SCHOOL: "school",
+});

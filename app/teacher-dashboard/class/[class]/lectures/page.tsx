@@ -13,30 +13,35 @@ const userDetails = {
 	qualification: "BA in English",
 };
 
-const subjectList = [
-	{
-		name: "English",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/english",
-	},
-	{
-		name: "Maths",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/maths",
-	},
-	{
-		name: "Computer",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/computer",
-	},
-	{
-		name: "Science",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/science",
-	},
-];
+export default function Component({
+	params,
+}: {
+	params: { class: string; subject: string };
+}) {
+	const { class: teacherClass, subject } = params;
 
-export default function AddAssignmentGrades() {
+	const subjectList = [
+		{
+			name: "English",
+			subjectLink: `/teacher-dashboard/class/${teacherClass}/lectures/english`,
+		},
+		{
+			name: "Maths",
+			subjectLink: `/teacher-dashboard/class/${teacherClass}/lectures/maths`,
+		},
+		{
+			name: "Computer",
+			subjectLink: `/teacher-dashboard/class/${teacherClass}/lectures/computer`,
+		},
+		{
+			name: "Science",
+			subjectLink: `/teacher-dashboard/class/${teacherClass}/lectures/science`,
+		},
+	];
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={"Add Quiz Grades"}
+				mainSectionHeading={"All lectures"}
 				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}

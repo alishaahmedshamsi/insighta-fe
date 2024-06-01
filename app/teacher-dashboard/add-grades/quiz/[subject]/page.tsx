@@ -13,36 +13,33 @@ const userDetails = {
 	qualification: "BA in English",
 };
 
-const subjectList = [
-	{
-		name: "English",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/english",
-	},
-	{
-		name: "Maths",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/maths",
-	},
-	{
-		name: "Computer",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/computer",
-	},
-	{
-		name: "Science",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/science",
-	},
-];
-
-export default function AddAssignmentGrades() {
+export default function Component({
+	params,
+}: {
+	params: { subject: string };
+}) {
+	const { subject } = params;
+	const quizList = [
+		{
+			name: "Quiz #1",
+			subjectLink: `/teacher-dashboard/add-grades/quiz/${subject}/1`,
+		},
+		{
+			name: "Quiz #2",
+			subjectLink: `/teacher-dashboard/add-grades/quiz/${subject}/2`,
+		},
+	];
+	const mainSectionHeading = `Add ${subject} Quiz Grades`;
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={"Add Quiz Grades"}
+				mainSectionHeading={mainSectionHeading}
 				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>
 				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
-					{subjectList.map((subject) => {
+					{quizList.map((subject) => {
 						return (
 							<Link href={subject.subjectLink}>
 								<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">

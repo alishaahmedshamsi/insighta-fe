@@ -1,7 +1,7 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-export default function PBreakdown({
+export default function PointsBreakdown({
 	points,
 	assignmentPoints,
 	quizPoints,
@@ -12,6 +12,9 @@ export default function PBreakdown({
 	userClass,
 	qualification,
 	role,
+    children,
+	open,
+	setOpen
 }: {
 	points: number;
 	assignmentPoints: number;
@@ -23,16 +26,17 @@ export default function PBreakdown({
 	userClass?: string;
 	qualification?: string;
 	role: string;
+    children: React.ReactNode
+	open: boolean
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-	const [open, setOpen] = useState(false);
+	
 
 	const cancelButtonRef = useRef(null);
 
 	return (
 		<>
-			<span className="cursor-pointer" onClick={() => setOpen(!open)}>
-				⭐ {points} Points
-			</span>
+			{children}
 			<Transition.Root show={open} as={Fragment}>
 				<Dialog
 					className="relative z-10"

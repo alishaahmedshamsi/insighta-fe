@@ -12,9 +12,7 @@ import { onRegister } from "@/services/apis";
 import { toast } from "sonner";
 import { IRegisterFields } from "@/types/type";
 
-
 export default function Component() {
-	
 	const { mutateAsync, error, reset } = useMutation({
 		mutationFn: onRegister,
 		onError: (error) => {
@@ -40,9 +38,6 @@ export default function Component() {
 		if (!success) return toast.error(response);
 		if (success) toast.success("School created successful");
 		reset();
-	
-
-	
 	};
 
 	return (
@@ -65,7 +60,6 @@ export default function Component() {
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="name"
 								type="text"
-								
 							/>
 						</div>
 						<div className="w-full flex flex-col">
@@ -75,7 +69,6 @@ export default function Component() {
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="schoolId"
 								type="text"
-							
 							/>
 						</div>
 
@@ -86,7 +79,6 @@ export default function Component() {
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="password"
 								type="text"
-								
 							/>
 						</div>
 

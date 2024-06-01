@@ -9,48 +9,21 @@ import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 const subjectList = [
 	{
 		name: "English",
-		duration: "17 min",
 		subjectLink: "/student-dashboard/subject/english",
 	},
 	{
 		name: "Maths",
-		duration: "17 min",
 		subjectLink: "/student-dashboard/subject/maths",
 	},
 	{
 		name: "Computer",
-		duration: "17 min",
 		subjectLink: "/student-dashboard/subject/computer",
 	},
 	{
 		name: "Science",
-		duration: "17 min",
 		subjectLink: "/student-dashboard/subject/science",
 	},
 ];
-
-// const subjectList = [
-// 	{
-// 		name: "English",
-// 		duration: "17 min",
-// 		subjectLink: "/student-dashboard/english",
-// 	},
-// 	{
-// 		name: "Maths",
-// 		duration: "17 min",
-// 		subjectLink: "/student-dashboard/maths",
-// 	},
-// 	{
-// 		name: "Computer",
-// 		duration: "17 min",
-// 		subjectLink: "/student-dashboard/computer",
-// 	},
-// 	{
-// 		name: "Science",
-// 		duration: "17 min",
-// 		subjectLink: "/student-dashboard/science",
-// 	},
-// ];
 
 const userDetails = {
 	userName: "Annie Leonchart",
@@ -60,13 +33,10 @@ const userDetails = {
 };
 
 export default function StudentDashboard() {
-	// const pointsEarned = "400";
-	// const mainSectionHeading = "Subjects";
 	return (
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Subjects"}
-				// pointsEarned={"400"}
 				userDetails={userDetails}
 				quickStartList={STUDENT_QUICK_START_LIST}
 				leftSidebarLinks={studentLeftSidebarLinks()}
@@ -91,9 +61,9 @@ export default function StudentDashboard() {
 										<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
 											{subject.name}
 										</h4>
-										<p className="text-[#959BA5] text-[1em] align-middle">
+										{/* <p className="text-[#959BA5] text-[1em] align-middle">
 											{subject.duration}
-										</p>
+										</p> */}
 									</div>
 								</div>
 							</Link>
