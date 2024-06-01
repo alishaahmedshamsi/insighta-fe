@@ -14,9 +14,6 @@ export default function ResetPassword() {
 	const router = useRouter();
 	const { mutateAsync, error, reset } = useMutation({
 		mutationFn: onRegister,
-
-
-
 		onError: (error) => {
 			console.log(error.message);
 			setTimeout(() => {
@@ -50,20 +47,6 @@ export default function ResetPassword() {
 				onSubmit={handleSubmit(onSubmit)}
 				className="flex items-start flex-col w-full"
 			>
-				<div className="mb-3 w-full">
-					<input
-						{...register("currentPassword")}
-						id="currentPassword"
-						type="password"
-						placeholder="Current password"
-						className="input-form-fields w-full "
-					/>
-					{errors.currentPassword && (
-						<p className="text-brand-sea-green mt-1 pt-2">
-							{errors.currentPassword.message}
-						</p>
-					)}
-				</div>
 				<div className="mb-3 w-full">
 					<input
 						{...register("newPassword")}
@@ -100,15 +83,6 @@ export default function ResetPassword() {
 					Reset
 				</button>
 			</form>
-
-			<hr className="my-[20px] opacity-[.5]" />
-
-			<div className="w-full text-[#ccc] text-center mb-[20px] inline-block">
-				Remember Password?{" "}
-				<Link href="/" className="inline w-full text-center underline">
-					<b>Login</b>
-				</Link>
-			</div>
 		</AuthLayout>
 	);
 }
