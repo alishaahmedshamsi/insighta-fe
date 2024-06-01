@@ -7,48 +7,34 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { forgotPasswordSchema } from "@/validation";
 import { useMutation } from "@tanstack/react-query";
-import { onRegister } from "@/services/apis";
+import { forgetPasswordApi, onRegister } from "@/services/apis";
 import { toast } from "sonner";
-import Image from "next/image";
 
 export default function forgetPassword() {
 	const router = useRouter();
 
 	const { mutateAsync, error, reset } = useMutation({
-		// change onRegister to forgetPassword API (need to be created)
-		mutationFn: onRegister,
-
-		// onSuccess: Handle success if needed,
-		// onError: Handle error if needed,
-
+		mutationFn: forgetPasswordApi,
 		onError: (error) => {
 			console.log(error.message);
 			setTimeout(() => {
 				reset();
 			}, 3000);
 		},
-
-		onSuccess: (data: any) => {
-			// localStorage.setItem("token", data.data.accessToken);
-			// router.push("/dashboard");
-		},
 	});
 
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isSubmitting }, // isSubmitting for loading state
+		formState: { errors, isSubmitting },
 	} = useForm<IForgetFields>({ resolver: zodResolver(forgotPasswordSchema) });
 
 	const onSubmit: SubmitHandler<IForgetFields> = async (data) => {
-		console.log(data);
-		const { success, response } = await mutateAsync(data);
-
+		const { success, response } = await mutateAsync(data.email);
 		if (!success) return toast.error(response);
-		if (response.user.role !== "admin")
-			return toast.error("Unauthorized Access!!!");
-
-		toast.success("Forget Password success");
+		toast.success("OTP Code sent to your email." + " " +response.data.data);
+		router.push(`/otp-code/${data.email}`);
+		reset();
 	};
 
 	return (

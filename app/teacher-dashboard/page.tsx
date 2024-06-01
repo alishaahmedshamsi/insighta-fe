@@ -9,22 +9,18 @@ import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 const classesList = [
 	{
 		name: "Class 5",
-		duration: "17 min",
 		classLink: "/teacher-dashboard/class/5",
 	},
 	{
 		name: "Class 6",
-		duration: "17 min",
 		classLink: "/teacher-dashboard/class/6",
 	},
 	{
 		name: "Class 7",
-		duration: "17 min",
 		classLink: "/teacher-dashboard/class/7",
 	},
 	{
 		name: "Class 8",
-		duration: "17 min",
 		classLink: "/teacher-dashboard/class/8",
 	},
 ];
@@ -67,9 +63,6 @@ export default function TeacherDashboard() {
 										<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
 											{teaherClass.name}
 										</h4>
-										<p className="text-[#959BA5] text-[1em] align-middle">
-											{teaherClass.duration}
-										</p>
 									</div>
 								</div>
 							</Link>

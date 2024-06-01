@@ -5,7 +5,7 @@ export const studentLeftSidebarLinks = () => {
 	return (
 		<>
 			<Link
-				href="/student-dashboard"
+				href="/profile"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image
@@ -33,9 +33,9 @@ export const studentLeftSidebarLinks = () => {
 				/>{" "}
 				Dashboard
 			</Link>
-		
+
 			<Link
-				href="#"
+				href="/student-dashboard/announcement"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image
@@ -49,8 +49,6 @@ export const studentLeftSidebarLinks = () => {
 			</Link>
 
 			<hr className="my-[50px] opacity-[.3] " />
-
-		
 		</>
 	);
 };

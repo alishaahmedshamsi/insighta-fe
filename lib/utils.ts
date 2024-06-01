@@ -27,3 +27,12 @@ export const capitalizeFirstLetter = (str: string | undefined | null): string =>
   }
   return str.replace(/\b\w/g, (char) => char.toUpperCase());
 };
+
+export function formatDate(dateString:string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
