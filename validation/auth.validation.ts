@@ -24,9 +24,18 @@ const registerTeacherSchema = z.object({
 });
 
 const resetPasswordSchema = z.object({
-	password: z.string().min(6),
+	newPassword: z.string().min(6),
 	confirmPassword: z.string().min(6),
-});
+  }).superRefine((data, ctx) => {
+	if (data.newPassword !== data.confirmPassword) {
+	  ctx.addIssue({
+		code: 'custom',
+		path: ['confirmPassword'],
+		message: "Passwords do not match",
+	  });
+	}
+  });
+  
 
 const otpSchema = z.object({
 	otpCode: z.string().length(6),

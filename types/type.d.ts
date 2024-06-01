@@ -15,7 +15,6 @@ export interface IRegisterFields {
 }
 
 export interface IResetPassword {
-	currentPassword: string;
 	newPassword: string;
 	confirmPassword: string;
 }

@@ -7,13 +7,13 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPasswordSchema } from "@/validation";
 import { useMutation } from "@tanstack/react-query";
-import { onRegister } from "@/services/apis";
+import { onRegister, resetPassword } from "@/services/apis";
 import { toast } from "sonner";
 
 export default function ResetPassword() {
 	const router = useRouter();
 	const { mutateAsync, error, reset } = useMutation({
-		mutationFn: onRegister,
+		mutationFn: resetPassword,
 		onError: (error) => {
 			console.log(error.message);
 			setTimeout(() => {
@@ -29,13 +29,11 @@ export default function ResetPassword() {
 	} = useForm<IResetPassword>({ resolver: zodResolver(resetPasswordSchema) });
 
 	const onSubmit: SubmitHandler<IResetPassword> = async (data) => {
-		// const { success, response } = await mutateAsync(data);
+		const { success, response } = await mutateAsync(data);
 
-		// if (!success) return toast.error(response);
-		// if (response.user.role !== "admin")
-		// 	return toast.error("Unauthorized Access!!!");
-
-		// toast.success("Signup success");
+		if (!success) return toast.error(response);
+		toast.success("Password Reset Successfully.");
+		router.push('/login')
 	};
 
 	return (

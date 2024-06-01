@@ -98,7 +98,7 @@ export const verfyOtp = async (data: any) => {
 		if(response.status === STATUS.BAD_REQUEST){
 			return { success: false, response: response.data.message }
 		}
-		localStorage.setItem('accessToken', response.data.data.accessToken)
+		localStorage.setItem('accessToken', response.data.data)
 		return { success: true, response: response.data }
 	} catch (error:any) {
 		console.log(error);
@@ -108,7 +108,7 @@ export const verfyOtp = async (data: any) => {
 
 export const resetPassword = async (data: any) => {
 	try {
-		const response = await api.post('/auth/reset-password', data)
+		const response = await api.put('/auth/reset', {password:data.newPassword})
 		if(response.status === STATUS.UNPROCESSABLE_ENTITY){
 			return { success: false, response: response.data.message }
 		}
@@ -120,6 +120,6 @@ export const resetPassword = async (data: any) => {
 		return { success: true, response: response.data }
 	} catch (error:any) {
 		console.log(error);
-		return { success: false, response: error.message.data }
+		return { success: false, response: (error as any).response.data.message, }
 	}
 }
