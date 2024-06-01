@@ -37,7 +37,6 @@ export default function Component() {
     if (success) toast.success("School created successful");
     reset();
 
-
     return (
       <>
         <DashboardLayout
@@ -48,7 +47,10 @@ export default function Component() {
           <div className="rounded-lg p-6 bg-white shadow-md">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block font-medium text-gray-700">
+                <label
+                  htmlFor="name"
+                  className="block font-medium text-gray-700"
+                >
                   Name
                 </label>
                 <Input
@@ -58,11 +60,16 @@ export default function Component() {
                   type="text"
                 />
                 {errors.fullname && (
-                  <span className="text-red-500">{errors.fullname.message}</span>
+                  <span className="text-red-500">
+                    {errors.fullname.message}
+                  </span>
                 )}
               </div>
               <div>
-                <label htmlFor="name" className="block font-medium text-gray-700">
+                <label
+                  htmlFor="name"
+                  className="block font-medium text-gray-700"
+                >
                   Email
                 </label>
                 <Input
@@ -76,7 +83,10 @@ export default function Component() {
                 )}
               </div>
               <div>
-                <label htmlFor="name" className="block font-medium text-gray-700">
+                <label
+                  htmlFor="name"
+                  className="block font-medium text-gray-700"
+                >
                   password
                 </label>
                 <Input
@@ -86,13 +96,13 @@ export default function Component() {
                   type="text"
                 />
                 {errors.password && (
-                  <span className="text-red-500">{errors.password.message}</span>
+                  <span className="text-red-500">
+                    {errors.password.message}
+                  </span>
                 )}
               </div>
               <div className="flex justify-end">
-                <Button
-                  disabled={isSubmitting}
-                >
+                <Button disabled={isSubmitting}>
                   {isSubmitting ? "Creating..." : "Create School"}
                 </Button>
               </div>
@@ -101,5 +111,5 @@ export default function Component() {
         </DashboardLayout>
       </>
     );
-  }
+  };
 }
