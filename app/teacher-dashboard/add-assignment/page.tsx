@@ -5,12 +5,13 @@ import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import AddAssignmentComponent from "@/components/AddAssignment/add-assignment";
 
 const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
+  userName: "Annie Leonchart",
+  role: "Teacher",
+  qualification: "BA in English",
 };
 
 export default function TeacherDashboard() {
+
 	return (
 		<>
 			<DashboardLayout
@@ -26,4 +27,5 @@ export default function TeacherDashboard() {
 			</DashboardLayout>
 		</>
 	);
+
 }

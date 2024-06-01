@@ -8,11 +8,12 @@ import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import TakeQuizOnline from "@/components/takeQuizOnline";
 
 const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Student",
-	class: "5",
-	section: "B",
+  userName: "Annie Leonchart",
+  role: "Student",
+  class: "5",
+  section: "B",
 };
+
 
 const subjectList = [
 	{
@@ -71,4 +72,5 @@ export default function StudentQuiz() {
 			</DashboardLayout>
 		</>
 	);
+
 }

@@ -51,9 +51,9 @@ export const fetchUsers = async ({
 	}
 };
 
-export const fetchSchoolsInfo = async () => {
+export const fetchSchoolsInfo = async (id?:string) => {
 	try {
-		const response = await api.get("/admin/school");
+		const response = await api.get(`/admin/school?schoolId=${id? id : null}`);
 		return response.data.data;
 	} catch (error: any) {
 		throw new Error(error ?? error.message.data);

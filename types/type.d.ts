@@ -15,7 +15,6 @@ export interface IRegisterFields {
 }
 
 export interface IResetPassword {
-	currentPassword: string;
 	newPassword: string;
 	confirmPassword: string;
 }
@@ -65,6 +64,7 @@ export interface IPagination {
   }
 
 export  interface IUser  {
+	_id:string
 	fullname: string;
 	email: string;
 	qualification: string;

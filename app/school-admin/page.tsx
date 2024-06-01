@@ -7,17 +7,33 @@ import { SCHOOL_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdmin";
 import PointsBreakdown from "@/components/points-breakdown";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCurrentUser } from "@/services/apis";
-import { useEffect } from "react";
+import { ApiResponse, ISchoolInfo } from "@/types/type";
+import { fetchSchoolsInfo } from "@/services/apis/school.api";
+import { useCurrentUser } from "@/hooks/user.hook";
+
 
 function SchoolAdminDashboard() {
-	
+
+	const { user } = useCurrentUser();
+
+	const {
+		isLoading,
+		data,
+		error
+	}: { data: ApiResponse<ISchoolInfo> | undefined; error: any; isLoading: boolean } =
+		useQuery({
+			queryKey: ["fetch-classes"],
+			queryFn: () => fetchSchoolsInfo(user?._id),
+		});
+
+	if (isLoading) {
+		return <div>Loading...</div>
+	}
+
 	return (
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Dashboard"}
-				// pointsEarned={"400"}
-				
 				quickStartList={SCHOOL_ADMIN_QUICK_START_LIST}
 				leftSidebarLinks={schoolAdminLeftSidebarLinks()}
 			>
@@ -45,7 +61,7 @@ function SchoolAdminDashboard() {
 										Total Students
 									</h4>
 									<p className="text-[#959BA5] text-[1em] align-middle">
-										250
+										{data?.data[0].studentCount}
 									</p>
 								</div>
 							</div>
@@ -68,32 +84,11 @@ function SchoolAdminDashboard() {
 										Total Teachers
 									</h4>
 									<p className="text-[#959BA5] text-[1em] align-middle">
-										45
+										{data?.data[0].teacherCount}
 									</p>
 								</div>
 							</div>
 						</Link>
-						<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
-							<div className="w-[80px]">
-								<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
-									<Image
-										alt=""
-										className="object-contain w-[5em] inline"
-										src={"/assets/folder.png"}
-										width={600}
-										height={600}
-									/>
-								</div>
-							</div>
-							<div className="w-[75%]">
-								<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-									Total Classes
-								</h4>
-								<p className="text-[#959BA5] text-[1em] align-middle">
-									45
-								</p>
-							</div>
-						</div>
 					</div>
 					<hr className="my-[1em]" />
 

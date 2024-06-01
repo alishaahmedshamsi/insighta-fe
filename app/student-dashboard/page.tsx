@@ -7,6 +7,7 @@ import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 
 const subjectList = [
+
 	{
 		name: "English",
 		subjectLink: "/student-dashboard/subject/english",
@@ -23,16 +24,18 @@ const subjectList = [
 		name: "Science",
 		subjectLink: "/student-dashboard/subject/science",
 	},
+
 ];
 
 const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Student",
-	class: "5",
-	section: "B",
+  userName: "Annie Leonchart",
+  role: "Student",
+  class: "5",
+  section: "B",
 };
 
 export default function StudentDashboard() {
+
 	return (
 		<>
 			<DashboardLayout
@@ -73,4 +76,5 @@ export default function StudentDashboard() {
 			</DashboardLayout>
 		</>
 	);
+
 }
