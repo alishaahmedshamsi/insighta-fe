@@ -43,21 +43,23 @@ export default function Login() {
 
 		localStorage.setItem("accessToken", response.data.data.accessToken);
 		Cookies.set("accessToken", response.data.data.accessToken, { expires: 7 });
-		if (response.data.data.user.role == ROLES.ADMIN) {
-			console.log(response.data.data.accessToken);
-
-			router.push("/sup-admin");
-		}
-		if (response.data.data.user.role == ROLES.SCHOOL) {
-			console.log(response.data.data.accessToken);
-			router.push("/school-admin");
-		}
-		if (response.data.data.user.role == ROLES.USER) {
-			console.log(response.data.data.accessToken);
-			router.push("/student-dashboard");
-		}
-		// const role = response
-		// switch()
+        switch (response.data.data.user.role) {
+            case ROLES.ADMIN:
+                router.push("/sup-admin");
+                break;
+            case ROLES.SCHOOL:
+                router.push("/school-admin");
+                break;
+            case ROLES.USER:
+                router.push("/student-dashboard");
+                break;
+            case ROLES.TEACHER:
+                router.push("/teacher-dashboard");
+                break;
+            default:
+                toast.error("Invalid role");
+                break;
+        }
 	};
 
 	return (

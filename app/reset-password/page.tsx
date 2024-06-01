@@ -9,16 +9,13 @@ import { resetPasswordSchema } from "@/validation";
 import { useMutation } from "@tanstack/react-query";
 import { onRegister } from "@/services/apis";
 import { toast } from "sonner";
-import Image from "next/image";
 
 export default function ResetPassword() {
 	const router = useRouter();
-
 	const { mutateAsync, error, reset } = useMutation({
 		mutationFn: onRegister,
 
-		// onSuccess: Handle success if needed,
-		// onError: Handle error if needed,
+
 
 		onError: (error) => {
 			console.log(error.message);
@@ -26,28 +23,22 @@ export default function ResetPassword() {
 				reset();
 			}, 3000);
 		},
-
-		onSuccess: (data: any) => {
-			// localStorage.setItem("token", data.data.accessToken);
-			// router.push("/dashboard");
-		},
 	});
 
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isSubmitting }, // isSubmitting for loading state
+		formState: { errors, isSubmitting },
 	} = useForm<IResetPassword>({ resolver: zodResolver(resetPasswordSchema) });
 
 	const onSubmit: SubmitHandler<IResetPassword> = async (data) => {
-		console.log(data);
-		const { success, response } = await mutateAsync(data);
+		// const { success, response } = await mutateAsync(data);
 
-		if (!success) return toast.error(response);
-		if (response.user.role !== "admin")
-			return toast.error("Unauthorized Access!!!");
+		// if (!success) return toast.error(response);
+		// if (response.user.role !== "admin")
+		// 	return toast.error("Unauthorized Access!!!");
 
-		toast.success("Signup success");
+		// toast.success("Signup success");
 	};
 
 	return (
@@ -116,35 +107,6 @@ export default function ResetPassword() {
 				Remember Password?{" "}
 				<Link href="/" className="inline w-full text-center underline">
 					<b>Login</b>
-				</Link>
-				{/* {" | "}
-				<Link
-					href="/signup"
-					className="inline w-full text-center underline"
-				>
-					<b>Signup</b>
-				</Link> */}
-			</div>
-
-			<div className="w-full flex justify-center gap-5">
-				<Link href={"/google-login"}>
-					<Image
-						alt=""
-						className="object-cover w-[40px] h-auto"
-						src={"/assets/google-icon.webp"}
-						width={600}
-						height={600}
-					/>
-				</Link>
-
-				<Link href={"/facebook-login"}>
-					<Image
-						alt=""
-						className="object-cover w-[40px] h-auto"
-						src={"/assets/fb-icon.webp"}
-						width={600}
-						height={600}
-					/>
 				</Link>
 			</div>
 		</AuthLayout>
