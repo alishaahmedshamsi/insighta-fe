@@ -1,31 +1,34 @@
 "use client";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
-import AddAssignmentComponent from "@/components/AddAssignment/add-assignment";
+import AddLectureComponent from "@/components/AddLecture/add-lecture";
+
 
 const userDetails = {
-  userName: "Annie Leonchart",
-  role: "Teacher",
-  qualification: "BA in English",
+	userName: "Annie Leonchart",
+	role: "Teacher",
+	qualification: "BA in English",
 };
 
-export default function TeacherDashboard() {
-
+export default function TeacherAddLecture() {
+	
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={"Add Assignment"}
+				mainSectionHeading={"Add Lecture"}
 				// pointsEarned={"400"}
 				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>
 				<div className="rounded-[2em] flex flex-col gap-[2em]">
-					<AddAssignmentComponent />
+					<AddLectureComponent />
 				</div>
 			</DashboardLayout>
 		</>
 	);
-
 }

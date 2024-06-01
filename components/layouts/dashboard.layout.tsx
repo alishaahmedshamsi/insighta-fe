@@ -6,6 +6,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import defaultUserPicture from "@/public/assets/default.jpg";
+import PBreakdown from "@/components/p-breakdown";
+import { useState } from "react";
+
 export default function DashboardLayout({
 	mainSectionHeading,
 	quickStartList,
@@ -24,12 +27,12 @@ export default function DashboardLayout({
 	};
 	quickStartList: Array<{
 		heading: String;
-		count: String;
 		link: String;
 	}>;
 	children: React.ReactNode;
 	leftSidebarLinks: React.ReactNode;
 }) {
+	const [open, setOpen] = useState(false);
 
 	const {
 		data: user,
@@ -40,7 +43,6 @@ export default function DashboardLayout({
 		queryFn: fetchCurrentUser,
 	});
 
-
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
@@ -50,7 +52,7 @@ export default function DashboardLayout({
 	}
 
 	const handleLogout = async () => {
-		await logout()
+		await logout();
 		window.location.href = "/login";
 	};
 	const studentPoints = 400;
@@ -61,26 +63,43 @@ export default function DashboardLayout({
 			return (
 				<>
 					<div className="grid grid-cols-3 gap-[1em] w-full">
-						<div className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
-							<Image
-								alt=""
-								className="object-cover mx-auto w-[40%] h-auto"
-								src={"/assets/credit-card.png"}
-								width={600}
-								height={600}
-							/>
-							<div className="flex justify-between w-full items-center mt-[1em]">
-								<h3 className="text-white font-semibold text-[1.5em]">
-									Points Earned
-								</h3>
-								<p className="text-[#581D7D] font-semibold text-[1.2em]">
-									⭐{" "}
-									{user.role === "student"
-										? studentPoints
-										: teacherPoints}
-								</p>
+						<PBreakdown
+							userName="Waqqam Usman"
+							schoolName="Karachi Public School"
+							userRank={"1st"}
+							userClass={"5th Grade"}
+							role={"student"}
+							points={500}
+							assignmentPoints={100}
+							quizPoints={150}
+							lecturePoints={200}
+							open={open}
+							setOpen={setOpen}
+						>
+							<div
+								onClick={() => setOpen(!open)}
+								className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] "
+							>
+								<Image
+									alt=""
+									className="object-cover mx-auto w-[40%] h-auto"
+									src={"/assets/credit-card.png"}
+									width={600}
+									height={600}
+								/>
+								<div className="flex justify-between w-full items-center mt-[1em]">
+									<h3 className="text-white font-semibold text-[1.5em]">
+										Points Earned
+									</h3>
+									<p className="text-[#581D7D] font-semibold text-[1.2em]">
+										⭐{" "}
+										{user.role === "student"
+											? studentPoints
+											: teacherPoints}
+									</p>
+								</div>
 							</div>
-						</div>
+						</PBreakdown>
 						<div className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 							<Image
 								alt=""
@@ -300,12 +319,10 @@ export default function DashboardLayout({
 						Log Out
 					</button>
 				</div>
-
 			</div>
 
 			{/* main container */}
 			<div
-
 				className={`main-container col-span-3 overflow-y-auto px-[2em] pb-[2em]`}
 			>
 				<div className="cta-header-main pt-[3em]">{topBoxes()}</div>
@@ -345,7 +362,12 @@ export default function DashboardLayout({
 										Class
 									</p>
 									<p className="font-bold text-[#212121] align-middle text-[2em]">
-										{user.classes.map((cls: { className: any; }) => cls.className).join(", ")}
+										{user.classes
+											.map(
+												(cls: { className: any }) =>
+													cls.className
+											)
+											.join(", ")}
 									</p>
 								</div>
 								<div className="flex flex-col items-center">
@@ -401,9 +423,6 @@ export default function DashboardLayout({
 										<h4 className="font-medium text-[#212121] align-middle text-[1.2em] leading-6">
 											{list.heading}
 										</h4>
-										<p className="text-[#959BA5] text-[1em] align-middle">
-											{list.count}
-										</p>
 									</div>
 								</div>
 							</Link>

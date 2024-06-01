@@ -1,17 +1,23 @@
 "use client";
+
+
 import React from "react";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { SUPER_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 import { superAdminLeftSidebarLinks } from "@/components/left-sidebar/supAdmin";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { registerSchema } from "@/validation";
+
 import { useMutation } from "@tanstack/react-query";
 import { onRegister } from "@/services/apis";
 import { toast } from "sonner";
 import { IRegisterFields } from "@/types/type";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+
 
 export default function Component() {
   const { mutateAsync, error, reset } = useMutation({
@@ -29,6 +35,7 @@ export default function Component() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<IRegisterFields>({ resolver: zodResolver(registerSchema) });
+
 
   const onSubmit: SubmitHandler<IRegisterFields> = async (data, e) => {
     data.role = "school";
@@ -112,4 +119,5 @@ export default function Component() {
       </>
     );
   };
+
 }

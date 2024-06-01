@@ -1,48 +1,50 @@
 "use client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
-import Link from "next/link";
-import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
-import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
-
-const subjectList = [
-
-	{
-		name: "English",
-		subjectLink: "/student-dashboard/subject/english",
-	},
-	{
-		name: "Maths",
-		subjectLink: "/student-dashboard/subject/maths",
-	},
-	{
-		name: "Computer",
-		subjectLink: "/student-dashboard/subject/computer",
-	},
-	{
-		name: "Science",
-		subjectLink: "/student-dashboard/subject/science",
-	},
-
-];
+import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
+import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
+import TakeQuizOnline from "@/components/takeQuizOnline";
 
 const userDetails = {
-  userName: "Annie Leonchart",
-  role: "Student",
-  class: "5",
-  section: "B",
+	userName: "Annie Leonchart",
+	role: "Teacher",
+	qualification: "BA in English",
 };
 
-export default function StudentDashboard() {
+export default function Component({
+	params,
+}: {
+	params: { class: string; subject: string };
+}) {
+	const { class: teacherClass, subject } = params;
 
+	const subjectList = [
+		{
+			name: "English",
+			subjectLink: `/teacher-dashboard/class/${teacherClass}/lectures/english`,
+		},
+		{
+			name: "Maths",
+			subjectLink: `/teacher-dashboard/class/${teacherClass}/lectures/maths`,
+		},
+		{
+			name: "Computer",
+			subjectLink: `/teacher-dashboard/class/${teacherClass}/lectures/computer`,
+		},
+		{
+			name: "Science",
+			subjectLink: `/teacher-dashboard/class/${teacherClass}/lectures/science`,
+		},
+	];
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={"Subjects"}
+				mainSectionHeading={"All lectures"}
 				userDetails={userDetails}
-				quickStartList={STUDENT_QUICK_START_LIST}
-				leftSidebarLinks={studentLeftSidebarLinks()}
+				quickStartList={TEACHER_QUICK_START_LIST}
+				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>
 				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
 					{subjectList.map((subject) => {
@@ -64,9 +66,6 @@ export default function StudentDashboard() {
 										<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
 											{subject.name}
 										</h4>
-										{/* <p className="text-[#959BA5] text-[1em] align-middle">
-											{subject.duration}
-										</p> */}
 									</div>
 								</div>
 							</Link>
@@ -76,5 +75,4 @@ export default function StudentDashboard() {
 			</DashboardLayout>
 		</>
 	);
-
 }
