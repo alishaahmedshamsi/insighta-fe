@@ -12,18 +12,9 @@ import { onRegister } from "@/services/apis";
 import { toast } from "sonner";
 import { IRegisterFields } from "@/types/type";
 
-const userDetails = {
-	userName: "Admin",
-	role: "Super Admin",
-};
 
 export default function Component() {
-	const [formDetails, setFormDetails] = React.useState({
-		fullname: "",
-		email: "",
-		password: "",
-	});
-
+	
 	const { mutateAsync, error, reset } = useMutation({
 		mutationFn: onRegister,
 		onError: (error) => {
@@ -48,20 +39,10 @@ export default function Component() {
 		console.log("data", data);
 		if (!success) return toast.error(response);
 		if (success) toast.success("School created successful");
+		reset();
+	
 
-		setFormDetails({
-			fullname: "",
-			email: "",
-			password: "",
-		});
-
-		// console.log(response.data.data.user.role);
-		// if (response.data.data.user.role == ROLES.ADMIN) {
-		// 	localStorage.setItem("accessToken", response.data.accessToken);
-		// 	console.log(response.data.accessToken);
-		// }
-		// const role = response
-		// switch()
+	
 	};
 
 	return (
@@ -84,13 +65,7 @@ export default function Component() {
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="name"
 								type="text"
-								value={formDetails.fullname}
-								onChange={(e) => {
-									setFormDetails({
-										...formDetails,
-										fullname: e.target.value,
-									});
-								}}
+								
 							/>
 						</div>
 						<div className="w-full flex flex-col">
@@ -100,13 +75,7 @@ export default function Component() {
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="schoolId"
 								type="text"
-								value={formDetails.email}
-								onChange={(e) => {
-									setFormDetails({
-										...formDetails,
-										email: e.target.value,
-									});
-								}}
+							
 							/>
 						</div>
 
@@ -117,13 +86,7 @@ export default function Component() {
 								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 								id="password"
 								type="text"
-								value={formDetails.password}
-								onChange={(e) => {
-									setFormDetails({
-										...formDetails,
-										password: e.target.value,
-									});
-								}}
+								
 							/>
 						</div>
 
