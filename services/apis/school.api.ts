@@ -53,13 +53,20 @@ export const fetchUsers = async ({
 
 export const fetchSchoolsInfo = async (id?:string) => {
 	try {
-		const response = await api.get(`/admin/school?schoolId=${id? id : null}`);
+		const response = await api.get(`/admin/school`);
 		return response.data.data;
 	} catch (error: any) {
 		throw new Error(error ?? error.message.data);
 	}
 }
-
+export const fetchSingleSchoolInfo = async (id?:string) => {
+	try {
+		const response = await api.get(`/admin/school?schoolId=${id?id:undefined}`);
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+}
 export const  createSubject = async (data: any) => {
 	try {
 		const response = await api.post("/school/subject-create", data);

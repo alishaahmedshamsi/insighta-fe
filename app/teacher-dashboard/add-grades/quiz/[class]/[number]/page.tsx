@@ -6,6 +6,9 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import TakeQuizOnline from "@/components/takeQuizOnline";
+import { Button } from "@/components/ui/button";
+import TeacherGrading from "@/components/TeacherGrading/teacher-grading";
+import { useState } from "react";
 
 const userDetails = {
 	userName: "Annie Leonchart",
@@ -226,11 +229,13 @@ const submissions = [
 export default function AddAssignmentGrades({
 	params,
 }: {
-	params: { subject: string; number: string };
+	params: { class: string; number: string };
 }) {
-	const { subject, number } = params;
+	const { class: classes, number } = params;
 
-	const mainSectionHeading = `Add ${subject} Quiz #${number} Grades`;
+	
+
+	const mainSectionHeading = `Add Class: ${classes} Quiz #${number} Grades`;
 	return (
 		<>
 			<DashboardLayout
@@ -254,12 +259,21 @@ export default function AddAssignmentGrades({
 										<h4>
 											Total Marks: {submission.totalMarks}
 										</h4>
+										
 										<div className="flex">
-											<label>Obt. Marks</label>
-											<input
-												className="w-full p-[.5em] rounded-[1em] border border-[#DBDBDB] bg-[#f4f8fb]"
-												type="text"
+											<TeacherGrading
+												userName={
+													submission.studentName
+												}
+												userClass={classes}
+												number={number}
+												materialType={"Quiz"}
+												totalMarks={submission.totalMarks}
+												// open={open}
+												// setOpen={setOpen}
 											/>
+												
+											{/* </TeacherGrading> */}
 										</div>
 
 										<TakeQuizOnline

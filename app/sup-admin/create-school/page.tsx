@@ -43,7 +43,7 @@ export default function Component() {
     if (!success) return toast.error(response);
     if (success) toast.success("School created successful");
     reset();
-
+  }
     return (
       <>
         <DashboardLayout
@@ -120,4 +120,4 @@ export default function Component() {
     );
   };
 
-}
+

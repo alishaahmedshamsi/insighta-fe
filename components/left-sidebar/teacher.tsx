@@ -6,7 +6,7 @@ export const teacherLeftSidebarLinks = () => {
 		<>
 		
 			<Link
-				href="/teacher-dashboard"
+				href="/profile"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image
@@ -36,7 +36,7 @@ export const teacherLeftSidebarLinks = () => {
 			</Link>
 			
 			<Link
-				href="#"
+				href="/teacher-dashboard/announcement"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image

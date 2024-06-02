@@ -8,7 +8,7 @@ import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdm
 import PointsBreakdown from "@/components/points-breakdown";
 import { useQuery } from "@tanstack/react-query";
 import { ApiResponse, ISchoolInfo } from "@/types/type";
-import { fetchSchoolsInfo } from "@/services/apis/school.api";
+import {  fetchSingleSchoolInfo } from "@/services/apis/school.api";
 import { useCurrentUser } from "@/hooks/user.hook";
 
 
@@ -23,7 +23,7 @@ function SchoolAdminDashboard() {
 	}: { data: ApiResponse<ISchoolInfo> | undefined; error: any; isLoading: boolean } =
 		useQuery({
 			queryKey: ["fetch-classes"],
-			queryFn: () => fetchSchoolsInfo(user?._id),
+			queryFn: () => fetchSingleSchoolInfo(user?._id),
 		});
 
 	if (isLoading) {

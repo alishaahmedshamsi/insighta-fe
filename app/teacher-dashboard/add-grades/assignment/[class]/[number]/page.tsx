@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
+import TeacherGrading from "@/components/TeacherGrading/teacher-grading";
 
 const userDetails = {
 	userName: "Annie Leonchart",
@@ -53,11 +52,11 @@ const submissions = [
 export default function Component({
 	params,
 }: {
-	params: { subject: string; number: string };
+	params: { class: string; number: string };
 }) {
-	const { subject, number } = params;
+	const { class: classes, number } = params;
 
-	const mainSectionHeading = `Add ${subject} Assignment #${number} Grades`;
+	const mainSectionHeading = `Add Class: ${classes} Assignment #${number} Grades`;
 	return (
 		<>
 			<DashboardLayout
@@ -82,10 +81,18 @@ export default function Component({
 											Total Marks: {submission.totalMarks}
 										</h4>
 										<div className="flex">
-											<label>Obt. Marks</label>
-											<input
-												className="w-full p-[.5em] rounded-[1em] border border-[#DBDBDB] bg-[#f4f8fb]"
-												type="text"
+											<TeacherGrading
+												userName={
+													submission.studentName
+												}
+												userClass={classes}
+												number={number}
+												materialType={"Quiz"}
+												totalMarks={
+													submission.totalMarks
+												}
+												// open={open}
+												// setOpen={setOpen}
 											/>
 										</div>
 										<Link
