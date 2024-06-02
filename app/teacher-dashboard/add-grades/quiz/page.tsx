@@ -1,11 +1,9 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
-import TakeQuizOnline from "@/components/takeQuizOnline";
 
 const userDetails = {
 	userName: "Annie Leonchart",
@@ -13,26 +11,26 @@ const userDetails = {
 	qualification: "BA in English",
 };
 
-const subjectList = [
+const classesList = [
 	{
-		name: "English",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/english",
+		name: "Class 5",
+		classLink: "/teacher-dashboard/add-grades/quiz/5",
 	},
 	{
-		name: "Maths",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/maths",
+		name: "Class 6",
+		classLink: "/teacher-dashboard/add-grades/quiz/6",
 	},
 	{
-		name: "Computer",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/computer",
+		name: "Class 7",
+		classLink: "/teacher-dashboard/add-grades/quiz/7",
 	},
 	{
-		name: "Science",
-		subjectLink: "/teacher-dashboard/add-grades/quiz/science",
+		name: "Class 8",
+		classLink: "/teacher-dashboard/add-grades/quiz/8",
 	},
 ];
 
-export default function AddAssignmentGrades() {
+export default function Component() {
 	return (
 		<>
 			<DashboardLayout
@@ -42,9 +40,9 @@ export default function AddAssignmentGrades() {
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>
 				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
-					{subjectList.map((subject) => {
+					{classesList.map((classes) => {
 						return (
-							<Link href={subject.subjectLink}>
+							<Link href={classes.classLink}>
 								<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 									<div className="w-[80px]">
 										<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -59,7 +57,7 @@ export default function AddAssignmentGrades() {
 									</div>
 									<div className="w-[75%]">
 										<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-											{subject.name}
+											{classes.name}
 										</h4>
 									</div>
 								</div>
