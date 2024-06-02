@@ -1,11 +1,9 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
-import TakeQuizOnline from "@/components/takeQuizOnline";
 
 const userDetails = {
 	userName: "Annie Leonchart",
@@ -13,23 +11,19 @@ const userDetails = {
 	qualification: "BA in English",
 };
 
-export default function Component({
-	params,
-}: {
-	params: { subject: string };
-}) {
-	const { subject } = params;
+export default function Component({ params }: { params: { class: string } }) {
+	const { class: classes } = params;
 	const quizList = [
 		{
-			name: "Quiz #1",
-			subjectLink: `/teacher-dashboard/add-grades/quiz/${subject}/1`,
+			name: "Assignment #1",
+			classLink: `/teacher-dashboard/add-grades/assignment/${classes}/1`,
 		},
 		{
-			name: "Quiz #2",
-			subjectLink: `/teacher-dashboard/add-grades/quiz/${subject}/2`,
+			name: "Assignment #2",
+			classLink: `/teacher-dashboard/add-grades/assignment/${classes}/2`,
 		},
 	];
-	const mainSectionHeading = `Add ${subject} Quiz Grades`;
+	const mainSectionHeading = `Add Class: ${classes} Assignment Grades`;
 	return (
 		<>
 			<DashboardLayout
@@ -39,9 +33,9 @@ export default function Component({
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>
 				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
-					{quizList.map((subject) => {
+					{quizList.map((classes) => {
 						return (
-							<Link href={subject.subjectLink}>
+							<Link href={classes.classLink}>
 								<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 									<div className="w-[80px]">
 										<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -56,7 +50,7 @@ export default function Component({
 									</div>
 									<div className="w-[75%]">
 										<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-											{subject.name}
+											{classes.name}
 										</h4>
 									</div>
 								</div>

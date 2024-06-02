@@ -13,19 +13,19 @@ const userDetails = {
 	qualification: "BA in English",
 };
 
-export default function Component({ params }: { params: { subject: string } }) {
-	const { subject } = params;
+export default function Component({ params }: { params: { class: string } }) {
+	const { class: classes } = params;
 	const quizList = [
 		{
-			name: "Assignment #1",
-			subjectLink: `/teacher-dashboard/add-grades/assignment/${subject}/1`,
+			name: "Quiz #1",
+			classLink: `/teacher-dashboard/add-grades/quiz/${classes}/1`,
 		},
 		{
-			name: "Assignment #2",
-			subjectLink: `/teacher-dashboard/add-grades/assignment/${subject}/2`,
+			name: "Quiz #2",
+			classLink: `/teacher-dashboard/add-grades/quiz/${classes}/2`,
 		},
 	];
-	const mainSectionHeading = `Add ${subject} Assignment Grades`;
+	const mainSectionHeading = `Add Class: ${classes} Quiz Grades`;
 	return (
 		<>
 			<DashboardLayout
@@ -37,7 +37,7 @@ export default function Component({ params }: { params: { subject: string } }) {
 				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
 					{quizList.map((subject) => {
 						return (
-							<Link href={subject.subjectLink}>
+							<Link href={subject.classLink}>
 								<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 									<div className="w-[80px]">
 										<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">

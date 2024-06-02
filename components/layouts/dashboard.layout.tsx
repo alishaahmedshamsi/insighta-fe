@@ -51,6 +51,8 @@ export default function DashboardLayout({
 		return <div>Error loading user data</div>;
 	}
 
+	console.log('data: ', user)
+
 	const handleLogout = async () => {
 		await logout();
 		window.location.href = "/login";
