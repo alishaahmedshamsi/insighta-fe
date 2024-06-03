@@ -4,6 +4,8 @@ import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import TakeQuizOnline from "@/components/takeQuizOnline";
 
+import StudentQuiz from "@/components/StudentQuiz/StudentQuiz";
+
 const allQuiz = [
 	{
 		title: "Quiz #1",
@@ -57,14 +59,20 @@ const allQuiz = [
 	},
 ];
 
-export default function StudentQuiz({
-	params,
-}: {
-	params: { subject: string };
-}) {
+// function isDeadlinePassed(deadline: string) {
+// 	const currentDate = new Date();
+// 	const deadlineDate = new Date(deadline);
+// 	return currentDate > deadlineDate;
+// }
+
+export default function Component({ params }: { params: { subject: string } }) {
 	const { subject } = params;
 
 	const mainSectionHeading = `${subject} Quiz`;
+
+	// const currentDate = new Date();
+	// const deadline = new Date(allQuiz[0].deadline);
+	// const isDeadlinePassed = currentDate > deadline;
 	return (
 		<>
 			<DashboardLayout
@@ -79,79 +87,7 @@ export default function StudentQuiz({
 							Quiz
 						</h3>
 						{allQuiz.map((quiz, index) => (
-							<div
-								key={index}
-								className="assignment flex flex-col rounded-[2em] border border-[#DBDBDB] bg-white p-[2em]"
-							>
-								<div className="assginment-details grid grid-cols-4 gap-5">
-									<div>
-										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-											Title
-										</h5>
-										<h4 className="text-[#111] capitalize text-[1.2em]">
-											{quiz.title}
-										</h4>
-									</div>
-									<div>
-										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-											Deadline
-										</h5>
-										<h4 className="text-[#111] capitalize text-[1.2em]">
-											{quiz.deadline}
-										</h4>
-									</div>
-									<div>
-										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-											Total Marks
-										</h5>
-										<h4 className="text-[#111] capitalize text-[1.2em]">
-											{quiz.totalMarks}
-										</h4>
-									</div>
-									<div>
-										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-											Obt. Marks
-										</h5>
-										<h4 className="text-[#111] capitalize text-[1.2em]">
-											{quiz.obtMarks}
-										</h4>
-									</div>
-									<div>
-										<h5
-											className={
-												"text-[#777] font-medium uppercase text-[.9em] tracking-wider"
-											}
-										>
-											Status
-										</h5>
-										<h4
-											className={`text-[#111] font-medium capitalize text-[1.2em] ${
-												quiz.status.toLowerCase() ==
-												"completed"
-													? `text-[#5fc935]`
-													: "text-[#cf2e23]"
-											}`}
-										>
-											{quiz.status}
-										</h4>{" "}
-									</div>
-									<div>
-										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-											Assignment
-										</h5>
-										<h4 className="text-[#111] underline capitalize text-[1.2em]">
-											<TakeQuizOnline
-												displayText="Start Quiz"
-												quizName={quiz.title}
-												quizQuestions={
-													quiz.quizQuestions
-												}
-												role="student"
-											/>
-										</h4>
-									</div>
-								</div>
-							</div>
+							<StudentQuiz index={index} quiz={[quiz]} />
 						))}
 					</div>
 				</div>

@@ -1,10 +1,8 @@
 "use client";
 import Image from "next/image";
 
-
 import PointsBreakdown from "@/components/points-breakdown";
 import HeaderComponent from "@/components/header.component";
-
 
 export default function FrontPage() {
 	return (
@@ -191,9 +189,9 @@ export default function FrontPage() {
 													userClass={"5th Grade"}
 													role={"student"}
 													points={500}
-										assignmentPoints={100}
-										quizPoints={150}
-										lecturePoints={200}
+													assignmentPoints={100}
+													quizPoints={150}
+													lecturePoints={200}
 												/>
 											</span>
 										</div>
@@ -206,7 +204,6 @@ export default function FrontPage() {
 					<h3 className="font-normal mt-[150px] mb-[20px] text-[35px] sm:text-[50px] leading-tight text-center text-[#3F1954]">
 						Top Faculty
 					</h3>
-
 
 					<div className="flex flex-col w-full">
 						<table>
