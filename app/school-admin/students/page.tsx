@@ -20,12 +20,6 @@ interface SearchParams {
   };
 }
 
-const userDetails = {
-  userName: "School Admin",
-  role: "Admin",
-  schoolName: "Karachi Public School",
-};
-
 export default function Page({ searchParams }: SearchParams) {
   const { page, search } = searchParams;
 
@@ -54,7 +48,6 @@ export default function Page({ searchParams }: SearchParams) {
     <DashboardLayout
       mainSectionHeading={"Students"}
       // pointsEarned={"400"}
-      userDetails={userDetails}
       quickStartList={SCHOOL_ADMIN_QUICK_START_LIST}
       leftSidebarLinks={schoolAdminLeftSidebarLinks()}
     >

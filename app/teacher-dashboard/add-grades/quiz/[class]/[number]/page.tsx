@@ -10,12 +10,6 @@ import { Button } from "@/components/ui/button";
 import TeacherGrading from "@/components/TeacherGrading/teacher-grading";
 import { useState } from "react";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
-};
-
 const submissions = [
 	{
 		studentName: "Muhammad Usman",
@@ -240,7 +234,6 @@ export default function AddAssignmentGrades({
 		<>
 			<DashboardLayout
 				mainSectionHeading={mainSectionHeading}
-				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

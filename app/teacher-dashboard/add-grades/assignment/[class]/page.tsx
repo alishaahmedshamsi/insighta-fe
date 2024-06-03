@@ -5,11 +5,6 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
-};
 
 export default function Component({ params }: { params: { class: string } }) {
 	const { class: classes } = params;
@@ -28,7 +23,6 @@ export default function Component({ params }: { params: { class: string } }) {
 		<>
 			<DashboardLayout
 				mainSectionHeading={mainSectionHeading}
-				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

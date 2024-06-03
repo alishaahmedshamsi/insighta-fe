@@ -5,9 +5,9 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import Link from "next/link";
 import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
+import { useState } from "react";
 
 const subjectList = [
-
 	{
 		name: "English",
 		subjectLink: "/student-dashboard/subject/english",
@@ -24,57 +24,83 @@ const subjectList = [
 		name: "Science",
 		subjectLink: "/student-dashboard/subject/science",
 	},
-
 ];
 
-const userDetails = {
-  userName: "Annie Leonchart",
-  role: "Student",
-  class: "5",
-  section: "B",
-};
+
 
 export default function StudentDashboard() {
-
+	const [allowReview, setAllowReview] = useState(true);
 	return (
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Subjects"}
-				userDetails={userDetails}
 				quickStartList={STUDENT_QUICK_START_LIST}
 				leftSidebarLinks={studentLeftSidebarLinks()}
 			>
-				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
-					{subjectList.map((subject) => {
-						return (
-							<Link href={subject.subjectLink}>
-								<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
-									<div className="w-[80px]">
-										<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
-											<Image
-												alt=""
-												className="object-contain w-[5em] inline"
-												src={"/assets/folder.png"}
-												width={600}
-												height={600}
-											/>
+				<div className="flex flex-col gap-[2em]">
+					<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
+						{subjectList.map((subject) => {
+							return (
+								<Link href={subject.subjectLink}>
+									<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
+										<div className="w-[80px]">
+											<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
+												<Image
+													alt=""
+													className="object-contain w-[5em] inline"
+													src={"/assets/folder.png"}
+													width={600}
+													height={600}
+												/>
+											</div>
 										</div>
-									</div>
-									<div className="w-[75%]">
-										<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-											{subject.name}
-										</h4>
-										{/* <p className="text-[#959BA5] text-[1em] align-middle">
+										<div className="w-[75%]">
+											<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
+												{subject.name}
+											</h4>
+											{/* <p className="text-[#959BA5] text-[1em] align-middle">
 											{subject.duration}
 										</p> */}
+										</div>
 									</div>
-								</div>
-							</Link>
-						);
-					})}
+								</Link>
+							);
+						})}
+					</div>
+
+					{allowReview && (
+						<>
+							<hr className="my-2" />
+
+							<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
+								Give Review to Teachers
+							</h3>
+							<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
+								<Link href="/student-dashboard/recommend-teachers">
+									<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
+										<div className="w-[80px]">
+											<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
+												<Image
+													alt=""
+													className="object-contain w-[5em] inline"
+													src={"/assets/folder.png"}
+													width={600}
+													height={600}
+												/>
+											</div>
+										</div>
+										<div className="w-[75%]">
+											<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
+												Recommend Your Teachers
+											</h4>
+										</div>
+									</div>
+								</Link>
+							</div>
+						</>
+					)}
 				</div>
 			</DashboardLayout>
 		</>
 	);
-
 }

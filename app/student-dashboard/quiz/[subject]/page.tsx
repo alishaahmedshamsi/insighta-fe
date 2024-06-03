@@ -4,13 +4,6 @@ import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import TakeQuizOnline from "@/components/takeQuizOnline";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Student",
-	class: "5",
-	section: "B",
-};
-
 const allQuiz = [
 	{
 		title: "Quiz #1",
@@ -77,7 +70,6 @@ export default function StudentQuiz({
 			<DashboardLayout
 				mainSectionHeading={mainSectionHeading}
 				// pointsEarned={"400"}
-				userDetails={userDetails}
 				quickStartList={STUDENT_QUICK_START_LIST}
 				leftSidebarLinks={studentLeftSidebarLinks()}
 			>

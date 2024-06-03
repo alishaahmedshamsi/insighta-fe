@@ -8,11 +8,6 @@ import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import TakeQuizOnline from "@/components/takeQuizOnline";
 import { Main } from "next/document";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
-};
 
 export default function Component({ params }: { params: { class: string } }) {
 	const { class: teacherClass } = params;
@@ -28,7 +23,6 @@ export default function Component({ params }: { params: { class: string } }) {
 		<>
 			<DashboardLayout
 				mainSectionHeading={mainSectionHeading}
-				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>
