@@ -6,19 +6,12 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
-};
-
 export default function AddGrades() {
 	return (
 		<>
 			<DashboardLayout
 				mainSectionHeading={"Add Grades"}
 				// pointsEarned={"400"}
-				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

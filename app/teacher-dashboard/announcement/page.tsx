@@ -8,11 +8,6 @@ import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 
 import { date } from "zod";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
-};
 
 const previousAnnouncements = [
 	{
@@ -51,7 +46,6 @@ export default function Component() {
 			<DashboardLayout
 				mainSectionHeading={"All announcements"}
 				// pointsEarned={"400"}
-				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

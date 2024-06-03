@@ -6,11 +6,7 @@ import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import TakeQuizOnline from "@/components/takeQuizOnline";
 import AddQuizComponent from "@/components/AddQuiz/add-quiz";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
-};
+
 
 const allQuiz = [
 	{
@@ -98,7 +94,6 @@ export default function TeacherIndividualClassAddAssignments({
 			<DashboardLayout
 				mainSectionHeading={mainSectionHeading}
 				// pointsEarned={"400"}
-				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

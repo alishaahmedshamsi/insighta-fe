@@ -16,15 +16,6 @@ export default function DashboardLayout({
 	leftSidebarLinks,
 }: {
 	mainSectionHeading: String;
-
-	userDetails?: {
-		userName: String;
-		role: String;
-		class?: String;
-		section?: String;
-		qualification?: String;
-		schoolName?: String;
-	};
 	quickStartList: Array<{
 		heading: String;
 		link: String;
@@ -206,7 +197,7 @@ export default function DashboardLayout({
 							</div>
 						</div>
 
-						<Link href="/school-admin/manage-points">
+						<Link href="/school-admin/manage-access">
 							<div className="h-full flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 								<Image
 									alt=""
@@ -217,7 +208,7 @@ export default function DashboardLayout({
 								/>
 								<div className="flex justify-between w-full items-center mt-[1em]">
 									<h3 className="text-white font-semibold text-[1.5em]">
-										Manage Points
+										Manage Access
 									</h3>
 									{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
 										B+

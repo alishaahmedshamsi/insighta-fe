@@ -7,12 +7,6 @@ import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import AddAssignmentComponent from "@/components/AddAssignment/add-assignment";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
-};
-
 const allAssignments = [
 	{
 		title: "Assignment #1",
@@ -40,8 +34,6 @@ export default function TeacherIndividualClassAddAssignments({
 		<>
 			<DashboardLayout
 				mainSectionHeading={mainSectionHeading}
-				// pointsEarned={"400"}
-				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

@@ -7,11 +7,6 @@ import { SCHOOL_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdmin";
 import PointsBreakdown from "@/components/points-breakdown";
 
-const userDetails = {
-  userName: "School Admin",
-  role: "Admin",
-  schoolName: "Karachi Public School",
-};
 
 export default function SchoolAdminTopFive() {
   return (
@@ -19,7 +14,6 @@ export default function SchoolAdminTopFive() {
       <DashboardLayout
         mainSectionHeading={"Top 5"}
         // pointsEarned={"400"}
-        userDetails={userDetails}
         quickStartList={SCHOOL_ADMIN_QUICK_START_LIST}
         leftSidebarLinks={schoolAdminLeftSidebarLinks()}
       >

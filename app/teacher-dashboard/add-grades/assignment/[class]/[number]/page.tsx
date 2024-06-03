@@ -5,11 +5,6 @@ import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import TeacherGrading from "@/components/TeacherGrading/teacher-grading";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
-};
 
 const submissions = [
 	{
@@ -61,7 +56,6 @@ export default function Component({
 		<>
 			<DashboardLayout
 				mainSectionHeading={mainSectionHeading}
-				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>
