@@ -11,13 +11,6 @@ import { JSX, SVGProps } from "react";
 
 import defaultImage from "@/public/assets/default.webp";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Student",
-	class: "5",
-	section: "B",
-};
-
 const allAssignments = [
 	{
 		title: "Assignment #1",
@@ -41,7 +34,6 @@ export default function Component({
 		<>
 			<DashboardLayout
 				mainSectionHeading={mainSectionHeading}
-				userDetails={userDetails}
 				quickStartList={STUDENT_QUICK_START_LIST}
 				leftSidebarLinks={studentLeftSidebarLinks()}
 			>

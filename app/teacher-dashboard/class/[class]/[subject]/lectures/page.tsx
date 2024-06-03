@@ -8,12 +8,6 @@ import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import WatchLectureDialog from "@/components/watchLectureDialog";
 import AddLectureComponent from "@/components/AddLecture/add-lecture";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
-};
-
 const allClassesLectures = [
 	{
 		title: "Lecture #1",
@@ -57,8 +51,6 @@ export default function TeacherIndividualClass({
 		<>
 			<DashboardLayout
 				mainSectionHeading={mainSectionHeading}
-				// pointsEarned={"400"}
-				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

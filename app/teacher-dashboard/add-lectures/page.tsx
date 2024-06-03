@@ -8,11 +8,6 @@ import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import AddLectureComponent from "@/components/AddLecture/add-lecture";
 
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
-};
 
 export default function TeacherAddLecture() {
 	
@@ -21,7 +16,6 @@ export default function TeacherAddLecture() {
 			<DashboardLayout
 				mainSectionHeading={"Add Lecture"}
 				// pointsEarned={"400"}
-				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

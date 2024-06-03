@@ -25,12 +25,6 @@ const classesList = [
 	},
 ];
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Teacher",
-	qualification: "BA in English",
-};
-
 export default function TeacherDashboard() {
 	// const pointsEarned = 400;
 	// const mainSectionHeading = "Subjects";
@@ -39,7 +33,6 @@ export default function TeacherDashboard() {
 			<DashboardLayout
 				mainSectionHeading={"Classes"}
 				// pointsEarned={"400"}
-				userDetails={userDetails}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

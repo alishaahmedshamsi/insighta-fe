@@ -4,12 +4,6 @@ import Link from "next/link";
 import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Student",
-	class: "5",
-	section: "B",
-};
 
 export default function Component({ params }: { params: { subject: string } }) {
 	const { subject } = params;
@@ -32,7 +26,6 @@ export default function Component({ params }: { params: { subject: string } }) {
 		<>
 			<DashboardLayout
 				mainSectionHeading={mainSectionHeading}
-				userDetails={userDetails}
 				quickStartList={STUDENT_QUICK_START_LIST}
 				leftSidebarLinks={studentLeftSidebarLinks()}
 			>

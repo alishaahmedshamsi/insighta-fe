@@ -6,12 +6,6 @@ import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import Image from "next/image";
 import TakeQuizOnline from "@/components/takeQuizOnline";
 
-const userDetails = {
-	userName: "Annie Leonchart",
-	role: "Student",
-	class: "5",
-	section: "B",
-};
 
 const allQuiz = [
 	{
@@ -79,7 +73,6 @@ export default function StudentSubjectQuiz({
 			<DashboardLayout
 				mainSectionHeading={mainSectionHeading}
 				// pointsEarned={"400"}
-				userDetails={userDetails}
 				quickStartList={STUDENT_QUICK_START_LIST}
 				leftSidebarLinks={studentLeftSidebarLinks()}
 			>
