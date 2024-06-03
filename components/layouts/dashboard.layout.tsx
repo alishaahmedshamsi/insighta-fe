@@ -8,6 +8,7 @@ import { capitalizeFirstLetter } from "@/lib/utils";
 import defaultUserPicture from "@/public/assets/default.jpg";
 import PBreakdown from "@/components/p-breakdown";
 import { useState } from "react";
+import CalenderDialog from "../CalenderDialog/CalenderDialog";
 
 export default function DashboardLayout({
 	mainSectionHeading,
@@ -23,7 +24,8 @@ export default function DashboardLayout({
 	children: React.ReactNode;
 	leftSidebarLinks: React.ReactNode;
 }) {
-	const [open, setOpen] = useState(false);
+	const [pointsOpen, setPointsOpen] = useState(false);
+	const [calenderOpen, setCalenderOpen] = useState(false);
 
 	const {
 		data: user,
@@ -42,7 +44,7 @@ export default function DashboardLayout({
 		return <div>Error loading user data</div>;
 	}
 
-	console.log('data: ', user)
+	console.log("data: ", user);
 
 	const handleLogout = async () => {
 		await logout();
@@ -66,11 +68,11 @@ export default function DashboardLayout({
 							assignmentPoints={100}
 							quizPoints={150}
 							lecturePoints={200}
-							open={open}
-							setOpen={setOpen}
+							open={pointsOpen}
+							setOpen={setPointsOpen}
 						>
 							<div
-								onClick={() => setOpen(!open)}
+								onClick={() => setPointsOpen(!pointsOpen)}
 								className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] "
 							>
 								<Image
@@ -101,16 +103,26 @@ export default function DashboardLayout({
 								width={600}
 								height={600}
 							/>
-							<div className="flex justify-between w-full items-center mt-[1em]">
-								<h3 className="text-white font-semibold text-[1.5em]">
-									Calendar
-								</h3>
-								<p className="text-[#581D7D] font-semibold text-[1.2em]">
-									{new Date().getDate()}/
-									{new Date().getMonth() + 1}/
-									{new Date().getFullYear()}
-								</p>
-							</div>
+							<CalenderDialog
+								open={calenderOpen}
+								setOpen={setCalenderOpen}
+							>
+								<div
+									onClick={() =>
+										setCalenderOpen(!calenderOpen)
+									}
+									className="flex justify-between w-full items-center mt-[1em]"
+								>
+									<h3 className="text-white font-semibold text-[1.5em]">
+										Calendar
+									</h3>
+									<p className="text-[#581D7D] font-semibold text-[1.2em]">
+										{new Date().getDate()}/
+										{new Date().getMonth() + 1}/
+										{new Date().getFullYear()}
+									</p>
+								</div>
+							</CalenderDialog>
 						</div>
 						{user.role === "student" ? (
 							<Link href="#">
@@ -185,16 +197,26 @@ export default function DashboardLayout({
 								width={600}
 								height={600}
 							/>
-							<div className="flex justify-between w-full items-center mt-[1em]">
-								<h3 className="text-white font-semibold text-[1.5em]">
-									Calendar
-								</h3>
-								<p className="text-[#581D7D] font-semibold text-[1.2em]">
-									{new Date().getDate()}/
-									{new Date().getMonth() + 1}/
-									{new Date().getFullYear()}
-								</p>
-							</div>
+							<CalenderDialog
+								open={calenderOpen}
+								setOpen={setCalenderOpen}
+							>
+								<div
+									onClick={() =>
+										setCalenderOpen(!calenderOpen)
+									}
+									className="flex justify-between w-full items-center mt-[1em]"
+								>
+									<h3 className="text-white font-semibold text-[1.5em]">
+										Calendar
+									</h3>
+									<p className="text-[#581D7D] font-semibold text-[1.2em]">
+										{new Date().getDate()}/
+										{new Date().getMonth() + 1}/
+										{new Date().getFullYear()}
+									</p>
+								</div>
+							</CalenderDialog>
 						</div>
 
 						<Link href="/school-admin/manage-access">
@@ -248,16 +270,26 @@ export default function DashboardLayout({
 								width={600}
 								height={600}
 							/>
-							<div className="flex justify-between w-full items-center mt-[1em]">
-								<h3 className="text-white font-semibold text-[1.5em]">
-									Calendar
-								</h3>
-								<p className="text-[#581D7D] font-semibold text-[1.2em]">
-									{new Date().getDate()}/
-									{new Date().getMonth() + 1}/
-									{new Date().getFullYear()}
-								</p>
-							</div>
+							<CalenderDialog
+								open={calenderOpen}
+								setOpen={setCalenderOpen}
+							>
+								<div
+									onClick={() =>
+										setCalenderOpen(!calenderOpen)
+									}
+									className="flex justify-between w-full items-center mt-[1em]"
+								>
+									<h3 className="text-white font-semibold text-[1.5em]">
+										Calendar
+									</h3>
+									<p className="text-[#581D7D] font-semibold text-[1.2em]">
+										{new Date().getDate()}/
+										{new Date().getMonth() + 1}/
+										{new Date().getFullYear()}
+									</p>
+								</div>
+							</CalenderDialog>
 						</div>
 
 						<div className="h-full flex flex-col justify-center items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">

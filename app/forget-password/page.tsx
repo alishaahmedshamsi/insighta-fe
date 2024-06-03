@@ -32,7 +32,9 @@ export default function forgetPassword() {
 	const onSubmit: SubmitHandler<IForgetFields> = async (data) => {
 		const { success, response } = await mutateAsync(data.email);
 		if (!success) return toast.error(response);
-		toast.success("OTP Code sent to your email." + " " +response.data.data);
+		toast.success(
+			"OTP Code sent to your email." + " " + response.data.data
+		);
 		router.push(`/otp-code/${data.email}`);
 		reset();
 	};
