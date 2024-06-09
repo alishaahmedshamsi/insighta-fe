@@ -9,9 +9,9 @@ export interface IRegisterFields {
 	fullname: string;
 	email: string;
 	password: string;
-	role: string;
-	classes?: number[];
-	section?: string[];
+	classes?: string[];
+	rollnumber?: string;
+	role:string
 }
 
 export interface IResetPassword {
@@ -56,7 +56,7 @@ export interface IPagination {
 
   export interface IClasses{
 	_id:string
-	className:number[]
+	className:string[]
   }
   export interface IClass{
 	_id:string
@@ -78,7 +78,12 @@ export  interface IUser  {
 	otpExpiry: Date;
 	profilePicture: string;
 	location:string
-	points: ObjectId;
+	points: {
+		assignment: number;
+		quiz: number;
+		totalNumber: number;
+		lecture: number;
+	};
 	createdAt?: Date;
 	updatedAt?: Date;
   }

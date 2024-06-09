@@ -9,9 +9,9 @@ const registerSchema = z.object({
 const registerStudentSchema = z.object({
 	fullname: z.string().min(3,"Name must be atleast 3 characters"),
 	email: z.string().email(),
+	rollnumber: z.string(),
 	password: z.string().min(6),
-	classes: z.array(z.number()),
-	section: z.array(z.string()),
+	classes: z.array(z.string()),
 });
 
 const registerTeacherSchema = z.object({

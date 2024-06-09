@@ -44,7 +44,6 @@ export default function DashboardLayout({
 		return <div>Error loading user data</div>;
 	}
 
-	console.log("data: ", user);
 
 	const handleLogout = async () => {
 		await logout();
@@ -400,7 +399,7 @@ export default function DashboardLayout({
 										Section
 									</p>
 									<p className="font-bold text-[#212121] align-middle text-[2em]">
-										{user.section[0].toUpperCase()}
+										{/* {user.section[0].toUpperCase()} */}
 									</p>
 								</div>
 							</div>
