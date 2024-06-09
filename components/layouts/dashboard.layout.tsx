@@ -44,7 +44,6 @@ export default function DashboardLayout({
 		return <div>Error loading user data</div>;
 	}
 
-
 	const handleLogout = async () => {
 		await logout();
 		window.location.href = "/login";
@@ -314,6 +313,7 @@ export default function DashboardLayout({
 		}
 	};
 
+	console.log("user classes: ", user.classes);
 	return (
 		<section className="relative grid h-[100vh] grid-cols-5 bg-[#F4F8FB]">
 			{/* left sidebar */}
@@ -386,12 +386,13 @@ export default function DashboardLayout({
 										Class
 									</p>
 									<p className="font-bold text-[#212121] align-middle text-[2em]">
-										{user.classes
-											.map(
+										{
+											user.classes.map(
 												(cls: { className: any }) =>
-													cls.className
+													cls.className[0]
 											)
-											.join(", ")}
+											// .join(", ")
+										}
 									</p>
 								</div>
 								<div className="flex flex-col items-center">
@@ -400,6 +401,15 @@ export default function DashboardLayout({
 									</p>
 									<p className="font-bold text-[#212121] align-middle text-[2em]">
 										{/* {user.section[0].toUpperCase()} */}
+										{
+											user.classes.map(
+												(cls: { className: any }) =>
+													cls.className[1]
+														? cls.className[1]
+														: "-"
+											)
+											// .join(", ")
+										}
 									</p>
 								</div>
 							</div>

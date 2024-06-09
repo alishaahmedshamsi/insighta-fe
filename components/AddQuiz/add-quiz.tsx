@@ -194,7 +194,7 @@ export default function AddQuizComponent() {
 						className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 						id="totalMarks"
 						name="totalMarks"
-						type="text"
+						type="number"
 						value={formState.totalMarks}
 						onChange={handleChange}
 					/>
@@ -205,7 +205,7 @@ export default function AddQuizComponent() {
 						className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 						id="deadline"
 						name="deadline"
-						type="text"
+						type="date"
 						value={formState.deadline}
 						onChange={handleChange}
 					/>
