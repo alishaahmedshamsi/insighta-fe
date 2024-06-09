@@ -6,9 +6,21 @@ import { SCHOOL_ADMIN_QUICK_START_LIST } from "@/utils";
 import { createClass } from "@/services/apis/school.api";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select"
 
 export default function ClassCreate() {
 	const [classInput, setClassInput] = useState("");
+	const [section,setSection] = useState("");
+
 	const [error, setError] = useState("");
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,6 +28,16 @@ export default function ClassCreate() {
 
 		if (/^(10|[1-9])$/.test(value) || value === "") {
 			setClassInput(value);
+			setError("");
+		} else {
+			setError("Please enter a single digit (1-9) or 10.");
+		}
+	};
+
+	const handleInputChange2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+
+		if (/^(10|[1-9])$/.test(value) || value === "") {
 			setError("");
 		} else {
 			setError("Please enter a single digit (1-9) or 10.");
@@ -36,7 +58,12 @@ export default function ClassCreate() {
 			setError("Please enter a single digit (1-9) or 10.");
 		} else {
 			setError("");
-			const { response, success } = await createClass(inputNumber);
+			let classes = inputNumber.toString();
+			if(section !== 'no-section'){
+				 classes = inputNumber+section;
+			}
+
+			const { response, success } = await createClass(classes);
 			if (!success) {
 				toast.error(response);
 			} else {
@@ -54,41 +81,62 @@ export default function ClassCreate() {
 		>
 			<div className="flex justify-center">
 				<div className="bg-white p-8 rounded-lg shadow-md w-full">
-					{/* <h2 className="text-2xl font-semibold mb-6 text-gray-800 text-center">
-            Create a New Class
-          </h2> */}
-					<form
-						onSubmit={handleFormSubmit}
-						className="grid grid-cols-4 items-end gap-4"
-					>
-						<div className="mb-4 col-span-3">
-							<label
-								htmlFor="classInput"
-								className="block text-sm font-medium text-gray-700"
-							>
-								Class
-							</label>
-							<input
-								id="classInput"
-								className="h-[4em] mt-1 block w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-sea-green focus:border-brand-sea-green"
-								type="text"
-								placeholder="Enter class number (1-10)"
-								value={classInput}
-								onChange={handleInputChange}
-							/>
-							{error && (
-								<p className="text-red-500 text-xs mt-2">
-									{error}
-								</p>
-							)}
+					<form onSubmit={handleFormSubmit} className="grid grid-cols-1 gap-4">
+						<div className="grid grid-cols-2 gap-4">
+							<div className="mb-4 col-span-1">
+								<label
+									htmlFor="classInput"
+									className="block text-sm font-medium text-gray-700"
+								>
+									Class
+								</label>
+								<Input
+									id="classInput"
+									className=""
+									type="text"
+									placeholder="Enter class number (1-10)"
+									value={classInput}
+									onChange={handleInputChange}
+								/>
+								{error && (
+									<p className="text-red-500 text-xs mt-2">
+										{error}
+									</p>
+								)}
+							</div>
+							<div className="mb-4 col-span-1">
+								<label
+									htmlFor="classInput2"
+									className="block text-sm font-medium text-gray-700"
+								>
+									Section
+								</label>
+								<Select onValueChange={(value)=>setSection(value)}>
+									<SelectTrigger className="">
+										<SelectValue placeholder="Select a Section" />
+									</SelectTrigger>
+									<SelectContent className="w-full">
+										<SelectGroup>
+											<SelectLabel>Section</SelectLabel>
+											<SelectItem value="A">A</SelectItem>
+											<SelectItem value="B">B</SelectItem>
+											<SelectItem value="C">C</SelectItem>
+											<SelectItem value="D">D</SelectItem>
+											<SelectItem value="E">E</SelectItem>
+											<SelectItem value="no-section">No Section</SelectItem>
+										</SelectGroup>
+									</SelectContent>
+								</Select>
+
+							</div>
 						</div>
-						<div className="flex items-center h-full">
+						<div className="flex justify-center">
 							<Button
 								size={"lg"}
 								type="submit"
-								className=" w-full h-[4em] bg-brand-sea-green hover:bg-brand-pink"
+								className="w-full "
 							>
-								Create
+								Create Class
 							</Button>
 						</div>
 					</form>

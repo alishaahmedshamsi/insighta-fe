@@ -9,7 +9,7 @@ import StudentQuiz from "@/components/StudentQuiz/StudentQuiz";
 const allQuiz = [
 	{
 		title: "Quiz #1",
-		deadline: "5 May 2024",
+		deadline: "11 july 2024",
 		totalMarks: "10",
 		obtMarks: "--",
 		status: "Not completed",

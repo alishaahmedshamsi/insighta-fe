@@ -1,7 +1,7 @@
 import api from "../middleware/middleware";
 import { STATUS } from "@/utils";
 
-export const createClass = async (className: number) => {
+export const createClass = async (className: string) => {
 	try {
 		const response = await api.post("/school/class-create", { className });
 		if (

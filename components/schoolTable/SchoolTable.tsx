@@ -18,6 +18,8 @@ export function SchoolTable({
 	data: IUser[];
 	role: string;
 }) {
+
+	
 	return (
 		<Table>
 			<TableCaption>{caption}</TableCaption>
@@ -28,7 +30,6 @@ export function SchoolTable({
 					<TableHead>Status</TableHead>
 					<TableHead>Points</TableHead>
 					<TableHead>Class</TableHead>
-					{role === "student" && <TableHead>Section</TableHead>}
 				</TableRow>
 			</TableHeader>
 			<TableBody>
@@ -37,7 +38,7 @@ export function SchoolTable({
 						<TableCell>{user.fullname}</TableCell>
 						<TableCell>{user.email}</TableCell>
 						<TableCell>{"paid"}</TableCell>
-						<TableCell className="px-8">{0}</TableCell>
+						<TableCell className="px-8">0</TableCell>
 						<TableCell className="px-8">
 							{user.classes.map((classObj, classIndex) => (
 								<span key={classIndex}>
@@ -47,11 +48,6 @@ export function SchoolTable({
 								</span>
 							))}
 						</TableCell>
-						{role === "student" && (
-							<TableCell className="px-8">
-								{user.section.join(", ")}
-							</TableCell>
-						)}
 					</TableRow>
 				))}
 			</TableBody>
