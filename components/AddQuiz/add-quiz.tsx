@@ -10,7 +10,16 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover"
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ApiResponse, IClasses } from "@/types/type";
 import { createSubject, fetchClasses } from "@/services/apis/school.api";
@@ -20,6 +29,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import subjectSchema, { Subject } from "@/validation/subject.validation";
 
 export default function AddQuizComponent() {
+	const [date, setDate] = useState<Date>()
+
 	const {
 		isLoading,
 		data,
@@ -119,14 +130,7 @@ export default function AddQuizComponent() {
 			>
 				<div className="w-full flex flex-col">
 					<label htmlFor="class">Class</label>
-					{/* <input
-								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-								id="class"
-								name="class"
-								type="text"
-								value={formState.class}
-								onChange={handleChange}
-							/> */}
+
 					<Select onValueChange={(value) => setValue("class", value)}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Class" />
@@ -154,15 +158,6 @@ export default function AddQuizComponent() {
 				</div>
 				<div className="w-full flex flex-col">
 					<label htmlFor="subject">Subject</label>
-					{/* <input
-								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-								id="subject"
-								name="subject"
-								type="text"
-								value={formState.subject}
-								onChange={handleChange}
-							/> */}
-
 					<Select onValueChange={(value) => setValue("class", value)}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Subject" />
@@ -200,15 +195,28 @@ export default function AddQuizComponent() {
 					/>
 				</div>
 				<div className="w-full flex flex-col">
-					<label htmlFor="deadline">Deadline</label>
-					<input
-						className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-						id="deadline"
-						name="deadline"
-						type="text"
-						value={formState.deadline}
-						onChange={handleChange}
-					/>
+					<Popover>
+						<PopoverTrigger asChild>
+							<Button
+								variant={"outline"}
+								className={cn(
+									"w-[280px] justify-start text-left font-normal",
+									!date && "text-muted-foreground"
+								)}
+							>
+								<CalendarIcon className="mr-2 h-4 w-4" />
+								{date ? format(date, "PPP") : <span>Pick a date</span>}
+							</Button>
+						</PopoverTrigger>
+						<PopoverContent className="w-auto p-0">
+							<Calendar
+								mode="single"
+								selected={date}
+								onSelect={setDate}
+								initialFocus
+							/>
+						</PopoverContent>
+					</Popover>
 				</div>
 				<div className="col-span-2">
 					<label htmlFor="questions">Add Questions</label>
@@ -261,7 +269,7 @@ export default function AddQuizComponent() {
 					<button
 						type="submit"
 						className="rounded-[1em] bg-brand-sea-green py-[.9em] px-[1.5em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
-						// onClick={handleSubmit}
+					// onClick={handleSubmit}
 					>
 						Add Quiz
 					</button>

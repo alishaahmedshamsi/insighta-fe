@@ -2,7 +2,6 @@
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { SCHOOL_ADMIN_QUICK_START_LIST } from "@/utils/constant/constant";
 import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdmin";
-
 import { registerStudentSchema } from "@/validation";
 import { onRegister } from "@/services/apis";
 import { IRegisterFields } from "@/types/type";

@@ -1,3 +1,4 @@
+import { IPoints } from "@/types/type";
 import api from "../middleware/middleware";
 import { STATUS } from "@/utils";
 
@@ -22,4 +23,18 @@ export const updateUser = async (data: any) => {
         response: error?.response?.data?.message ?? error.message.data,
         };
     }
+}
+export const fetchPoints = async (): Promise<IPoints> => {
+    try {
+      const response = await api.get("/user/fetch/points");
+  
+      if (response.status === STATUS.UNPROCESSABLE_ENTITY || response.status === STATUS.BAD_REQUEST) {
+        throw new Error(response.data.message);
+      }
+  
+      return response.data.data;
+    } catch (error: any) {
+      throw new Error(error?.response?.data?.message ?? error.message);
     }
+  };
+

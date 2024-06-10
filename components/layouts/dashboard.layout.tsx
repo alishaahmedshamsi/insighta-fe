@@ -1,6 +1,6 @@
 "use client";
 import { fetchCurrentUser, logout } from "@/services/apis";
-import { IUser } from "@/types/type";
+import { IPoints, IUser } from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,7 @@ import defaultUserPicture from "@/public/assets/default.jpg";
 import PBreakdown from "@/components/p-breakdown";
 import { useState } from "react";
 import CalenderDialog from "../CalenderDialog/CalenderDialog";
+import { fetchPoints } from "@/services/apis/user.api";
 
 export default function DashboardLayout({
 	mainSectionHeading,
@@ -36,11 +37,23 @@ export default function DashboardLayout({
 		queryFn: fetchCurrentUser,
 	});
 
-	if (isLoading) {
+	
+	const {
+		data: points,
+		isLoading: isLoadingPoints,
+		isError: isPointsError,
+	} = useQuery<IPoints | undefined>({
+		queryKey: ["user-points"],
+		queryFn: fetchPoints,
+	});
+
+	
+
+	if (isLoading && isLoadingPoints) {
 		return <div>Loading...</div>;
 	}
 
-	if (isError || !user) {
+	if (isError || !user || isPointsError || !points) {
 		return <div>Error loading user data</div>;
 	}
 
@@ -49,8 +62,8 @@ export default function DashboardLayout({
 		await logout();
 		window.location.href = "/login";
 	};
-	const studentPoints = 400;
-	const teacherPoints = 350;
+
+	// console.log("🚀 Points Data:", points);	
 
 	const topBoxes = () => {
 		if (user.role === "student" || user.role === "teacher") {
@@ -58,15 +71,15 @@ export default function DashboardLayout({
 				<>
 					<div className="grid grid-cols-3 gap-[1em] w-full">
 						<PBreakdown
-							userName="Waqqam Usman"
-							schoolName="Karachi Public School"
-							userRank={"1st"}
-							userClass={"5th Grade"}
+							userName={user.fullname}
+							schoolName={user.school}
+							userRank={""}
+							userClass={user.classes}
 							role={"student"}
-							points={500}
-							assignmentPoints={100}
-							quizPoints={150}
-							lecturePoints={200}
+							points={points.total}
+							assignmentPoints={points.assignment}
+							quizPoints={points.quiz}
+							lecturePoints={points.lecture}
 							open={pointsOpen}
 							setOpen={setPointsOpen}
 						>
@@ -87,9 +100,7 @@ export default function DashboardLayout({
 									</h3>
 									<p className="text-[#581D7D] font-semibold text-[1.2em]">
 										⭐{" "}
-										{user.role === "student"
-											? studentPoints
-											: teacherPoints}
+										{points.total}
 									</p>
 								</div>
 							</div>
