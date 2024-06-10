@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
 	Select,
 	SelectContent,
@@ -36,9 +36,13 @@ export default function AddAssignmentComponent() {
 	const [file, setFile] = useState<File | null>(null);
 	const [description, setDescription] = useState("");
 	const [title, setTitle] = useState("");
+	// const [classIndex, setClassIndex] = useState("");
+
 	const { user, isLoading, error } = useCurrentUser();
-	const router = useRouter()
-	const { mutateAsync, reset,isPending } = useMutation({
+	console.log("user: ", user);
+
+	const router = useRouter();
+	const { mutateAsync, reset, isPending } = useMutation({
 		mutationFn: onAddAssignment,
 		onError: (error) => {
 			console.log(error.message);
@@ -47,6 +51,15 @@ export default function AddAssignmentComponent() {
 			}, 3000);
 		},
 	});
+
+	// useEffect(() => {
+	// 	setClassIndex(() => (
+	// 		user?.classes.findIndex(
+	// 			(item) => item.className.toString() === className
+	// 		)
+	// 	)
+	// 	);
+	// }, [className]);
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files && e.target.files[0]) {
@@ -76,7 +89,6 @@ export default function AddAssignmentComponent() {
 		// console.log(formData.get("deadline"));
 		// console.log(formData.get("file"));
 
-
 		const { success, response } = await mutateAsync(formData);
 
 		if (!success) return toast.error(response);
@@ -85,32 +97,37 @@ export default function AddAssignmentComponent() {
 		setClassName("");
 		setSubjectName("");
 		setMarks("");
-		setDate(new Date());
+		setDate(null);
 		setFile(null);
+		setTitle("");
 		setDescription("");
 	};
 
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>Error loading classes or subjects</div>;
 
+	// console.log("classIndex", checkClassIndex);
+
+	// const filteredSubjects =
+	// 	checkClassIndex !== -1 ? user?.subject[checkClassIndex!] || [] : [];
+
 	return (
 		<>
-			<form onSubmit={handleSubmit} className="grid grid-cols-2 gap-[1em]">
+			<form
+				onSubmit={handleSubmit}
+				className="grid grid-cols-2 gap-[1em]"
+			>
 				<Input
-					onChange={
-						(e) => {
-							setTitle(e.target.value);
-						}
-					}
+					onChange={(e) => {
+						setTitle(e.target.value);
+					}}
 					placeholder="Title"
 					className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 				/>
 				<Input
-					onChange={
-						(e) => {
-							setDescription(e.target.value);
-						}
-					}
+					onChange={(e) => {
+						setDescription(e.target.value);
+					}}
 					placeholder="Description"
 					className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 				/>
@@ -125,7 +142,10 @@ export default function AddAssignmentComponent() {
 							<SelectGroup>
 								<SelectLabel>Classes</SelectLabel>
 								{user?.classes.map((item) => (
-									<SelectItem key={item._id} value={item.className.toString()}>
+									<SelectItem
+										key={item._id}
+										value={item.className.toString()}
+									>
 										{item.className}
 									</SelectItem>
 								))}
@@ -143,10 +163,26 @@ export default function AddAssignmentComponent() {
 							<SelectGroup>
 								<SelectLabel>Subjects</SelectLabel>
 								{user?.subject.map((item) => (
-									<SelectItem key={item._id} value={item.name}>
+									<SelectItem
+										key={item._id}
+										value={item.name}
+									>
 										{item.name}
 									</SelectItem>
 								))}
+
+								{/* {classIndex > -1 && (
+									<SelectItem
+										key={
+											user?.subject[classIndex]._id
+										}
+										value={
+											user?.subject[classIndex].name
+										}
+									>
+										{user?.subject[classIndex].name}
+									</SelectItem>
+								)} */}
 							</SelectGroup>
 						</SelectContent>
 					</Select>
@@ -158,7 +194,11 @@ export default function AddAssignmentComponent() {
 						id="totalMarks"
 						type="number"
 						value={marks}
-						onChange={(e) => setMarks(e.target.value ? Number(e.target.value) : "")}
+						onChange={(e) =>
+							setMarks(
+								e.target.value ? Number(e.target.value) : ""
+							)
+						}
 					/>
 				</div>
 				<div className="w-full flex flex-col">
@@ -173,14 +213,20 @@ export default function AddAssignmentComponent() {
 								)}
 							>
 								<CalendarIcon className="mr-2 h-4 w-4" />
-								{date ? format(date, "PPP") : <span>Pick a date</span>}
+								{date ? (
+									format(date, "PPP")
+								) : (
+									<span>Pick a date</span>
+								)}
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent className="w-auto p-0">
 							<Calendar
 								mode="single"
 								selected={date as Date | undefined}
-								onSelect={setDate as (value: Date | undefined) => void}
+								onSelect={
+									setDate as (value: Date | undefined) => void
+								}
 								disabled={(date) => date < new Date()}
 								initialFocus
 							/>
@@ -203,10 +249,10 @@ export default function AddAssignmentComponent() {
 					>
 						{isPending ? (
 							<>
-							<div className="flex justify-center items-center">
-								<Loader2Icon className="mr-2 animate-spin" />
-								<span>Submitting...</span>
-							</div>
+								<div className="flex justify-center items-center">
+									<Loader2Icon className="mr-2 animate-spin" />
+									<span>Submitting...</span>
+								</div>
 							</>
 						) : (
 							"Add Assignment"

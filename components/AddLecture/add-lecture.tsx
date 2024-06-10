@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
 	Select,
 	SelectContent,
@@ -22,25 +24,20 @@ import subjectSchema, { Subject } from "@/validation/subject.validation";
 import { addLectureSchema } from "@/validation/teacher.validation";
 import { onAddLecture } from "@/services/apis/teacher.api";
 
+import { useRouter } from "next/navigation";
+import { useCurrentUser } from "@/hooks/user.hook";
+
 export default function AddLectureComponent() {
-	const {
-		data,
-		isLoading,
-		error,
-	}: {
-		data: ApiResponse<IClasses> | undefined;
-		isLoading: boolean;
-		error: any;
-	} = useQuery({
-		queryKey: ["fetch-classes"],
-		queryFn: () => fetchClasses(),
-	});
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
+	const [className, setClassName] = useState("");
+	const [subjectName, setSubjectName] = useState("");
+	const [file, setFile] = useState<File | null>(null);
 
-	console.log("class data", data);
+	const { user, isLoading, error } = useCurrentUser();
 
-	// -------------------
-
-	const { mutateAsync, reset } = useMutation({
+	const router = useRouter();
+	const { mutateAsync, reset, isPending } = useMutation({
 		mutationFn: onAddLecture,
 		onError: (error) => {
 			console.log(error.message);
@@ -49,31 +46,113 @@ export default function AddLectureComponent() {
 			}, 3000);
 		},
 	});
-	const {
-		register,
-		handleSubmit,
-		setValue,
-		formState: { errors, isSubmitting }, // isSubmitting for loading state
-	} = useForm<IAddLecture>({
-		resolver: zodResolver(addLectureSchema),
-	});
-	console.log(errors);
 
-	const onSubmit: SubmitHandler<IAddLecture> = async (data, e) => {
-		e?.preventDefault();
+	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files[0]) {
+			setFile(e.target.files[0]);
+		}
+	};
 
-		console.log("DATAAAAA", data);
-		// data.role = "student";
-		const { success, response } = await mutateAsync(data);
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+
+		if (!className || !subjectName || !title || !description || !file) {
+			return toast.error("Please fill in all fields");
+		}
+
+		const formData = new FormData();
+		formData.append("title", title);
+		formData.append("description", description);
+		formData.append("className", className);
+		formData.append("subjectName", subjectName);
+		formData.append("file", file);
+
+		// formData.append("marks", marks.toString());
+		// formData.append("deadline", date?.toISOString() || "");
+
+		console.log(formData.get("title"));
+		console.log(formData.get("description"));
+		console.log(formData.get("className"));
+		console.log(formData.get("subjectName"));
+		console.log(formData.get("file"));
+
+		const lectureData: IAddLecture = {
+		  title: formData.get("title") as string,
+		  description: formData.get("description") as string,
+		  className: formData.get("className") as string,
+		  subjectName: formData.get("subjectName") as string,
+		  file: formData.get("file") as File,
+		};
+		
+		const { success, response } = await mutateAsync(lectureData);
 
 		if (!success) return toast.error(response);
-		if (success) toast.success("Quiz Added Successfully");
+		if (success) toast.success("Lecture Added Successfully");
+		router.push("/teacher-dashboard");
+
+		setTitle("")
+		setDescription("")
+		setClassName("");
+		setSubjectName("");
+		setFile(null);
+		// setMarks("");
+		// setDate(new Date());
 	};
+
+	if (isLoading) return <div>Loading...</div>;
+	if (error) return <div>Error loading classes or subjects</div>;
+
+	// const {
+	// 	data,
+	// 	isLoading,
+	// 	error,
+	// }: {
+	// 	data: ApiResponse<IClasses> | undefined;
+	// 	isLoading: boolean;
+	// 	error: any;
+	// } = useQuery({
+	// 	queryKey: ["fetch-classes"],
+	// 	queryFn: () => fetchClasses(),
+	// });
+
+	// console.log("class data", data);
+
+	// // -------------------
+
+	// const { mutateAsync, reset } = useMutation({
+	// 	mutationFn: onAddLecture,
+	// 	onError: (error) => {
+	// 		console.log(error.message);
+	// 		setTimeout(() => {
+	// 			reset();
+	// 		}, 3000);
+	// 	},
+	// });
+	// const {
+	// 	register,
+	// 	handleSubmit,
+	// 	setValue,
+	// 	formState: { errors, isSubmitting }, // isSubmitting for loading state
+	// } = useForm<IAddLecture>({
+	// 	resolver: zodResolver(addLectureSchema),
+	// });
+	// console.log(errors);
+
+	// const onSubmit: SubmitHandler<IAddLecture> = async (data, e) => {
+	// 	e?.preventDefault();
+
+	// 	console.log("DATAAAAA", data);
+	// 	// data.role = "student";
+	// 	const { success, response } = await mutateAsync(data);
+
+	// 	if (!success) return toast.error(response);
+	// 	if (success) toast.success("Quiz Added Successfully");
+	// };
 
 	return (
 		<>
 			<form
-				onSubmit={handleSubmit(onSubmit)}
+				onSubmit={handleSubmit}
 				className="grid grid-cols-2 gap-[1em]"
 			>
 				<div className="w-full flex flex-col">
@@ -82,7 +161,9 @@ export default function AddLectureComponent() {
 						className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 						id="title"
 						type="text"
-						{...register("title")}
+						onChange={(e) => {
+							setTitle(e.target.value);
+						}}
 					/>
 				</div>
 				<div className="w-full flex flex-col">
@@ -91,75 +172,51 @@ export default function AddLectureComponent() {
 						className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 						id="description"
 						type="text"
-						{...register("description")}
+						onChange={(e) => {
+							setDescription(e.target.value);
+						}}
 					/>
 				</div>
 				<div className="w-full flex flex-col">
 					<label htmlFor="class">Class</label>
-					{/* <input
-								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-								id="class"
-								type="text"
-							/> */}
-					<Select
-						onValueChange={(value) => setValue("className", value)}
-					>
+
+					<Select onValueChange={setClassName}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Class" />
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
 								<SelectLabel>Classes</SelectLabel>
-								{isLoading ? (
-									<div>Loading...</div>
-								) : error ? (
-									<div>Error loading classes</div>
-								) : (
-									data?.data.map((item) => (
-										<SelectItem
-											key={item._id}
-											value={String(item._id)}
-										>
-											{item.className}
-										</SelectItem>
-									))
-								)}
+								{user?.classes.map((item) => (
+									<SelectItem
+										key={item._id}
+										value={item.className.toString()}
+									>
+										{item.className}
+									</SelectItem>
+								))}
 							</SelectGroup>
 						</SelectContent>
 					</Select>
 				</div>
 				<div className="w-full flex flex-col">
 					<label htmlFor="subject">Subject</label>
-					{/* <input
-								className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
-								id="subject"
-								type="text"
-							/> */}
-					<Select
-						onValueChange={(value) =>
-							setValue("subjectName", value)
-						}
-					>
+
+					<Select onValueChange={setSubjectName}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Subject" />
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
 								<SelectLabel>Subjects</SelectLabel>
-								{isLoading ? (
-									<div>Loading...</div>
-								) : error ? (
-									<div>Error loading classes</div>
-								) : (
-									data?.data.map((item) => (
-										<SelectItem
-											key={item._id}
-											value={String(item._id)}
-										>
-											{item.className}
-										</SelectItem>
-									))
-								)}
+								{user?.subject.map((item) => (
+									<SelectItem
+										key={item._id}
+										value={item.name}
+									>
+										{item.name}
+									</SelectItem>
+								))}
 							</SelectGroup>
 						</SelectContent>
 					</Select>
@@ -170,7 +227,7 @@ export default function AddLectureComponent() {
 						type="file"
 						id="file"
 						className="col-span-3 w-full border-2 border-[#ddd] bg-white border-dashed rounded-[1em] p-[.8em]"
-						{...register("file")}
+						onChange={handleFileChange}
 					/>
 				</div>
 				<div className="col-span-1">

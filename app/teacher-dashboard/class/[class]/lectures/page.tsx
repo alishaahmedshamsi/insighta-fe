@@ -7,6 +7,11 @@ import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import WatchLectureDialog from "@/components/watchLectureDialog";
 import AddLectureComponent from "@/components/AddLecture/add-lecture";
+import { useCurrentUser } from "@/hooks/user.hook";
+import { useQuery } from "@tanstack/react-query";
+import { fetchLectures, fetchQuiz } from "@/services/apis/teacher.api";
+import { Key } from "react";
+
 
 const allClassesLectures = [
 	{
@@ -47,6 +52,28 @@ export default function TeacherIndividualClass({
 	const { class: teacherClass, subject } = params;
 
 	const mainSectionHeading = `Class: ${teacherClass} Lectures`;
+
+	
+	const extractClass = teacherClass.split("-")[0];
+	const { user } = useCurrentUser();
+
+	const classId = user?.classes.find(
+		(cls) => cls.className.toString() == extractClass
+	)?._id;
+
+	console.log("user: ", user);
+	console.log("classId: ", classId);
+
+	const { data: allClassesLectures, isLoading } = useQuery({
+		queryKey: ["fetch-lectures"],
+		queryFn: () => fetchLectures(classId!),
+	});
+
+	console.log("All lectures: ", allClassesLectures)
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 	return (
 		<>
 			<DashboardLayout
@@ -64,7 +91,7 @@ export default function TeacherIndividualClass({
 						<hr className="my-[1em]" />
 
 						<div className="rounded-[2em] flex flex-col gap-[2em] pb-[2em]">
-							{allClassesLectures.map((lecture) => (
+							{allClassesLectures?.map((lecture: any) => (
 								<div>
 									<div className="subject-assignments-container flex flex-col gap-6">
 										<div

@@ -131,11 +131,12 @@ export interface IAddQuiz {
 	questions: string[];
 	marks: number;
 }
+
 export interface IAddLecture {
 	title: string;
 	description: string;
 	className: string;
 	subjectName: string;
-	file: string;
+	file: File;
 }
 

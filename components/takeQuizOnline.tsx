@@ -177,21 +177,22 @@ export default function TakeQuizOnline({
 														</Dialog.Title>
 														<div className="mt-2 overflow-y-scroll pr-4">
 															{quizQuestions.map(
-																(question) => (
+																(
+																	question,
+																	i
+																) => (
 																	<div
-																		key={
-																			question.questionNo
-																		}
+																		key={i}
 																		className="flex flex-col mb-4"
 																	>
 																		<h3 className="font-medium uppercase text-[#494949] align-middle text-[1em] tracking-[2px]">
-																			{
-																				question.questionNo
-																			}
+																			Question
+																			#
+																			{i +1}
 																		</h3>
 																		<h3 className="font-medium text-[#212121] align-middle text-[1.4em]">
 																			{
-																				question.question
+																				question
 																			}
 																		</h3>
 																	</div>

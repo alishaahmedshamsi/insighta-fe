@@ -61,13 +61,8 @@ export const onAddQuiz = async (data: IAddQuiz) => {
 
 export const onAddLecture = async (data: IAddLecture) => {
 	try {
-		const response = await api.post("/auth/register", data, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-			},
-		});
+		const response = await api.post("/teacher/lecture", data);
 
-		console.log("data: ", data);
 
 		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
 			return { success: false, response: response.data.message };
@@ -89,3 +84,29 @@ export const onAddLecture = async (data: IAddLecture) => {
 		};
 	}
 };
+
+export const fetchAssignments = async (subject?:string) => {
+	try {
+		const response = await api.get(`/teacher/assignment?subject=${subject?subject:undefined}`);
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+}
+
+export const fetchQuiz = async (classroom?:string) => {
+	try {
+		const response = await api.get(`/teacher/quiz?classroom=${classroom?classroom:undefined}`);
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+}
+export const fetchLectures = async (classroom?:string) => {
+	try {
+		const response = await api.get(`/teacher/lecture?class=${classroom?classroom:undefined}`);
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+}
