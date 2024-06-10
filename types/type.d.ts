@@ -79,7 +79,14 @@ export  interface IUser  {
 	otpExpiry: Date;
 	profilePicture: string;
 	location:string
-	points: IPoints;
+
+	points: {
+		assignment: number;
+		quiz: number;
+		totalNumber: number;
+		lecture: number;
+	};
+
 	createdAt?: Date;
 	updatedAt?: Date;
   }
