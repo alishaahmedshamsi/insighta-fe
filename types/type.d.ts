@@ -73,21 +73,24 @@ export  interface IUser  {
 	role: ROLES;
 	classes: IClass[];
 	section: string[];
+	subject: ISubject[];
 	school: ObjectId;
 	otp: number;
 	otpExpiry: Date;
 	profilePicture: string;
 	location:string
-	points: {
-		assignment: number;
-		quiz: number;
-		totalNumber: number;
-		lecture: number;
-	};
+	points: IPoints;
 	createdAt?: Date;
 	updatedAt?: Date;
   }
 
+  export interface IPoints {
+	assignment: number;
+	quiz: number;
+	lecture: number;
+	review:number
+	total: number;
+  }
 export interface ISchoolInfo {
 	fullname:string,
 	email:string
@@ -99,4 +102,9 @@ export interface ISchoolInfo {
 export interface IUserUpdate {
 	fullname: string;
 	location:string
-  }
+}
+
+export interface ISubject {
+	_id:string
+	name:string
+}

@@ -1,5 +1,6 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { IClass } from "@/types/type";
 
 export default function PointsBreakdown({
 	points,
@@ -12,7 +13,7 @@ export default function PointsBreakdown({
 	userClass,
 	qualification,
 	role,
-    children,
+	children,
 	open,
 	setOpen
 }: {
@@ -23,16 +24,18 @@ export default function PointsBreakdown({
 	userName: string;
 	schoolName: string;
 	userRank: string;
-	userClass?: string;
+	userClass?: IClass[];
 	qualification?: string;
 	role: string;
-    children: React.ReactNode
+	children: React.ReactNode
 	open: boolean
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-	
+
 
 	const cancelButtonRef = useRef(null);
+
+	console.log(userClass);
 
 	return (
 		<>
@@ -87,7 +90,7 @@ export default function PointsBreakdown({
 												</p>
 												{role === "student" ? (
 													<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
-														Grade: {userClass}
+														Class: {userClass && userClass.map((c) => c.className).join(', ')}
 													</p>
 												) : (
 													<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
