@@ -119,22 +119,17 @@ export interface ISubject {
 export interface IAddAssignment {
 	className: string;
 	subjectName: string;
-	totalMarks: number;
-	deadline: string;
-	file: string;
+	marks: number;
+	deadline: Date;
+	file: File;
 }
 
 export interface IAddQuiz {
 	className: string;
 	subjectName: string;
-	totalMarks: number;
-	deadline: string;
-	// and
-	questions: [
-		{
-			question: string;
-		}
-	];
+	deadline: Date;
+	questions: string[];
+	marks: number;
 }
 export interface IAddLecture {
 	title: string;
@@ -144,4 +139,3 @@ export interface IAddLecture {
 	file: string;
 }
 
-// IQuestion

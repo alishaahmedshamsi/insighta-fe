@@ -5,16 +5,14 @@ import { z } from "zod";
 export const addAssignmentSchema = z.object({
 	className: z.string(),
 	subjectName: z.string(),
-	totalMarks: z.number(),
-	deadline: z.string(),
-	file: z.string(),
+	marks: z.number(),
 });
 
 export const addQuizSchema = z.object({
 	className: z.string(),
 	subjectName: z.string(),
-	totalMarks: z.number(),
-	deadline: z.string(),
+	marks: z.number(),
+	deadline: z.date(),
 	questions: z.array(
 		z.object({
 			question: z.string(),
