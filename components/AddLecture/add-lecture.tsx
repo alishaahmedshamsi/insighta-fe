@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ApiResponse, IClasses } from "@/types/type";
+import { ApiResponse, IAddLecture, IClasses } from "@/types/type";
 import { createSubject, fetchClasses } from "@/services/apis/school.api";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
@@ -19,32 +19,29 @@ import { onLogin } from "@/services/apis";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import subjectSchema, { Subject } from "@/validation/subject.validation";
+import { addLectureSchema } from "@/validation/teacher.validation";
+import { onAddLecture } from "@/services/apis/teacher.api";
 
 export default function AddLectureComponent() {
 	const {
-		isLoading,
 		data,
+		isLoading,
 		error,
 	}: {
 		data: ApiResponse<IClasses> | undefined;
-		error: any;
 		isLoading: boolean;
+		error: any;
 	} = useQuery({
 		queryKey: ["fetch-classes"],
 		queryFn: () => fetchClasses(),
 	});
 
-	if (isLoading) {
-		<div>loading...</div>;
-	}
+	console.log("class data", data);
 
-	if (error) {
-		toast.error(error);
-	}
+	// -------------------
 
 	const { mutateAsync, reset } = useMutation({
-		mutationFn: createSubject,
-
+		mutationFn: onAddLecture,
 		onError: (error) => {
 			console.log(error.message);
 			setTimeout(() => {
@@ -52,31 +49,40 @@ export default function AddLectureComponent() {
 			}, 3000);
 		},
 	});
-
 	const {
-		setValue,
 		register,
 		handleSubmit,
-		formState: { errors, isSubmitting },
-	} = useForm<Subject>({ resolver: zodResolver(subjectSchema) });
+		setValue,
+		formState: { errors, isSubmitting }, // isSubmitting for loading state
+	} = useForm<IAddLecture>({
+		resolver: zodResolver(addLectureSchema),
+	});
+	console.log(errors);
 
-	const onSubmit: SubmitHandler<Subject> = async (data, e) => {
-		console.log("Hello wolr");
+	const onSubmit: SubmitHandler<IAddLecture> = async (data, e) => {
+		e?.preventDefault();
 
+		console.log("DATAAAAA", data);
+		// data.role = "student";
 		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
-		if (success) toast.success("Quiz Created successfully");
+		if (success) toast.success("Quiz Added Successfully");
 	};
+
 	return (
 		<>
-			<div className="grid grid-cols-2 gap-[1em]">
+			<form
+				onSubmit={handleSubmit(onSubmit)}
+				className="grid grid-cols-2 gap-[1em]"
+			>
 				<div className="w-full flex flex-col">
 					<label htmlFor="title">Title</label>
 					<input
 						className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 						id="title"
 						type="text"
+						{...register("title")}
 					/>
 				</div>
 				<div className="w-full flex flex-col">
@@ -85,6 +91,7 @@ export default function AddLectureComponent() {
 						className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 						id="description"
 						type="text"
+						{...register("description")}
 					/>
 				</div>
 				<div className="w-full flex flex-col">
@@ -94,7 +101,9 @@ export default function AddLectureComponent() {
 								id="class"
 								type="text"
 							/> */}
-					<Select onValueChange={(value) => setValue("class", value)}>
+					<Select
+						onValueChange={(value) => setValue("className", value)}
+					>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Class" />
 						</SelectTrigger>
@@ -126,7 +135,11 @@ export default function AddLectureComponent() {
 								id="subject"
 								type="text"
 							/> */}
-					<Select onValueChange={(value) => setValue("class", value)}>
+					<Select
+						onValueChange={(value) =>
+							setValue("subjectName", value)
+						}
+					>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Subject" />
 						</SelectTrigger>
@@ -155,9 +168,9 @@ export default function AddLectureComponent() {
 					<label htmlFor="file">Upload file</label>
 					<input
 						type="file"
-						name="file"
 						id="file"
 						className="col-span-3 w-full border-2 border-[#ddd] bg-white border-dashed rounded-[1em] p-[.8em]"
+						{...register("file")}
 					/>
 				</div>
 				<div className="col-span-1">
@@ -165,7 +178,7 @@ export default function AddLectureComponent() {
 						Add Lecture
 					</button>
 				</div>
-			</div>
+			</form>
 		</>
 	);
 }

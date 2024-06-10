@@ -26,8 +26,6 @@ const subjectList = [
 	},
 ];
 
-
-
 export default function StudentDashboard() {
 	const [allowReview, setAllowReview] = useState(true);
 	return (
@@ -91,7 +89,7 @@ export default function StudentDashboard() {
 										</div>
 										<div className="w-[75%]">
 											<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-												Recommend Your Teachers
+												Give Feedback
 											</h4>
 										</div>
 									</div>

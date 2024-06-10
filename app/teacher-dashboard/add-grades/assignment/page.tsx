@@ -4,8 +4,7 @@ import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
-
-
+import { useCurrentUser } from "@/hooks/user.hook";
 
 const classesList = [
 	{
@@ -27,6 +26,12 @@ const classesList = [
 ];
 
 export default function Component() {
+	const { user, isLoading } = useCurrentUser();
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<>
 			<DashboardLayout
@@ -35,9 +40,12 @@ export default function Component() {
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>
 				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
-					{classesList.map((classes) => {
+					{/* {classesList.map((classes) => { */}
+					{user?.classes.map((teacherClass, index) => {
 						return (
-							<Link href={classes.classLink}>
+							<Link
+								href={`/teacher-dashboard/add-grades/assignment/${teacherClass.className}`}
+							>
 								<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 									<div className="w-[80px]">
 										<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -52,7 +60,8 @@ export default function Component() {
 									</div>
 									<div className="w-[75%]">
 										<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-											{classes.name}
+											{teacherClass.className} -{" "}
+											{user.subject[index]?.name}
 										</h4>
 									</div>
 								</div>
