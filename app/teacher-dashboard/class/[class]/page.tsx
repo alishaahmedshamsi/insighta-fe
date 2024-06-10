@@ -5,17 +5,18 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 
-
 export default function Component({ params }: { params: { class: string } }) {
 	const { class: teacherClass } = params;
-	const mainSectionHeading = `Class: ${teacherClass} - Subjects`
+	// const { className } = teacherClass;
+	console.log("teacherClass: ", teacherClass)
+	const mainSectionHeading = `Class: ${teacherClass}`;
 
-	const subjectList = [
-		{
-			name: "English",
-			subjectLink: `/teacher-dashboard/class/${teacherClass}/english`,
-		},
-	];
+	// const subjectList = [
+	// 	{
+	// 		name: "English",
+	// 		subjectLink: `/teacher-dashboard/class/${teacherClass}/english`,
+	// 	},
+	// ];
 	return (
 		<>
 			<DashboardLayout
@@ -23,11 +24,11 @@ export default function Component({ params }: { params: { class: string } }) {
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>
-			<div className="rounded-[2em] flex flex-col gap-[2em]">
+				<div className="rounded-[2em] flex flex-col gap-[2em]">
 					<div className="grid grid-cols-2 gap-[2em]">
 						<Link
 							// href={`/teacher-dashboard/class/${teacherClass}/${subject}/assignments`}
-							href={''}
+							href={`/teacher-dashboard/class/${teacherClass}/assignments`}
 						>
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">
@@ -50,7 +51,7 @@ export default function Component({ params }: { params: { class: string } }) {
 						</Link>
 						<Link
 							// href={`/teacher-dashboard/class/${teacherClass}/${subject}/quiz`}
-							href={''}
+							href={`/teacher-dashboard/class/${teacherClass}/quiz`}
 						>
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">
@@ -73,7 +74,7 @@ export default function Component({ params }: { params: { class: string } }) {
 						</Link>
 						<Link
 							// href={`/teacher-dashboard/class/${teacherClass}/${subject}/lectures`}
-							href={''}
+							href={`/teacher-dashboard/class/${teacherClass}/lectures`}
 						>
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">

@@ -53,7 +53,7 @@ export default function SchoolAdminCreateStudent() {
 
 	const onSubmit: SubmitHandler<IRegisterFields> = async (data, e) => {
 		e?.preventDefault();
-
+		
 		console.log("DATAAAAA", data);
 		data.role = 'student'
 		const { success, response } = await mutateAsync(data);

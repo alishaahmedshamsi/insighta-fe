@@ -37,7 +37,6 @@ export default function DashboardLayout({
 		queryFn: fetchCurrentUser,
 	});
 
-	
 	const {
 		data: points,
 		isLoading: isLoadingPoints,
@@ -47,8 +46,6 @@ export default function DashboardLayout({
 		queryFn: fetchPoints,
 	});
 
-	
-
 	if (isLoading && isLoadingPoints) {
 		return <div>Loading...</div>;
 	}
@@ -57,13 +54,12 @@ export default function DashboardLayout({
 		return <div>Error loading user data</div>;
 	}
 
-
 	const handleLogout = async () => {
 		await logout();
 		window.location.href = "/login";
 	};
 
-	// console.log("🚀 Points Data:", points);	
+	// console.log("🚀 Points Data:", points);
 
 	const topBoxes = () => {
 		if (user.role === "student" || user.role === "teacher") {
@@ -99,8 +95,7 @@ export default function DashboardLayout({
 										Points Earned
 									</h3>
 									<p className="text-[#581D7D] font-semibold text-[1.2em]">
-										⭐{" "}
-										{points.total}
+										⭐ {points.total}
 									</p>
 								</div>
 							</div>
@@ -397,12 +392,10 @@ export default function DashboardLayout({
 										Class
 									</p>
 									<p className="font-bold text-[#212121] align-middle text-[2em]">
-										{user.classes
-											.map(
-												(cls: { className: any }) =>
-													cls.className
-											)
-											.join(", ")}
+										{user.classes.map(
+											(cls: { className: any }) =>
+												cls.className[0]
+										)}
 									</p>
 								</div>
 								<div className="flex flex-col items-center">
@@ -411,6 +404,10 @@ export default function DashboardLayout({
 									</p>
 									<p className="font-bold text-[#212121] align-middle text-[2em]">
 										{/* {user.section[0].toUpperCase()} */}
+										{user.classes.map(
+											(cls: { className: any }) =>
+												cls.className[1] ? cls.className[1] : "-"
+										)}
 									</p>
 								</div>
 							</div>

@@ -10,51 +10,51 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ApiResponse, IClasses } from "@/types/type";
+import { ApiResponse, IAddQuiz, IClasses } from "@/types/type";
 import { createSubject, fetchClasses } from "@/services/apis/school.api";
 import { toast } from "sonner";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import subjectSchema, { Subject } from "@/validation/subject.validation";
+import { onAddQuiz } from "@/services/apis/teacher.api";
+import { addQuizSchema } from "@/validation/teacher.validation";
 
 export default function AddQuizComponent() {
-	const [date, setDate] = useState<Date>()
+	const [date, setDate] = useState<Date>();
+
+	// const [selectedClass, setSelectedClass] = useState("");
+	// const [open, setOpen] = useState(false);
 
 	const {
-		isLoading,
 		data,
+		isLoading,
 		error,
 	}: {
 		data: ApiResponse<IClasses> | undefined;
-		error: any;
 		isLoading: boolean;
+		error: any;
 	} = useQuery({
 		queryKey: ["fetch-classes"],
 		queryFn: () => fetchClasses(),
 	});
 
-	if (isLoading) {
-		<div>loading...</div>;
-	}
+	console.log("class data", data);
 
-	if (error) {
-		toast.error(error);
-	}
+	// -------------------
 
 	const { mutateAsync, reset } = useMutation({
-		mutationFn: createSubject,
-
+		mutationFn: onAddQuiz,
 		onError: (error) => {
 			console.log(error.message);
 			setTimeout(() => {
@@ -62,34 +62,34 @@ export default function AddQuizComponent() {
 			}, 3000);
 		},
 	});
-
 	const {
-		setValue,
 		register,
 		handleSubmit,
-		formState: { errors, isSubmitting },
-	} = useForm<Subject>({ resolver: zodResolver(subjectSchema) });
+		setValue,
+		formState: { errors, isSubmitting }, // isSubmitting for loading state
+	} = useForm<IAddQuiz>({
+		resolver: zodResolver(addQuizSchema),
+	});
+	console.log(errors);
 
-	const onSubmit: SubmitHandler<Subject> = async (data, e) => {
-		console.log("Hello wolr");
+	const onSubmit: SubmitHandler<IAddQuiz> = async (data, e) => {
+		e?.preventDefault();
 
+		console.log("DATAAAAA", data);
+		// data.role = "student";
 		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
-		if (success) toast.success("Quiz Created successfully");
+		if (success) toast.success("Quiz Added Successfully");
 	};
 
 	const [formState, setFormState] = useState({
-		class: "",
-		subject: "",
-		totalMarks: "",
-		deadline: "",
 		questions: [{ id: 1, text: "" }],
 	});
 
 	const addQuestion = () => {
 		setFormState((prevState) => ({
-			...prevState,
+			
 			questions: [
 				...prevState.questions,
 				{ id: prevState.questions.length + 1, text: "" },
@@ -99,7 +99,7 @@ export default function AddQuizComponent() {
 
 	const removeQuestion = (id: number) => {
 		setFormState((prevState) => ({
-			...prevState,
+			
 			questions: prevState.questions.filter(
 				(question) => question.id !== id
 			),
@@ -108,20 +108,19 @@ export default function AddQuizComponent() {
 
 	const handleQuestionChange = (id: number, text: any) => {
 		setFormState((prevState) => ({
-			...prevState,
 			questions: prevState.questions.map((question) =>
 				question.id === id ? { ...question, text } : question
 			),
 		}));
 	};
 
-	const handleChange = (e: { target: { name: any; value: any } }) => {
-		const { name, value } = e.target;
-		setFormState((prevState) => ({
-			...prevState,
-			[name]: value,
-		}));
-	};
+	// const handleChange = (e: { target: { name: any; value: any } }) => {
+	// 	const { name, value } = e.target;
+	// 	setFormState((prevState) => ({
+	// 		...prevState,
+	// 		[name]: value,
+	// 	}));
+	// };
 	return (
 		<>
 			<form
@@ -131,7 +130,7 @@ export default function AddQuizComponent() {
 				<div className="w-full flex flex-col">
 					<label htmlFor="class">Class</label>
 
-					<Select onValueChange={(value) => setValue("class", value)}>
+					<Select onValueChange={(value) => setValue("className", value)}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Class" />
 						</SelectTrigger>
@@ -158,7 +157,7 @@ export default function AddQuizComponent() {
 				</div>
 				<div className="w-full flex flex-col">
 					<label htmlFor="subject">Subject</label>
-					<Select onValueChange={(value) => setValue("class", value)}>
+					<Select onValueChange={(value) => setValue("subjectName", value)}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Subject" />
 						</SelectTrigger>
@@ -188,24 +187,31 @@ export default function AddQuizComponent() {
 					<input
 						className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 						id="totalMarks"
-						name="totalMarks"
+						// name="totalMarks"
 						type="text"
-						value={formState.totalMarks}
-						onChange={handleChange}
+						// value={formState.totalMarks}
+						// onChange={handleChange}
+						{...register("totalMarks")}
 					/>
 				</div>
-				<div className="w-full flex flex-col">
+				<div className="w-full flex flex-col justify-end">
+					<label htmlFor="totalMarks">Deadline</label>
+
 					<Popover>
 						<PopoverTrigger asChild>
 							<Button
 								variant={"outline"}
 								className={cn(
-									"w-[280px] justify-start text-left font-normal",
+									"rounded-[1em] p-[.8em] h-[3.7em] justify-start text-left font-normal",
 									!date && "text-muted-foreground"
 								)}
 							>
 								<CalendarIcon className="mr-2 h-4 w-4" />
-								{date ? format(date, "PPP") : <span>Pick a date</span>}
+								{date ? (
+									format(date, "PPP")
+								) : (
+									<span>Pick a date</span>
+								)}
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent className="w-auto p-0">
@@ -213,6 +219,7 @@ export default function AddQuizComponent() {
 								mode="single"
 								selected={date}
 								onSelect={setDate}
+								disabled={(date) => date < new Date()}
 								initialFocus
 							/>
 						</PopoverContent>
@@ -269,7 +276,7 @@ export default function AddQuizComponent() {
 					<button
 						type="submit"
 						className="rounded-[1em] bg-brand-sea-green py-[.9em] px-[1.5em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
-					// onClick={handleSubmit}
+						// onClick={handleSubmit}
 					>
 						Add Quiz
 					</button>

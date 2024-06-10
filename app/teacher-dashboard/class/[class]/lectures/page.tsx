@@ -46,7 +46,7 @@ export default function TeacherIndividualClass({
 }) {
 	const { class: teacherClass, subject } = params;
 
-	const mainSectionHeading = `Class: ${teacherClass} - ${subject} Lectures`;
+	const mainSectionHeading = `Class: ${teacherClass} Lectures`;
 	return (
 		<>
 			<DashboardLayout

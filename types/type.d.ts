@@ -11,7 +11,7 @@ export interface IRegisterFields {
 	password: string;
 	classes?: string[];
 	rollnumber?: string;
-	role:string
+	role: string;
 }
 
 export interface IResetPassword {
@@ -47,24 +47,24 @@ export interface IPagination {
 	prevPage: number | null;
 	totalItems: number;
 	totalPages: number;
-  }
-  
-  export interface ApiResponse<T> {
+}
+
+export interface ApiResponse<T> {
 	data: T[];
 	pagination: Pagination;
-  }
+}
 
-  export interface IClasses{
-	_id:string
-	className:string[]
-  }
-  export interface IClass{
-	_id:string
-	className:number
-  }
+export interface IClasses {
+	_id: string;
+	className: string[];
+}
+export interface IClass {
+	_id: string;
+	className: number;
+}
 
-export  interface IUser  {
-	_id:string
+export interface IUser {
+	_id: string;
 	fullname: string;
 	email: string;
 	qualification: string;
@@ -78,7 +78,7 @@ export  interface IUser  {
 	otp: number;
 	otpExpiry: Date;
 	profilePicture: string;
-	location:string
+	location: string;
 
 	points: {
 		assignment: number;
@@ -89,29 +89,59 @@ export  interface IUser  {
 
 	createdAt?: Date;
 	updatedAt?: Date;
-  }
+}
 
-  export interface IPoints {
+export interface IPoints {
 	assignment: number;
 	quiz: number;
 	lecture: number;
-	review:number
+	review: number;
 	total: number;
-  }
+}
 export interface ISchoolInfo {
-	fullname:string,
-	email:string
-	studentCount:number
-	teacherCount:number
-	_id:string
+	fullname: string;
+	email: string;
+	studentCount: number;
+	teacherCount: number;
+	_id: string;
 }
 
 export interface IUserUpdate {
 	fullname: string;
-	location:string
+	location: string;
 }
 
 export interface ISubject {
-	_id:string
-	name:string
+	_id: string;
+	name: string;
 }
+
+export interface IAddAssignment {
+	className: string;
+	subjectName: string;
+	totalMarks: number;
+	deadline: string;
+	file: string;
+}
+
+export interface IAddQuiz {
+	className: string;
+	subjectName: string;
+	totalMarks: number;
+	deadline: string;
+	// and
+	questions: [
+		{
+			question: string;
+		}
+	];
+}
+export interface IAddLecture {
+	title: string;
+	description: string;
+	className: string;
+	subjectName: string;
+	file: string;
+}
+
+// IQuestion
