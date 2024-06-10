@@ -1,19 +1,17 @@
 import { IAddAssignment, IAddLecture, IAddQuiz, ILoginFields, IRegisterFields, IUserUpdate } from "@/types/type";
 import api from "../middleware/middleware";
 import { STATUS } from "@/utils";
-import Cookies from "js-cookie";
 
 
 
-export const onAddAssignment = async (data: IAddAssignment) => {
+export const onAddAssignment = async (data: FormData) => {
 	try {
-		const response = await api.post("/auth/register", data, {
+		const response = await api.post("/teacher/assignment", data, {
 			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+				"Content-Type": "multipart/form-data",
 			},
 		});
 
-		console.log("data: ", data);
 
 		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
 			return { success: false, response: response.data.message };
@@ -38,13 +36,7 @@ export const onAddAssignment = async (data: IAddAssignment) => {
 
 export const onAddQuiz = async (data: IAddQuiz) => {
 	try {
-		const response = await api.post("/auth/register", data, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-			},
-		});
-
-		console.log("data: ", data);
+		const response = await api.post("/teacher/quiz", data);
 
 		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
 			return { success: false, response: response.data.message };
@@ -66,6 +58,7 @@ export const onAddQuiz = async (data: IAddQuiz) => {
 		};
 	}
 };
+
 export const onAddLecture = async (data: IAddLecture) => {
 	try {
 		const response = await api.post("/auth/register", data, {

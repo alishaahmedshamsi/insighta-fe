@@ -2,6 +2,7 @@ import { ILoginFields, IRegisterFields, IUserUpdate } from "@/types/type";
 import api from "../middleware/middleware";
 import { STATUS } from "@/utils";
 import Cookies from "js-cookie";
+
 export const onLogin = async (data: ILoginFields) => {
 	try {
 		const response = await api.post("/auth/login", data);
