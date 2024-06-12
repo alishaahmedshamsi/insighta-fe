@@ -50,7 +50,7 @@ export default function TeacherIndividualClassAddAssignments({
 		queryFn: () => fetchAssignments(subjectId!),
 	});
 
-	console.log("All assignments: ", allAssignments)
+	// console.log("All assignments: ", allAssignments)
 
 	if (isLoading) {
 		return <div>Loading...</div>;

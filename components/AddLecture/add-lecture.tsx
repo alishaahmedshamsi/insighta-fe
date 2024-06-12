@@ -16,7 +16,7 @@ import { createSubject, fetchClasses } from "@/services/apis/school.api";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { PlusCircleIcon } from "lucide-react";
+import { Loader2Icon, PlusCircleIcon } from "lucide-react";
 import { onLogin } from "@/services/apis";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -33,6 +33,9 @@ export default function AddLectureComponent() {
 	const [className, setClassName] = useState("");
 	const [subjectName, setSubjectName] = useState("");
 	const [file, setFile] = useState<File | null>(null);
+
+	const [classId, setClassId] = useState<string | null>(null);
+	const [subjectId, setSubjectId] = useState<string | null>(null);
 
 	const { user, isLoading, error } = useCurrentUser();
 
@@ -56,42 +59,52 @@ export default function AddLectureComponent() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (!className || !subjectName || !title || !description || !file) {
+		if (!classId || !subjectId || !title || !description || !file) {
 			return toast.error("Please fill in all fields");
 		}
 
-		const formData = new FormData();
-		formData.append("title", title);
-		formData.append("description", description);
-		formData.append("className", className);
-		formData.append("subjectName", subjectName);
-		formData.append("file", file);
+		// const formData = new FormData();
+		// formData.append("title", title);
+		// formData.append("description", description);
+		// formData.append("className", className);
+		// formData.append("subjectName", subjectName);
+		// formData.append("file", file);
 
 		// formData.append("marks", marks.toString());
 		// formData.append("deadline", date?.toISOString() || "");
 
-		console.log(formData.get("title"));
-		console.log(formData.get("description"));
-		console.log(formData.get("className"));
-		console.log(formData.get("subjectName"));
-		console.log(formData.get("file"));
+		// console.log(formData.get("title"));
+		// console.log(formData.get("description"));
+		// console.log(formData.get("className"));
+		// console.log(formData.get("subjectName"));
+		// console.log(formData.get("file"));
 
-		const lectureData: IAddLecture = {
-		  title: formData.get("title") as string,
-		  description: formData.get("description") as string,
-		  className: formData.get("className") as string,
-		  subjectName: formData.get("subjectName") as string,
-		  file: formData.get("file") as File,
+		// const lectureData: IAddLecture = {
+		//   title: formData.get("title") as string,
+		//   description: formData.get("description") as string,
+		//   className: formData.get("className") as string,
+		//   subjectName: formData.get("subjectName") as string,
+		//   file: formData.get("file") as File,
+		// };
+
+		const data: IAddLecture = {
+			title,
+			description: description,
+			className: classId,
+			subject: subjectId,
+			// marks: marks as number,
+			lecture: file,
 		};
-		
-		const { success, response } = await mutateAsync(lectureData);
+
+		console.log("lecture data: ", data);
+		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
 		if (success) toast.success("Lecture Added Successfully");
 		router.push("/teacher-dashboard");
 
-		setTitle("")
-		setDescription("")
+		setTitle("");
+		setDescription("");
 		setClassName("");
 		setSubjectName("");
 		setFile(null);
@@ -101,6 +114,24 @@ export default function AddLectureComponent() {
 
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>Error loading classes or subjects</div>;
+
+	const handleClassChange = (value: string) => {
+		console.log("class value: ", value);
+
+		const classData = user?.classes.find(
+			(item) => String(item.className) === String(value)
+		);
+		setClassId(classData?._id);
+	};
+
+	const handleSubjectChange = (value: string) => {
+		console.log("class value: ", value);
+
+		const subjectData = user?.subject.find(
+			(item) => String(item.name) === String(value)
+		);
+		setSubjectId(subjectData?._id);
+	};
 
 	// const {
 	// 	data,
@@ -180,7 +211,7 @@ export default function AddLectureComponent() {
 				<div className="w-full flex flex-col">
 					<label htmlFor="class">Class</label>
 
-					<Select onValueChange={setClassName}>
+					<Select onValueChange={handleClassChange}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Class" />
 						</SelectTrigger>
@@ -202,7 +233,7 @@ export default function AddLectureComponent() {
 				<div className="w-full flex flex-col">
 					<label htmlFor="subject">Subject</label>
 
-					<Select onValueChange={setSubjectName}>
+					<Select onValueChange={handleSubjectChange}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Subject" />
 						</SelectTrigger>
@@ -231,8 +262,21 @@ export default function AddLectureComponent() {
 					/>
 				</div>
 				<div className="col-span-1">
-					<button className="rounded-[1em] bg-brand-sea-green py-[.9em] px-[1.5em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink">
-						Add Lecture
+					
+					<button
+						className="rounded-[1em] bg-brand-sea-green py-[.9em] px-[1.5em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
+						type="submit"
+					>
+						{isPending ? (
+							<>
+								<div className="flex justify-center items-center">
+									<Loader2Icon className="mr-2 animate-spin" />
+									<span>Submitting...</span>
+								</div>
+							</>
+						) : (
+							"Add Lecture"
+						)}
 					</button>
 				</div>
 			</form>

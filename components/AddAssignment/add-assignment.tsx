@@ -29,13 +29,15 @@ import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 
 export default function AddAssignmentComponent() {
+	const [description, setDescription] = useState("");
+	const [title, setTitle] = useState("");
 	const [className, setClassName] = useState("");
 	const [subjectName, setSubjectName] = useState("");
 	const [marks, setMarks] = useState<number | "">("");
 	const [date, setDate] = useState<Date | null>(new Date());
 	const [file, setFile] = useState<File | null>(null);
-	const [description, setDescription] = useState("");
-	const [title, setTitle] = useState("");
+	const [classId, setClassId] = useState<string | null>(null);
+	const [subjectId, setSubjectId] = useState<string | null>(null);
 	// const [classIndex, setClassIndex] = useState("");
 
 	const { user, isLoading, error } = useCurrentUser();
@@ -70,18 +72,30 @@ export default function AddAssignmentComponent() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (!className || !subjectName || !marks || !date || !file) {
+		if (!classId || !subjectId || !date || !file) {
 			return toast.error("Please fill in all fields");
 		}
 
-		const formData = new FormData();
-		formData.append("className", className);
-		formData.append("title", title);
-		formData.append("description", description);
-		formData.append("subjectName", subjectName);
-		formData.append("marks", marks.toString());
-		formData.append("deadline", date?.toISOString() || "");
-		formData.append("assignmentFile", file);
+		// const formData = new FormData();
+		// formData.append("title", title);
+		// formData.append("description", description);
+		// formData.append("class", classId);
+		// formData.append("subject", subjectId);
+		// // formData.append("marks", marks.toString());
+		// formData.append("deadline", date?.toISOString() || "");
+		// formData.append("assignmentFile", file);
+
+		const data: IAddAssignment = {
+			title,
+			descripition: description,
+			class: classId,
+			subject: subjectId,
+			// marks: marks as number,
+			deadline: date!,
+			assignmentFile: file,
+		};
+
+		console.log("Assignment data: ", data);
 
 		// console.log(formData.get("className"));
 		// console.log(formData.get("subjectName"));
@@ -89,14 +103,14 @@ export default function AddAssignmentComponent() {
 		// console.log(formData.get("deadline"));
 		// console.log(formData.get("file"));
 
-		const { success, response } = await mutateAsync(formData);
+		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
 		if (success) toast.success("Assignment Added Successfully");
-		router.push("/teacher-dashboard");
+		// router.push("/teacher-dashboard");
 		setClassName("");
 		setSubjectName("");
-		setMarks("");
+		// setMarks("");
 		setDate(null);
 		setFile(null);
 		setTitle("");
@@ -110,6 +124,24 @@ export default function AddAssignmentComponent() {
 
 	// const filteredSubjects =
 	// 	checkClassIndex !== -1 ? user?.subject[checkClassIndex!] || [] : [];
+
+	const handleClassChange = (value: string) => {
+		console.log("class value: ", value);
+
+		const classData = user?.classes.find(
+			(item) => String(item.className) === String(value)
+		);
+		setClassId(classData?._id);
+	};
+
+	const handleSubjectChange = (value: string) => {
+		console.log("class value: ", value);
+
+		const subjectData = user?.subject.find(
+			(item) => String(item.name) === String(value)
+		);
+		setSubjectId(subjectData?._id);
+	};
 
 	return (
 		<>
@@ -134,7 +166,7 @@ export default function AddAssignmentComponent() {
 
 				<div className="w-full flex flex-col">
 					<label htmlFor="class">Class</label>
-					<Select onValueChange={setClassName}>
+					<Select onValueChange={handleClassChange}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Class" />
 						</SelectTrigger>
@@ -155,7 +187,7 @@ export default function AddAssignmentComponent() {
 				</div>
 				<div className="w-full flex flex-col">
 					<label htmlFor="subject">Subject</label>
-					<Select onValueChange={setSubjectName}>
+					<Select onValueChange={handleSubjectChange}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Subject" />
 						</SelectTrigger>
@@ -170,24 +202,11 @@ export default function AddAssignmentComponent() {
 										{item.name}
 									</SelectItem>
 								))}
-
-								{/* {classIndex > -1 && (
-									<SelectItem
-										key={
-											user?.subject[classIndex]._id
-										}
-										value={
-											user?.subject[classIndex].name
-										}
-									>
-										{user?.subject[classIndex].name}
-									</SelectItem>
-								)} */}
 							</SelectGroup>
 						</SelectContent>
 					</Select>
 				</div>
-				<div className="w-full flex flex-col">
+				{/* <div className="w-full flex flex-col">
 					<label htmlFor="totalMarks">Total Marks</label>
 					<input
 						className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
@@ -200,7 +219,7 @@ export default function AddAssignmentComponent() {
 							)
 						}
 					/>
-				</div>
+				</div> */}
 				<div className="w-full flex flex-col">
 					<label htmlFor="deadline">Deadline</label>
 					<Popover>

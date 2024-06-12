@@ -11,6 +11,24 @@ export interface IRegisterFields {
 	password: string;
 	classes?: string[];
 	rollnumber?: string;
+	subject?: string[]; // added now for createTeacher
+	role: string;
+}
+// export interface IRegisterFields {
+// 	fullname: string;
+// 	email: string;
+// 	password: string;
+// 	classes?: { classId: string; subject: string }[];
+// 	rollnumber?: string;
+// 	role: string;
+// }
+
+export interface IRegisterTeacherFields {
+	fullname: string;
+	email: string;
+	password: string;
+	classes: { classId: string; subject: string }[];
+	rollnumber?: string;
 	role: string;
 }
 
@@ -117,18 +135,21 @@ export interface ISubject {
 }
 
 export interface IAddAssignment {
-	className: string;
-	subjectName: string;
-	marks: number;
+	title: string;
+	descripition: string;
+	class: string;
+	subject: string;
+	// marks: number;
 	deadline: Date;
-	file: File;
+	assignmentFile: File;
 }
 
 export interface IAddQuiz {
-	className: string;
-	subjectName: string;
+	title: string;
+	class: string;
+	// subjectName: string;
 	deadline: Date;
-	questions: string[];
+	question: string[];
 	marks: number;
 }
 
@@ -136,7 +157,6 @@ export interface IAddLecture {
 	title: string;
 	description: string;
 	className: string;
-	subjectName: string;
-	file: File;
+	subject: string;
+	lecture: File;
 }
-
