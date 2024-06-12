@@ -30,6 +30,15 @@ export const fetchClasses = async () => {
 	}
 };
 
+export const fetchSubjects = async (id?:string) => {
+	try {
+		const response = await api.get(`/school/get/subjects/${id?id:undefined}`);
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+}
+
 export const fetchUsers = async ({
 	role,
 	search,

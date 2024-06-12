@@ -35,7 +35,6 @@ export default function AddQuizComponent() {
 	const [marks, setMarks] = useState<number>(0);
 	const [question, setQuestion] = useState([{ id: 1, text: "" }]);
 
-
 	const { user, isLoading, error } = useCurrentUser();
 	const queryClient = useQueryClient();
 	const { mutateAsync, reset } = useMutation({

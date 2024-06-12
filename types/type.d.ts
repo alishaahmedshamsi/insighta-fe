@@ -11,7 +11,7 @@ export interface IRegisterFields {
 	password: string;
 	classes?: string[];
 	rollnumber?: string;
-	subject?: string[]; // added now for createTeacher
+	subject?: (string | undefined)[]; // added now for createTeacher
 	role: string;
 }
 // export interface IRegisterFields {
@@ -75,6 +75,10 @@ export interface ApiResponse<T> {
 export interface IClasses {
 	_id: string;
 	className: string[];
+}
+export interface ISubjects {
+	_id: string;
+	name: string[];
 }
 export interface IClass {
 	_id: string;
@@ -146,7 +150,7 @@ export interface IAddAssignment {
 
 export interface IAddQuiz {
 	title: string;
-	class: string;
+	class: string | undefined;
 	// subjectName: string;
 	deadline: Date;
 	question: string[];
