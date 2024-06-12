@@ -34,8 +34,8 @@ export default function AddLectureComponent() {
 	const [subjectName, setSubjectName] = useState("");
 	const [file, setFile] = useState<File | null>(null);
 
-	const [classId, setClassId] = useState<string | null>(null);
-	const [subjectId, setSubjectId] = useState<string | null>(null);
+	const [classId, setClassId] = useState<string | undefined>(undefined);
+	const [subjectId, setSubjectId] = useState<string | undefined>(undefined);
 
 	const { user, isLoading, error } = useCurrentUser();
 

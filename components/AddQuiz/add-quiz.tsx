@@ -29,7 +29,7 @@ export default function AddQuizComponent() {
 	const [title, setTitle] = useState("");
 	const [date, setDate] = useState<Date | null>(new Date());
 	const [className, setClassName] = useState("");
-	const [classId, setClassId] = useState<string | null>(null);
+	const [classId, setClassId] = useState<string | undefined>(undefined);
 
 	// const [subjectName, setSubjectName] = useState("");
 	const [marks, setMarks] = useState<number>(0);
