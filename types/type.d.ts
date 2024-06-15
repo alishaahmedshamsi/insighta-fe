@@ -164,3 +164,31 @@ export interface IAddLecture {
 	subject: string;
 	lecture: File;
 }
+
+export interface IUploadAssignment {
+	studentId: string;
+	subjectId: string;
+	assignmentId: string;
+	title: string;
+	assignmentFile: File;
+}
+
+export interface ITakeQuiz {
+	studentId: string;
+	subjectId: string;
+	quizId: string;
+	quizName: string;
+	answers: {
+		questionNo: string;
+		question: string;
+		answer: string;
+	}[];
+}
+
+
+export interface ISendMessage {
+	studentId: string;
+	subjectId: string;
+	assignmentId: string;
+	message: string;
+}
