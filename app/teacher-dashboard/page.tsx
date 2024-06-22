@@ -27,7 +27,7 @@ export default function TeacherDashboard() {
 				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
 					{user?.classes.map((teacherClass, index) => {
 						return (
-							<Link href={`/teacher-dashboard/class/${teacherClass.className}`}>
+							<Link href={`/teacher-dashboard/class/${teacherClass.className}-${user.subject[index]?.name}`}>
 								<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 									<div className="w-[80px]">
 										<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">

@@ -8,6 +8,7 @@ import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 export default function Component({ params }: { params: { subject: string } }) {
 	const { subject } = params;
 
+	// fetch assignment list based on subjectId
 	const allAssignments = [
 		{
 			title: "Assignment #1",

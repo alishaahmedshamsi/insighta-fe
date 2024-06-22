@@ -7,7 +7,7 @@ import { onRegister } from "@/services/apis";
 import { IRegisterFields } from "@/types/type";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ApiResponse, IClasses } from "@/types/type";
-import {  fetchClasses } from "@/services/apis/school.api";
+import { fetchClasses } from "@/services/apis/school.api";
 import { toast } from "sonner";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -53,9 +53,9 @@ export default function SchoolAdminCreateStudent() {
 
 	const onSubmit: SubmitHandler<IRegisterFields> = async (data, e) => {
 		e?.preventDefault();
-		
+
 		console.log("DATAAAAA", data);
-		data.role = 'student'
+		data.role = "student";
 		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
@@ -137,7 +137,11 @@ export default function SchoolAdminCreateStudent() {
 										className="w-full  justify-between"
 									>
 										{selectedClass
-											? data?.data.find((item) => item._id === selectedClass)?.className
+											? data?.data.find(
+													(item) =>
+														item._id ===
+														selectedClass
+											  )?.className
 											: "Select Class"}
 										<ArrowDownCircleIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 									</Button>
@@ -146,22 +150,31 @@ export default function SchoolAdminCreateStudent() {
 									<Command>
 										<CommandInput placeholder="Search classes..." />
 										<CommandList>
-											<CommandEmpty>No classes found.</CommandEmpty>
+											<CommandEmpty>
+												No classes found.
+											</CommandEmpty>
 											<CommandGroup>
 												{data?.data.map((item) => (
 													<CommandItem
 														key={item._id}
 														onSelect={() => {
-															setSelectedClass(item._id);
-															setValue("classes", [item._id]);
+															setSelectedClass(
+																item._id
+															);
+															setValue(
+																"classes",
+																[item._id]
+															);
 															setOpen(false);
 														}}
 													>
 														<Check
-															className={`mr-2 h-4 w-4 ${selectedClass === item._id
-																? "opacity-100"
-																: "opacity-0"
-																}`}
+															className={`mr-2 h-4 w-4 ${
+																selectedClass ===
+																item._id
+																	? "opacity-100"
+																	: "opacity-0"
+															}`}
 														/>
 														{item.className}
 													</CommandItem>
@@ -175,13 +188,11 @@ export default function SchoolAdminCreateStudent() {
 							{errors.classes && (
 								<span>{errors.classes.message}</span>
 							)}
-								<Button type="submit" className="mt-3">
-							Submit
-						</Button>
+							<Button type="submit" className="mt-3">
+								Submit
+							</Button>
 						</div>
-					
 					</form>
-
 				</div>
 			</DashboardLayout>
 		</>

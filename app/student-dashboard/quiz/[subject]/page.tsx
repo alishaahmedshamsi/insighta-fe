@@ -19,15 +19,15 @@ const allQuiz = [
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #1",
+				questionNo: "Question #2",
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #1",
+				questionNo: "Question #3",
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #1",
+				questionNo: "Question #4",
 				question: "List all parts of speech?",
 			},
 		],
@@ -44,15 +44,15 @@ const allQuiz = [
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #1",
+				questionNo: "Question #2",
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #1",
+				questionNo: "Question #3",
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #1",
+				questionNo: "Question #4",
 				question: "List all parts of speech?",
 			},
 		],

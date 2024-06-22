@@ -7,8 +7,6 @@ import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import TakeQuizOnline from "@/components/takeQuizOnline";
 
-
-
 const subjectList = [
 	{
 		name: "English",

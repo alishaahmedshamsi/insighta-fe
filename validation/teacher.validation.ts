@@ -3,9 +3,13 @@ import { z } from "zod";
 // create validation for add assignment
 
 export const addAssignmentSchema = z.object({
+	title: z.string(),
+	description: z.string(),
 	className: z.string(),
 	subjectName: z.string(),
+	deadline: z.date(),
 	marks: z.number(),
+	file: z.string(),
 });
 
 export const addQuizSchema = z.object({

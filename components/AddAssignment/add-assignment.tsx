@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
 	Select,
 	SelectContent,
@@ -29,16 +29,22 @@ import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 
 export default function AddAssignmentComponent() {
+	const [description, setDescription] = useState("");
+	const [title, setTitle] = useState("");
 	const [className, setClassName] = useState("");
 	const [subjectName, setSubjectName] = useState("");
 	const [marks, setMarks] = useState<number | "">("");
 	const [date, setDate] = useState<Date | null>(new Date());
 	const [file, setFile] = useState<File | null>(null);
-	const [description, setDescription] = useState("");
-	const [title, setTitle] = useState("");
+	const [classId, setClassId] = useState<string | undefined>(undefined);
+	const [subjectId, setSubjectId] = useState<string | undefined>(undefined);
+	// const [classIndex, setClassIndex] = useState("");
+
 	const { user, isLoading, error } = useCurrentUser();
-	const router = useRouter()
-	const { mutateAsync, reset,isPending } = useMutation({
+	console.log("user: ", user);
+
+	const router = useRouter();
+	const { mutateAsync, reset, isPending } = useMutation({
 		mutationFn: onAddAssignment,
 		onError: (error) => {
 			console.log(error.message);
@@ -47,6 +53,15 @@ export default function AddAssignmentComponent() {
 			}, 3000);
 		},
 	});
+
+	// useEffect(() => {
+	// 	setClassIndex(() => (
+	// 		user?.classes.findIndex(
+	// 			(item) => item.className.toString() === className
+	// 		)
+	// 	)
+	// 	);
+	// }, [className]);
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files && e.target.files[0]) {
@@ -57,18 +72,30 @@ export default function AddAssignmentComponent() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (!className || !subjectName || !marks || !date || !file) {
+		if (!classId || !subjectId || !date || !file) {
 			return toast.error("Please fill in all fields");
 		}
 
-		const formData = new FormData();
-		formData.append("className", className);
-		formData.append("title", title);
-		formData.append("description", description);
-		formData.append("subjectName", subjectName);
-		formData.append("marks", marks.toString());
-		formData.append("deadline", date?.toISOString() || "");
-		formData.append("assignmentFile", file);
+		// const formData = new FormData();
+		// formData.append("title", title);
+		// formData.append("description", description);
+		// formData.append("class", classId);
+		// formData.append("subject", subjectId);
+		// // formData.append("marks", marks.toString());
+		// formData.append("deadline", date?.toISOString() || "");
+		// formData.append("assignmentFile", file);
+
+		const data: IAddAssignment = {
+			title,
+			descripition: description,
+			class: classId,
+			subject: subjectId,
+			// marks: marks as number,
+			deadline: date!,
+			assignmentFile: file,
+		};
+
+		console.log("Assignment data: ", data);
 
 		// console.log(formData.get("className"));
 		// console.log(formData.get("subjectName"));
@@ -76,48 +103,70 @@ export default function AddAssignmentComponent() {
 		// console.log(formData.get("deadline"));
 		// console.log(formData.get("file"));
 
-
-		const { success, response } = await mutateAsync(formData);
+		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
 		if (success) toast.success("Assignment Added Successfully");
-		router.push("/teacher-dashboard");
+		// router.push("/teacher-dashboard");
 		setClassName("");
 		setSubjectName("");
-		setMarks("");
-		setDate(new Date());
+		// setMarks("");
+		setDate(null);
 		setFile(null);
+		setTitle("");
 		setDescription("");
 	};
 
 	if (isLoading) return <div>Loading...</div>;
 	if (error) return <div>Error loading classes or subjects</div>;
 
+	// console.log("classIndex", checkClassIndex);
+
+	// const filteredSubjects =
+	// 	checkClassIndex !== -1 ? user?.subject[checkClassIndex!] || [] : [];
+
+	const handleClassChange = (value: string) => {
+		console.log("class value: ", value);
+
+		const classData = user?.classes.find(
+			(item) => String(item.className) === String(value)
+		);
+		setClassId(classData?._id);
+	};
+
+	const handleSubjectChange = (value: string) => {
+		console.log("class value: ", value);
+
+		const subjectData = user?.subject.find(
+			(item) => String(item.name) === String(value)
+		);
+		setSubjectId(subjectData?._id);
+	};
+
 	return (
 		<>
-			<form onSubmit={handleSubmit} className="grid grid-cols-2 gap-[1em]">
+			<form
+				onSubmit={handleSubmit}
+				className="grid grid-cols-2 gap-[1em]"
+			>
 				<Input
-					onChange={
-						(e) => {
-							setTitle(e.target.value);
-						}
-					}
+					onChange={(e) => {
+						setTitle(e.target.value);
+					}}
 					placeholder="Title"
 					className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 				/>
 				<Input
-					onChange={
-						(e) => {
-							setDescription(e.target.value);
-						}
-					}
+					onChange={(e) => {
+						setDescription(e.target.value);
+					}}
 					placeholder="Description"
 					className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 				/>
 
 				<div className="w-full flex flex-col">
 					<label htmlFor="class">Class</label>
-					<Select onValueChange={setClassName}>
+					<Select onValueChange={handleClassChange}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Class" />
 						</SelectTrigger>
@@ -125,7 +174,10 @@ export default function AddAssignmentComponent() {
 							<SelectGroup>
 								<SelectLabel>Classes</SelectLabel>
 								{user?.classes.map((item) => (
-									<SelectItem key={item._id} value={item.className.toString()}>
+									<SelectItem
+										key={item._id}
+										value={item.className.toString()}
+									>
 										{item.className}
 									</SelectItem>
 								))}
@@ -135,7 +187,7 @@ export default function AddAssignmentComponent() {
 				</div>
 				<div className="w-full flex flex-col">
 					<label htmlFor="subject">Subject</label>
-					<Select onValueChange={setSubjectName}>
+					<Select onValueChange={handleSubjectChange}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Subject" />
 						</SelectTrigger>
@@ -143,7 +195,10 @@ export default function AddAssignmentComponent() {
 							<SelectGroup>
 								<SelectLabel>Subjects</SelectLabel>
 								{user?.subject.map((item) => (
-									<SelectItem key={item._id} value={item.name}>
+									<SelectItem
+										key={item._id}
+										value={item.name}
+									>
 										{item.name}
 									</SelectItem>
 								))}
@@ -151,16 +206,20 @@ export default function AddAssignmentComponent() {
 						</SelectContent>
 					</Select>
 				</div>
-				<div className="w-full flex flex-col">
+				{/* <div className="w-full flex flex-col">
 					<label htmlFor="totalMarks">Total Marks</label>
 					<input
 						className="rounded-[1em] border border-[#ddd] bg-white p-[.8em]"
 						id="totalMarks"
 						type="number"
 						value={marks}
-						onChange={(e) => setMarks(e.target.value ? Number(e.target.value) : "")}
+						onChange={(e) =>
+							setMarks(
+								e.target.value ? Number(e.target.value) : ""
+							)
+						}
 					/>
-				</div>
+				</div> */}
 				<div className="w-full flex flex-col">
 					<label htmlFor="deadline">Deadline</label>
 					<Popover>
@@ -173,14 +232,20 @@ export default function AddAssignmentComponent() {
 								)}
 							>
 								<CalendarIcon className="mr-2 h-4 w-4" />
-								{date ? format(date, "PPP") : <span>Pick a date</span>}
+								{date ? (
+									format(date, "PPP")
+								) : (
+									<span>Pick a date</span>
+								)}
 							</Button>
 						</PopoverTrigger>
 						<PopoverContent className="w-auto p-0">
 							<Calendar
 								mode="single"
 								selected={date as Date | undefined}
-								onSelect={setDate as (value: Date | undefined) => void}
+								onSelect={
+									setDate as (value: Date | undefined) => void
+								}
 								disabled={(date) => date < new Date()}
 								initialFocus
 							/>
@@ -203,10 +268,10 @@ export default function AddAssignmentComponent() {
 					>
 						{isPending ? (
 							<>
-							<div className="flex justify-center items-center">
-								<Loader2Icon className="mr-2 animate-spin" />
-								<span>Submitting...</span>
-							</div>
+								<div className="flex justify-center items-center">
+									<Loader2Icon className="mr-2 animate-spin" />
+									<span>Submitting...</span>
+								</div>
 							</>
 						) : (
 							"Add Assignment"

@@ -10,6 +10,9 @@ import PBreakdown from "@/components/p-breakdown";
 import { useState } from "react";
 import CalenderDialog from "../CalenderDialog/CalenderDialog";
 import { fetchPoints } from "@/services/apis/user.api";
+import { ApiResponse, ISchoolInfo } from "@/types/type";
+import { fetchSchoolsInfo } from "@/services/apis/school.api";
+import { useSchoolInfo } from "@/hooks/school.hook";
 
 export default function DashboardLayout({
 	mainSectionHeading,
@@ -46,6 +49,8 @@ export default function DashboardLayout({
 		queryFn: fetchPoints,
 	});
 
+	const {schoolData} = useSchoolInfo()
+
 	if (isLoading && isLoadingPoints) {
 		return <div>Loading...</div>;
 	}
@@ -60,6 +65,19 @@ export default function DashboardLayout({
 	};
 
 	// console.log("🚀 Points Data:", points);
+
+	// const {
+	// 	data: schoolData,
+	// }: {
+	// 	data: ApiResponse<ISchoolInfo> | undefined;
+	// } = useQuery({
+	// 	queryKey: ["fetch-classes"],
+	// 	queryFn: () => fetchSchoolsInfo(),
+	// });
+
+
+
+
 
 	const topBoxes = () => {
 		if (user.role === "student" || user.role === "teacher") {
@@ -310,7 +328,7 @@ export default function DashboardLayout({
 									Total Schools
 								</h3>
 								<p className="text-[#581D7D] font-semibold text-[1.2em]">
-									6
+									{schoolData?.data.length}
 								</p>
 							</div>
 						</div>
@@ -406,7 +424,9 @@ export default function DashboardLayout({
 										{/* {user.section[0].toUpperCase()} */}
 										{user.classes.map(
 											(cls: { className: any }) =>
-												cls.className[1] ? cls.className[1] : "-"
+												cls.className[1]
+													? cls.className[1]
+													: "-"
 										)}
 									</p>
 								</div>

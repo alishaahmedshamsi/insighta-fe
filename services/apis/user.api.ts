@@ -1,4 +1,4 @@
-import { IPoints } from "@/types/type";
+import { IPoints, ISendMessage, ITakeQuiz, IUploadAssignment } from "@/types/type";
 import api from "../middleware/middleware";
 import { STATUS } from "@/utils";
 
@@ -38,3 +38,90 @@ export const fetchPoints = async (): Promise<IPoints> => {
     }
   };
 
+
+
+  
+export const onUploadAssignment = async (data: IUploadAssignment) => {
+	try {
+	
+		const response = await api.post("/teacher/assignment", data, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+				},
+			});
+
+		console.log("api data: ", data);
+		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
+			return { success: false, response: response.data.message };
+		}
+		if (response.status === STATUS.BAD_REQUEST) {
+			return { success: false, response: response.data.message };
+		}
+
+		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
+			return { success: false, response: response.data.message };
+		}
+
+		console.log("api data: ", data);
+		return { success: true, response: response.data };
+	} catch (error) {
+		console.error(error);
+		return {
+			success: false,
+			response: (error as any).response.data.message,
+		};
+	}
+};
+
+
+export const onTakeQuiz = async (data: ITakeQuiz) => {
+	try {
+		const response = await api.post("/teacher/quiz", data);
+
+		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
+			return { success: false, response: response.data.message };
+		}
+		if (response.status === STATUS.BAD_REQUEST) {
+			return { success: false, response: response.data.message };
+		}
+
+		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
+			return { success: false, response: response.data.message };
+		}
+
+		// console.log("response.data: ", response.data);
+		return { success: true, response: response.data };
+	} catch (error) {
+		console.error(error);
+		return {
+			success: false,
+			response: (error as any).response.data.message,
+		};
+	}
+};
+
+export const onSendMessage = async (data: ISendMessage) => {
+	try {
+		const response = await api.post("/teacher/quiz", data);
+
+		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
+			return { success: false, response: response.data.message };
+		}
+		if (response.status === STATUS.BAD_REQUEST) {
+			return { success: false, response: response.data.message };
+		}
+
+		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
+			return { success: false, response: response.data.message };
+		}
+
+		// console.log("response.data: ", response.data);
+		return { success: true, response: response.data };
+	} catch (error) {
+		console.error(error);
+		return {
+			success: false,
+			response: (error as any).response.data.message,
+		};
+	}
+};

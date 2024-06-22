@@ -11,6 +11,24 @@ export interface IRegisterFields {
 	password: string;
 	classes?: string[];
 	rollnumber?: string;
+	subject?: (string | undefined)[]; // added now for createTeacher
+	role: string;
+}
+// export interface IRegisterFields {
+// 	fullname: string;
+// 	email: string;
+// 	password: string;
+// 	classes?: { classId: string; subject: string }[];
+// 	rollnumber?: string;
+// 	role: string;
+// }
+
+export interface IRegisterTeacherFields {
+	fullname: string;
+	email: string;
+	password: string;
+	classes: { classId: string; subject: string }[];
+	rollnumber?: string;
 	role: string;
 }
 
@@ -57,6 +75,10 @@ export interface ApiResponse<T> {
 export interface IClasses {
 	_id: string;
 	className: string[];
+}
+export interface ISubjects {
+	_id: string;
+	name: string[];
 }
 export interface IClass {
 	_id: string;
@@ -117,25 +139,56 @@ export interface ISubject {
 }
 
 export interface IAddAssignment {
-	className: string;
-	subjectName: string;
-	marks: number;
+	title: string;
+	descripition: string;
+	class: string;
+	subject: string;
+	// marks: number;
 	deadline: Date;
-	file: File;
+	assignmentFile: File;
 }
 
 export interface IAddQuiz {
-	className: string;
-	subjectName: string;
+	title: string;
+	class: string | undefined;
+	// subjectName: string;
 	deadline: Date;
-	questions: string[];
+	question: string[];
 	marks: number;
 }
+
 export interface IAddLecture {
 	title: string;
 	description: string;
 	className: string;
-	subjectName: string;
-	file: string;
+	subject: string;
+	lecture: File;
 }
 
+export interface IUploadAssignment {
+	studentId: string;
+	subjectId: string;
+	assignmentId: string;
+	title: string;
+	assignmentFile: File;
+}
+
+export interface ITakeQuiz {
+	studentId: string;
+	subjectId: string;
+	quizId: string;
+	quizName: string;
+	answers: {
+		questionNo: string;
+		question: string;
+		answer: string;
+	}[];
+}
+
+
+export interface ISendMessage {
+	studentId: string;
+	subjectId: string;
+	assignmentId: string;
+	message: string;
+}

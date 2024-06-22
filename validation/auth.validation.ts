@@ -15,13 +15,20 @@ const registerStudentSchema = z.object({
 });
 
 const registerTeacherSchema = z.object({
-	fullname: z.string().min(3,"Name must be atleast 3 characters"),
-	qualification: z.string(),
+    fullname: z.string().min(3,"Name must be atleast 3 characters"),
 	email: z.string().email(),
 	password: z.string().min(6),
-	classes: z.array(z.number()),
-	section: z.array(z.string()),
+	classes: z.array(z.string()),
+	subject: z.array(z.string()),
 });
+
+// const registerTeacherSchema = z.object({
+// 	fullname: z.string().min(3,"Name must be atleast 3 characters"),
+// 	email: z.string().email(),
+// 	password: z.string().min(6),
+// 	classes: z.array(z.string()),
+// 	// section: z.array(z.string()),
+// });
 
 const resetPasswordSchema = z.object({
 	newPassword: z.string().min(6),

@@ -64,6 +64,8 @@ export default function Page() {
   });
 
   const onSubmit: SubmitHandler<Subject> = async (data) => {
+
+    console.log("subject data is: ", data)
     const { success, response } = await mutateAsync(data);
     if (!success) return toast.error(response);
     if (success) toast.success("Subject Created successfully");

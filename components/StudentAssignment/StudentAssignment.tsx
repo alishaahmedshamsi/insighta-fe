@@ -1,12 +1,16 @@
+import { useState, useEffect } from "react";
 import { capitalizeFirstLetter } from "@/lib/utils";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 import Link from "next/link";
+import { onUploadAssignment } from "@/services/apis/user.api";
+import { IUploadAssignment } from "@/types/type";
 
 function isDeadlinePassed(deadline: string) {
 	const currentDate = new Date();
 	const deadlineDate = new Date(deadline);
 	return currentDate > deadlineDate;
 }
-
 
 export default function StudentAssignment({
 	index,
@@ -22,6 +26,66 @@ export default function StudentAssignment({
 		assignment: string;
 	}[];
 }) {
+	const [title, setTitle] = useState("");
+	const [file, setFile] = useState<File | null>(null);
+
+	const { mutateAsync, reset, isPending } = useMutation({
+		mutationFn: onUploadAssignment,
+		onError: (error) => {
+			console.log(error.message);
+			setTimeout(() => {
+				reset();
+			}, 3000);
+		},
+	});
+
+	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files && e.target.files[0]) {
+			setFile(e.target.files[0]);
+		}
+	};
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+
+		if (!file) {
+			return toast.error("Please select a file.");
+		}
+
+		// const formData = new FormData();
+		// formData.append("title", title);
+		// formData.append("description", description);
+		// formData.append("class", classId);
+		// formData.append("subject", subjectId);
+		// // formData.append("marks", marks.toString());
+		// formData.append("deadline", date?.toISOString() || "");
+		// formData.append("assignmentFile", file);
+
+		const data: IUploadAssignment = {
+			studentId: "studentId", // fetch from the current user api
+			// subject and assignment ids could be extracted from the param
+			subjectId: "subjectId",
+			assignmentId: "assignmentId",
+			title: assignment[0].title,
+			assignmentFile: file,
+		};
+
+		console.log("Assignment data: ", data);
+
+		// console.log(formData.get("className"));
+		// console.log(formData.get("subjectName"));
+		// console.log(formData.get("marks"));
+		// console.log(formData.get("deadline"));
+		// console.log(formData.get("file"));
+
+		const { success, response } = await mutateAsync(data);
+
+		if (!success) return toast.error(response);
+		if (success) toast.success("Assignment Uploaded Successfully");
+		// router.push("/teacher-dashboard");
+
+		setFile(null);
+	};
+
 	return (
 		<>
 			{assignment.map((assignment) => (
@@ -105,7 +169,7 @@ export default function StudentAssignment({
 						<>
 							<hr className="my-[1em]" />
 							<div className="upload-file-container">
-								<div>
+								<form onSubmit={handleSubmit}>
 									<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
 										Submit Assignment
 									</h5>
@@ -114,16 +178,20 @@ export default function StudentAssignment({
 									</h4>
 									<div className="grid grid-cols-4">
 										<input
+											onChange={handleFileChange}
 											type="file"
 											name="file"
 											id="file"
 											className="col-span-3 w-full border-2 border-[#777] border-dashed rounded-[2em] p-[.9em]"
 										/>
-										<button className="col-span-1 w-full rounded-[2em] bg-brand-sea-green py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor">
+										<button
+											type="submit"
+											className="col-span-1 w-full rounded-[2em] bg-brand-sea-green py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
+										>
 											Upload
 										</button>
 									</div>
-								</div>
+								</form>
 							</div>
 						</>
 					) : null}

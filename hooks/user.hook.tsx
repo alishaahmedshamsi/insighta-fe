@@ -14,5 +14,7 @@ export const useCurrentUser = () => {
     queryFn: fetchCurrentUser,
   });
 
+  // console.log("user: ", user)
+
   return { user, isLoading, isError, error };
 };
