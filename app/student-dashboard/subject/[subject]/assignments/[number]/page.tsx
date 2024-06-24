@@ -165,8 +165,8 @@ export default function Component({
 						{/* Chat box */}
 
 						<ChatBoxComponent
-							assignmentId="assignmentId"
-							subjectId="subjectId"
+							assignmentId="66777a2b5694834d64b98d3d"
+							// subjectId="subjectId"
 						/>
 					</div>
 				</div>

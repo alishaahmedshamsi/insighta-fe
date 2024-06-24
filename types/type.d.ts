@@ -187,8 +187,8 @@ export interface ITakeQuiz {
 
 
 export interface ISendMessage {
-	studentId: string;
-	subjectId: string;
-	assignmentId: string;
+	// studentId: string;
+	// subjectId: string;
+	chat: string;
 	message: string;
 }

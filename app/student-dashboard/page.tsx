@@ -6,6 +6,10 @@ import Link from "next/link";
 import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import { useState } from "react";
+import { useCurrentUser } from "@/hooks/user.hook";
+import { useQuery } from "@tanstack/react-query";
+import { fetchSubjects } from "@/services/apis/school.api";
+import { useSubjectsList } from "@/hooks/getSubjectList.hook";
 
 const subjectList = [
 	{
@@ -28,6 +32,14 @@ const subjectList = [
 
 export default function StudentDashboard() {
 	const [allowReview, setAllowReview] = useState(true);
+
+	const { data, isLoading } = useSubjectsList();
+	console.log("data: ", data);
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<>
 			<DashboardLayout
