@@ -3,8 +3,8 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import WatchLectureDialog from "@/components/watchLectureDialog";
-
-
+import StudentLectures from "@/components/StudentLectures/StudentLectures";
+import { useStudentSubject } from "@/hooks/user.hook";
 
 const allLectures = [
 	{
@@ -28,7 +28,16 @@ const allLectures = [
 export default function Component({ params }: { params: { subject: string } }) {
 	const { subject } = params;
 
-	const mainSectionHeading = `${subject} Lectures`;
+	const { subjectsList } = useStudentSubject();
+
+	const subjectName = subjectsList?.find(
+		(sub: { _id: string }) => sub._id === subject
+	);
+
+	const mainSectionHeading = subjectName
+		? `${subjectName.name} Lectures`
+		: `${subject} Lectures`;
+
 	return (
 		<>
 			<DashboardLayout
@@ -38,7 +47,9 @@ export default function Component({ params }: { params: { subject: string } }) {
 				leftSidebarLinks={studentLeftSidebarLinks()}
 			>
 				<div className="rounded-[2em] flex flex-col gap-[2em] pb-[2em]">
-					{allLectures.map((lecture, index) => (
+					<StudentLectures subjectId={subject} />
+
+					{/* {allLectures.map((lecture, index) => (
 						<div key={index}>
 							<div className="subject-assignments-container flex flex-col gap-6">
 								<div
@@ -108,7 +119,7 @@ export default function Component({ params }: { params: { subject: string } }) {
 								<hr className="my-[1em]" />
 							</div>
 						</div>
-					))}
+					))} */}
 				</div>
 			</DashboardLayout>
 		</>

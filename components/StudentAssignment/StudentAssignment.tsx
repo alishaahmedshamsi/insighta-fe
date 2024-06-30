@@ -16,14 +16,14 @@ export default function StudentAssignment({
 	index,
 	assignment,
 }: {
-	index: number;
+	index: string;
 	assignment: {
 		title: string;
 		deadline: string;
 		totalMarks: string;
 		obtMarks: string;
 		status: string;
-		assignment: string;
+		assignmentFile: string;
 	}[];
 }) {
 	const [title, setTitle] = useState("");
@@ -107,7 +107,7 @@ export default function StudentAssignment({
 								Deadline
 							</h5>
 							<h4 className="text-[#111] capitalize text-[1.2em]">
-								{assignment.deadline}
+								{assignment.deadline.slice(0, 10)}
 							</h4>
 						</div>
 						<div>
@@ -151,9 +151,9 @@ export default function StudentAssignment({
 									Assignment
 								</h5>
 								<h4 className="text-[#111] underline capitalize text-[1.2em]">
-									<Link href={assignment.assignment}>
+									<a target="_blank" href={assignment.assignmentFile}>
 										Download File
-									</Link>
+									</a>
 								</h4>
 							</div>
 						) : (
@@ -164,7 +164,7 @@ export default function StudentAssignment({
 							</div>
 						)}
 					</div>
-					{!isDeadlinePassed(assignment.deadline) &&
+					{/* {!isDeadlinePassed(assignment.deadline) &&
 					assignment.status.toLowerCase() === "not completed" ? (
 						<>
 							<hr className="my-[1em]" />
@@ -194,7 +194,7 @@ export default function StudentAssignment({
 								</form>
 							</div>
 						</>
-					) : null}
+					) : null} */}
 				</div>
 			))}
 		</>

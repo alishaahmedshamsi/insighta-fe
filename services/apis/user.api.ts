@@ -54,7 +54,7 @@ export const onUploadAssignment = async (data: IUploadAssignment) => {
 			},
 		});
 
-		console.log("api data: ", data);
+		// console.log("api data: ", data);
 		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
 			return { success: false, response: response.data.message };
 		}
@@ -66,7 +66,7 @@ export const onUploadAssignment = async (data: IUploadAssignment) => {
 			return { success: false, response: response.data.message };
 		}
 
-		console.log("api data: ", data);
+		// console.log("api data: ", data);
 		return { success: true, response: response.data };
 	} catch (error) {
 		console.error(error);
@@ -147,6 +147,66 @@ export const getAssignments = async (id?: string) => {
 		);
 
 		// console.log("data from api: ", response)
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+};
+
+export const fetchStudentSubjects = async () => {
+	try {
+		const response = await api.get(`/user/subjects/users`);
+
+		// console.log("student subject data from api: ", response);
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+};
+
+export const fetchStudentLectures = async (id?: string) => {
+	try {
+		const response = await api.get(
+			`/student/student-lecture/get?subject=${id ? id : undefined}`
+		);
+		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
+			return { success: false, response: response.data.message };
+		}
+		if (response.status === STATUS.BAD_REQUEST) {
+			return { success: false, response: response.data.message };
+		}
+
+		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
+			return { success: false, response: response.data.message };
+		}
+
+		console.log("fetchLectures API: ", response);
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+};
+
+export const fetchStudentAssignments = async (id?: string) => {
+	try {
+		const response = await api.get(
+			`/student/student-assignment?subject=${id ? id : undefined}`
+		);
+
+		// console.log("data from api: ", response);
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+};
+
+export const fetchStudentQuiz = async (id?: string) => {
+	try {
+		const response = await api.get(
+			`/student/student-quiz?subject=${id ? id : undefined}`
+		);
+
+		// console.log("data from api: ", response);
 		return response.data.data;
 	} catch (error: any) {
 		throw new Error(error ?? error.message.data);

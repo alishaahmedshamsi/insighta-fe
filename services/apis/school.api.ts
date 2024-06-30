@@ -34,7 +34,7 @@ export const fetchSubjects = async (id?:string) => {
 	try {
 		const response = await api.get(`/school/get/subjects/${id?id:undefined}`);
 
-		console.log("data from api: ", response)
+		// console.log("data from api: ", response)
 		return response.data.data;
 	} catch (error: any) {
 		throw new Error(error ?? error.message.data);
