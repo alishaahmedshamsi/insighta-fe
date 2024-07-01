@@ -4,17 +4,24 @@ import { toast } from "sonner"; // Assuming you have toast notifications set up
 import { useMutation } from "@tanstack/react-query";
 import { onTakeQuiz } from "@/services/apis/user.api";
 import { ITakeQuiz } from "@/types/type";
+import { isDeadlinePassed } from "./StudentAssignment/StudentAssignment";
 
 export default function TakeQuizOnline({
 	quizName,
 	quizQuestions,
 	displayText,
 	role,
+	createdBy,
+	quizId,
+	quizDeadline,
 }: {
 	quizName: string;
 	quizQuestions: string[];
 	displayText: string;
 	role: string;
+	createdBy: string;
+	quizId: string;
+	quizDeadline: string;
 }) {
 	console.log("quizQuestions: ", quizQuestions);
 	const [open, setOpen] = useState(false);
@@ -52,11 +59,12 @@ export default function TakeQuizOnline({
 
 			// Prepare data for submission
 			const studentSubmission: ITakeQuiz = {
-				studentId: "studentId",
-				subjectId: "subjectId",
-				quizId: "quizId",
-				quizName,
-				answers: studentAnswers,
+				quizId: quizId,
+				teacher: createdBy,
+				isLate: isDeadlinePassed(quizDeadline),
+				isQuiz: true,
+				question: studentAnswers.map((question) => question.question),
+				answers: studentAnswers.map((answer) => answer.answer),
 			};
 			console.log("studentAnswers: ", studentAnswers);
 
@@ -67,20 +75,7 @@ export default function TakeQuizOnline({
 			if (!success) return toast.error(response);
 			if (success) toast.success("Quiz Submitted Successfully");
 
-			// Simulate API call or actual submission logic here
-			// Replace this with your actual API call
-			// const response = await submitQuiz(studentSubmission);
-
-			// Example of handling success response
-			// if (response.success) {
-			//   toast.success("Quiz submitted successfully!");
-			//   setOpen(false);
-			//   // Optionally reset form or state
-			//   setStudentAnswers([]);
-			// } else {
-			//   toast.error(response.message || "Failed to submit quiz.");
-			// }
-
+			
 			// Simulate a delay for demo purposes
 			setTimeout(() => {
 				// toast.success("Quiz submitted successfully!");
@@ -103,7 +98,7 @@ export default function TakeQuizOnline({
 		index: number
 	) => {
 		const updatedAnswers = [...studentAnswers];
-		let questionNo = `Question #${index+1}`
+		let questionNo = `Question #${index + 1}`;
 		updatedAnswers[index] = { questionNo, question, answer };
 		setStudentAnswers(updatedAnswers);
 	};
@@ -163,17 +158,22 @@ export default function TakeQuizOnline({
 														</Dialog.Title>
 														<div className="mt-2 overflow-y-scroll max-h-[350px] pr-4">
 															{quizQuestions.map(
-																(currentQuestion, i) => (
+																(
+																	currentQuestion,
+																	i
+																) => (
 																	<div
 																		key={
-																			i+1
+																			i +
+																			1
 																		}
 																		className="flex flex-col mb-12"
 																	>
 																		<h3 className="font-medium uppercase text-[#494949] align-middle text-[1em] tracking-[2px]">
-																			Question #{
-																			i+1
-																			}
+																			Question
+																			#
+																			{i +
+																				1}
 																		</h3>
 																		<h3 className="font-medium text-[#212121] align-middle text-[1.4em]">
 																			{
@@ -320,7 +320,7 @@ export default function TakeQuizOnline({
 						{displayText}
 					</span>
 
-					{openCount <= 1 && (
+					{openCount < 1 && (
 						<Transition.Root show={open} as={Fragment}>
 							<Dialog
 								className="relative z-10"

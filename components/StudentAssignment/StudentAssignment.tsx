@@ -6,7 +6,7 @@ import Link from "next/link";
 import { onUploadAssignment } from "@/services/apis/user.api";
 import { IUploadAssignment } from "@/types/type";
 
-function isDeadlinePassed(deadline: string) {
+export function isDeadlinePassed(deadline: string) {
 	const currentDate = new Date();
 	const deadlineDate = new Date(deadline);
 	return currentDate > deadlineDate;

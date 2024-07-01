@@ -174,15 +174,20 @@ export interface IUploadAssignment {
 }
 
 export interface ITakeQuiz {
-	studentId: string;
-	subjectId: string;
 	quizId: string;
-	quizName: string;
-	answers: {
-		questionNo: string;
-		question: string;
-		answer: string;
-	}[];
+	teacher: string;
+	isLate: boolean;
+	isQuiz: boolean;
+	question: string[];
+	answers: string[];
+
+
+
+	// answers: {
+	// 	questionNo: string;
+	// 	question: string;
+	// 	answer: string;
+	// }[];
 }
 
 

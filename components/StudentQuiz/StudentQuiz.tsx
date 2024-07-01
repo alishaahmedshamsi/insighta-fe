@@ -21,10 +21,11 @@ export default function StudentQuiz({
 		obtMarks: string;
 		status: string;
 		question: string[];
+		createdBy: string;
+		_id: string;
 	}[];
 }) {
-
-	console.log("quiz in StudentQuiz: ", quiz)
+	console.log("quiz in StudentQuiz: ", quiz);
 	return (
 		<>
 			{quiz.map((quiz) => (
@@ -100,6 +101,9 @@ export default function StudentQuiz({
 										quizName={quiz.title}
 										quizQuestions={quiz.question}
 										role="student"
+										createdBy={quiz.createdBy}
+										quizId={quiz._id}
+										quizDeadline={quiz.deadline}
 									/>
 								</h4>
 							</div>

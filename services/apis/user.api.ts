@@ -79,7 +79,11 @@ export const onUploadAssignment = async (data: IUploadAssignment) => {
 
 export const onTakeQuiz = async (data: ITakeQuiz) => {
 	try {
-		const response = await api.post("/submission/", data);
+		const response = await api.post("/submission/", data, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+		});
 
 		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
 			return { success: false, response: response.data.message };
