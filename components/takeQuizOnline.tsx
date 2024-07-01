@@ -12,14 +12,11 @@ export default function TakeQuizOnline({
 	role,
 }: {
 	quizName: string;
-	quizQuestions: Array<{
-		questionNo: string;
-		question: string;
-		answer?: string;
-	}>;
+	quizQuestions: string[];
 	displayText: string;
 	role: string;
 }) {
+	console.log("quizQuestions: ", quizQuestions);
 	const [open, setOpen] = useState(false);
 	const [openCount, setOpenCount] = useState(0);
 	const [studentAnswers, setStudentAnswers] = useState<
@@ -100,12 +97,13 @@ export default function TakeQuizOnline({
 	};
 
 	const handleAnswerChange = (
-		questionNo: string,
+		// questionNo: string,
 		question: string,
 		answer: string,
 		index: number
 	) => {
 		const updatedAnswers = [...studentAnswers];
+		let questionNo = `Question #${index+1}`
 		updatedAnswers[index] = { questionNo, question, answer };
 		setStudentAnswers(updatedAnswers);
 	};
@@ -165,27 +163,27 @@ export default function TakeQuizOnline({
 														</Dialog.Title>
 														<div className="mt-2 overflow-y-scroll max-h-[350px] pr-4">
 															{quizQuestions.map(
-																(question) => (
+																(currentQuestion, i) => (
 																	<div
 																		key={
-																			question.questionNo
+																			i+1
 																		}
 																		className="flex flex-col mb-12"
 																	>
 																		<h3 className="font-medium uppercase text-[#494949] align-middle text-[1em] tracking-[2px]">
-																			{
-																				question.questionNo
+																			Question #{
+																			i+1
 																			}
 																		</h3>
 																		<h3 className="font-medium text-[#212121] align-middle text-[1.4em]">
 																			{
-																				question.question
+																				currentQuestion
 																			}
 																		</h3>
 																		<h3 className="font-normal text-[#666] align-middle text-[1em]">
-																			{
+																			{/* {
 																				question.answer
-																			}
+																			} */}
 																		</h3>
 																	</div>
 																)
@@ -282,7 +280,7 @@ export default function TakeQuizOnline({
 																		</h3>
 																		<h3 className="font-medium text-[#212121] align-middle text-[1.4em]">
 																			{
-																				question.question
+																				question
 																			}
 																		</h3>
 																	</div>
@@ -365,31 +363,31 @@ export default function TakeQuizOnline({
 																	<hr className="my-4" />
 																</Dialog.Title>
 																<div className="mt-2 overflow-y-scroll h-[450px] pr-4">
-																	{quizQuestions.map(
+																	{quizQuestions?.map(
 																		(
 																			question,
 																			index
 																		) => (
 																			<div
 																				key={
-																					question.questionNo
+																					index
 																				}
 																				className="flex flex-col mb-4"
 																			>
 																				<label
-																					htmlFor={
-																						question.questionNo
-																					}
+																					// htmlFor={
+																					// 	question.questionNo
+																					// }
 																					className="font-medium text-[#212121] align-middle text-[1.2em]"
 																				>
 																					{
-																						question.question
+																						question
 																					}
 																				</label>
 																				<textarea
-																					id={
-																						question.questionNo
-																					}
+																					// id={
+																					// 	question.questionNo
+																					// }
 																					value={
 																						studentAnswers[
 																							index
@@ -401,8 +399,8 @@ export default function TakeQuizOnline({
 																						e
 																					) =>
 																						handleAnswerChange(
-																							question.questionNo,
-																							question.question,
+																							// question.questionNo,
+																							question,
 																							e
 																								.target
 																								.value,

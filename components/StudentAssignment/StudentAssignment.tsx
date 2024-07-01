@@ -20,10 +20,11 @@ export default function StudentAssignment({
 	assignment: {
 		title: string;
 		deadline: string;
-		totalMarks: string;
+		marks: string;
 		obtMarks: string;
 		status: string;
 		assignmentFile: string;
+		createdBy: string;
 	}[];
 }) {
 	const [title, setTitle] = useState("");
@@ -61,12 +62,11 @@ export default function StudentAssignment({
 		// formData.append("assignmentFile", file);
 
 		const data: IUploadAssignment = {
-			studentId: "studentId", // fetch from the current user api
-			// subject and assignment ids could be extracted from the param
-			subjectId: "subjectId",
-			assignmentId: "assignmentId",
-			title: assignment[0].title,
-			assignmentFile: file,
+			assignmentId: index,
+			isLate: String(isDeadlinePassed(assignment[0].deadline)),
+			teacher: assignment[0].createdBy,
+			isQuiz: "false",
+			pdf: file,
 		};
 
 		console.log("Assignment data: ", data);
@@ -84,6 +84,9 @@ export default function StudentAssignment({
 		// router.push("/teacher-dashboard");
 
 		setFile(null);
+
+		// reset the file field form
+		reset()
 	};
 
 	return (
@@ -115,7 +118,7 @@ export default function StudentAssignment({
 								Total Marks
 							</h5>
 							<h4 className="text-[#111] capitalize text-[1.2em]">
-								{assignment.totalMarks}
+								{assignment.marks}
 							</h4>
 						</div>
 						<div>
@@ -151,7 +154,10 @@ export default function StudentAssignment({
 									Assignment
 								</h5>
 								<h4 className="text-[#111] underline capitalize text-[1.2em]">
-									<a target="_blank" href={assignment.assignmentFile}>
+									<a
+										target="_blank"
+										href={assignment.assignmentFile}
+									>
 										Download File
 									</a>
 								</h4>
@@ -164,8 +170,8 @@ export default function StudentAssignment({
 							</div>
 						)}
 					</div>
-					{/* {!isDeadlinePassed(assignment.deadline) &&
-					assignment.status.toLowerCase() === "not completed" ? (
+					{/* assignment.status.toLowerCase() === "not completed" */}
+					{!isDeadlinePassed(assignment.deadline) ? (
 						<>
 							<hr className="my-[1em]" />
 							<div className="upload-file-container">
@@ -194,7 +200,7 @@ export default function StudentAssignment({
 								</form>
 							</div>
 						</>
-					) : null} */}
+					) : null}
 				</div>
 			))}
 		</>

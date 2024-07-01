@@ -36,6 +36,9 @@ export default function AddQuizComponent() {
 	const [question, setQuestion] = useState([{ id: 1, text: "" }]);
 
 	const { user, isLoading, error } = useCurrentUser();
+
+	console.log("user from teacher quiz module: ", user?.subject[0].class);
+
 	const queryClient = useQueryClient();
 	const { mutateAsync, reset } = useMutation({
 		mutationFn: onAddQuiz,
@@ -49,10 +52,14 @@ export default function AddQuizComponent() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
+		let subId = user?.subject.find((item) => item.class == classId)?._id;
+
+		console.log("subId: ", subId);
+
 		const data: IAddQuiz = {
 			title,
 			class: classId,
-			// subjectName,
+			subject: subId,
 			marks,
 			deadline: date!,
 			question: question.map((q) => q.text),
@@ -65,6 +72,8 @@ export default function AddQuizComponent() {
 		if (!success) return toast.error(response);
 		if (success) toast.success("Quiz Added Successfully");
 		queryClient.invalidateQueries({ queryKey: ["user-points"] });
+
+		reset();
 	};
 
 	const addQuestion = () => {

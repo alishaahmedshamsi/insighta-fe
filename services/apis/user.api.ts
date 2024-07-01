@@ -48,7 +48,7 @@ export const fetchPoints = async (): Promise<IPoints> => {
 
 export const onUploadAssignment = async (data: IUploadAssignment) => {
 	try {
-		const response = await api.post("/teacher/assignment", data, {
+		const response = await api.post("/submission/", data, {
 			headers: {
 				"Content-Type": "multipart/form-data",
 			},
@@ -79,7 +79,7 @@ export const onUploadAssignment = async (data: IUploadAssignment) => {
 
 export const onTakeQuiz = async (data: ITakeQuiz) => {
 	try {
-		const response = await api.post("/teacher/quiz", data);
+		const response = await api.post("/submission/", data);
 
 		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
 			return { success: false, response: response.data.message };

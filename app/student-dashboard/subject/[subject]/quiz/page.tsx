@@ -4,6 +4,9 @@ import Link from "next/link";
 import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import StudentQuiz from "@/components/StudentQuiz/StudentQuiz";
+import { useStudentSubject } from "@/hooks/user.hook";
+import { useQuery } from "@tanstack/react-query";
+import { fetchStudentQuiz } from "@/services/apis/user.api";
 
 const allQuiz = [
 	{
@@ -33,7 +36,7 @@ const allQuiz = [
 	},
 	{
 		title: "Quiz #2",
-		deadline: "1 May 2024",
+		deadline: "1 August 2024",
 		totalMarks: "10",
 		obtMarks: "8",
 		status: "Completed",
@@ -65,7 +68,24 @@ export default function StudentSubjectQuiz({
 }) {
 	const { subject } = params;
 
-	const mainSectionHeading = `${subject} Quiz`;
+	const { subjectsList } = useStudentSubject();
+	const subjectName = subjectsList?.find(
+		(sub: { _id: string }) => sub._id === subject
+	);
+
+	const { data: myAllQuiz, isLoading } = useQuery({
+		queryKey: ["fetch-student-quiz"],
+		queryFn: () => fetchStudentQuiz(subject),
+	});
+
+	const mainSectionHeading = subjectName
+	? `${subjectName.name} Quiz`
+	: `${subject} Quiz`;
+
+	console.log("myAllQuiz: ", myAllQuiz)
+
+
+	// const mainSectionHeading = `${subject} Quiz`;
 	return (
 		<>
 			<DashboardLayout
@@ -79,7 +99,7 @@ export default function StudentSubjectQuiz({
 						<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
 							Quiz
 						</h3>
-						{allQuiz.map((quiz, index) => (
+						{myAllQuiz?.map((quiz: any, index: any) => (
 							<StudentQuiz index={index} quiz={[quiz]} />
 						))}
 					</div>

@@ -151,7 +151,7 @@ export interface IAddAssignment {
 export interface IAddQuiz {
 	title: string;
 	class: string | undefined;
-	// subjectName: string;
+	subject: string | undefined;
 	deadline: Date;
 	question: string[];
 	marks: number;
@@ -166,11 +166,11 @@ export interface IAddLecture {
 }
 
 export interface IUploadAssignment {
-	studentId: string;
-	subjectId: string;
 	assignmentId: string;
-	title: string;
-	assignmentFile: File;
+	isLate: string;
+	teacher: string;
+	isQuiz: string;
+	pdf: File;
 }
 
 export interface ITakeQuiz {
