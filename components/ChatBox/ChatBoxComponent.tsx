@@ -13,14 +13,15 @@ import { toast } from "sonner"; // Assuming you have toast notifications set up
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getMessages, onSendMessage } from "@/services/apis/user.api";
 import { ISendMessage } from "@/types/type";
+import { useCurrentUser } from "@/hooks/user.hook";
 
-const userCode = (message: string) => {
+const userCode = (message: string | undefined) => {
 	return (
 		<div className="flex items-start gap-4 justify-end">
 			<div className="bg-blue-500 text-white dark:bg-gray-800 rounded-2xl p-4 max-w-[70%]">
 				<div className="text-sm font-medium">You</div>
 				<div className="text-sm text-white dark:text-gray-300 mt-1">
-					{message}
+					{message ? message : ""}
 				</div>
 			</div>
 			<Avatar className="w-8 h-8">
@@ -33,7 +34,7 @@ const userCode = (message: string) => {
 		</div>
 	);
 };
-const peersCode = (name: string, message: string) => {
+const peersCode = (name: string | undefined, message: string | undefined) => {
 	return (
 		<div className="flex items-start gap-4">
 			<Avatar className="w-8 h-8">
@@ -60,6 +61,8 @@ export default function ChatBoxComponent({
 }) {
 	const [message, setMessage] = useState("");
 	const chatContainerRef = useRef<HTMLDivElement>(null);
+
+	const { user } = useCurrentUser();
 
 	const { isLoading, data, error, refetch } = useQuery({
 		queryKey: ["getMessages", assignmentId],
@@ -144,16 +147,19 @@ export default function ChatBoxComponent({
 				>
 					{data?.map(
 						(message: {
-							user?: { fullname: string };
+							user?: {
+								_id: string;
+								fullname: string | undefined;
+							};
 							message: string;
 						}) => {
-							if (message.user) {
+							if (message?.user?._id === user?._id) {
+								return userCode(message.message);
+							} else {
 								return peersCode(
-									message.user.fullname,
+									message?.user?.fullname,
 									message.message
 								);
-							} else {
-								return userCode(message.message);
 							}
 						}
 					)}

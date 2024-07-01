@@ -6,23 +6,25 @@ export default function PBreakdown({
 	assignmentPoints,
 	quizPoints,
 	lecturePoints,
+	reviewPoints,
 	userName,
-	schoolName,
 	userRank,
 	userClass,
 	qualification,
 	role,
+	schoolName,
 }: {
 	points: number;
 	assignmentPoints: number;
 	quizPoints: number;
 	lecturePoints: number;
+	reviewPoints: number;
 	userName: string;
-	schoolName: string;
-	userRank: string;
+	userRank: string | undefined;
 	userClass?: string;
 	qualification?: string;
 	role: string;
+	schoolName?: string;
 }) {
 	const [open, setOpen] = useState(false);
 
@@ -116,6 +118,12 @@ export default function PBreakdown({
 														<span>Lectures</span>
 														<span>
 															⭐ {lecturePoints}
+														</span>
+													</div>
+													<div className="flex justify-between items-center w-full bg-[#eee] p-2 px-4 rounded-md">
+														<span>Review</span>
+														<span>
+															⭐ {reviewPoints}
 														</span>
 													</div>
 													<hr />
