@@ -34,17 +34,25 @@ function TopFive() {
 		// 	(cls: { _id: string }) => cls._id == currentId
 		// );
 
-        let newClassesArray = classesData?.data?.filter((cls: { _id: string }) => classesArray.includes(cls._id));
-		
+		let newClassesArray = classesData?.data?.filter(
+			(cls: { _id: string }) => classesArray.includes(cls._id)
+		);
+
 		console.log("newClassesArray: ", newClassesArray);
-        return newClassesArray?.map((cls: { className: string }) => cls.className).join(", ");
-        return "1A"
+		return newClassesArray
+			?.map((cls: { className: string }) => cls.className)
+			.join(", ");
+		return "1A";
 	};
 
 	console.log("classesData: ", classesData?.data);
 	console.log("top five data: ", data?.data);
 
-	return (
+	return isLoading ? (
+		<div>Loading...</div>
+	) : !data ? (
+		<div>Nothing to show right now</div>
+	) : (
 		<>
 			<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
 				Top 5 Students
@@ -210,8 +218,7 @@ function TopFive() {
 									</td>
 								</tr>
 							)
-						 )} 
-						
+						)}
 					</tbody>
 				</table>
 			</div>

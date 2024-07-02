@@ -20,12 +20,12 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { useMutation } from "@tanstack/react-query";
 import { IAddAssignment } from "@/types/type";
 import { toast } from "sonner";
 import { onAddAssignment } from "@/services/apis/teacher.api";
 import { useCurrentUser } from "@/hooks/user.hook";
 import { Input } from "../ui/input";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 export default function AddAssignmentComponent() {
@@ -44,6 +44,8 @@ export default function AddAssignmentComponent() {
 	console.log("user: ", user);
 
 	const router = useRouter();
+	const queryClient = useQueryClient();
+
 	const { mutateAsync, reset, isPending } = useMutation({
 		mutationFn: onAddAssignment,
 		onError: (error) => {
@@ -115,6 +117,8 @@ export default function AddAssignmentComponent() {
 		setFile(null);
 		setTitle("");
 		setDescription("");
+		queryClient.invalidateQueries({ queryKey: ["user-points"] });
+
 	};
 
 	if (isLoading) return <div>Loading...</div>;

@@ -191,7 +191,9 @@ function SchoolAdminDashboard() {
 					<hr className="my-[1em]" />
 
 					{/* ---------------------------------------------------- */}
-
+					<h3 className="font-semibold text-[#212121] capitalize align-middle text-[1.6em] mt-[1em] mb-[1em]">
+						Top 5
+					</h3>
 					<TopFive />
 				</div>
 			</DashboardLayout>

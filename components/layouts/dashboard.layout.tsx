@@ -49,14 +49,23 @@ export default function DashboardLayout({
 		queryFn: fetchPoints,
 	});
 
-	const {schoolData} = useSchoolInfo()
+	const { schoolData } = useSchoolInfo();
 
 	if (isLoading && isLoadingPoints) {
 		return <div>Loading...</div>;
 	}
 
-	if (isError || !user || isPointsError || !points) {
-		return <div>Error loading user data</div>;
+	if (isError) {
+		return <div>isError</div>;
+	}
+	if (!user) {
+		return <div>!user</div>;
+	}
+	if (isPointsError) {
+		return <div>isPointsError</div>;
+	}
+	if (!points) {
+		return <div></div>;
 	}
 
 	const handleLogout = async () => {
@@ -74,10 +83,6 @@ export default function DashboardLayout({
 	// 	queryKey: ["fetch-classes"],
 	// 	queryFn: () => fetchSchoolsInfo(),
 	// });
-
-
-
-
 
 	const topBoxes = () => {
 		if (user.role === "student" || user.role === "teacher") {
