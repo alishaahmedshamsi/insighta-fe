@@ -17,16 +17,16 @@ export default function TakeQuizOnline({
 	gradingQA,
 }: {
 	quizName: string;
-	quizQuestions: string[];
+	quizQuestions: string[] | undefined;
 	displayText: string;
-	role: string;
+	role: string; 
 	createdBy?: string;
 	quizId?: string;
 	quizDeadline?: string;
 	gradingQA?: {
 		question: string;
 		answer: string;
-	}[];
+	}[] | undefined;
 	
 }) {
 	console.log("quizQuestions: ", quizQuestions);
@@ -163,7 +163,7 @@ export default function TakeQuizOnline({
 															<hr className="my-4" />
 														</Dialog.Title>
 														<div className="mt-2 overflow-y-scroll max-h-[350px] pr-4">
-															{gradingQA.map(
+															{gradingQA?.map(
 																(
 																	currentQuestion,
 																	i
@@ -269,7 +269,7 @@ export default function TakeQuizOnline({
 															<hr className="my-4" />
 														</Dialog.Title>
 														<div className="mt-2 overflow-y-scroll pr-4">
-															{quizQuestions.map(
+															{quizQuestions?.map(
 																(
 																	question,
 																	i

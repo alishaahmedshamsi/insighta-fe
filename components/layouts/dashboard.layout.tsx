@@ -101,7 +101,6 @@ export default function DashboardLayout({
 							quizPoints={points.quiz}
 							lecturePoints={points.lecture}
 							reviewPoints={25}
-							
 							open={pointsOpen}
 							setOpen={setPointsOpen}
 						>
@@ -156,7 +155,7 @@ export default function DashboardLayout({
 							</CalenderDialog>
 						</div>
 						{user.role === "student" ? (
-							<Link href="#">
+							<Link href="/student-dashboard/grades">
 								<div className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 									<Image
 										alt=""

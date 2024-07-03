@@ -8,25 +8,6 @@ import WatchLectureDialog from "@/components/watchLectureDialog";
 import { useStudentSubject } from "@/hooks/user.hook";
 import StudentLectures from "@/components/StudentLectures/StudentLectures";
 
-const allLectures = [
-	{
-		title: "Lecture #2",
-		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		dateUploaded: "4 May 2024",
-		status: "Not Completed",
-		lectureFile: "https://youtu.be/EFg3u_E6eHU?si=t0kV0D4ei0mSGT9w",
-	},
-	{
-		title: "Lecture #1",
-		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		dateUploaded: "1 May 2024",
-		status: "Completed",
-		lectureFile: "https://youtu.be/EFg3u_E6eHU?si=t0kV0D4ei0mSGT9w",
-	},
-];
-
 export default function StudentSubjects({
 	params,
 }: {
