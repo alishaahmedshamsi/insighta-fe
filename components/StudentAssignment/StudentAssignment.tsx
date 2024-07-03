@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { onUploadAssignment } from "@/services/apis/user.api";
 import { IUploadAssignment } from "@/types/type";
+import { Loader2Icon } from "lucide-react";
+import { Input } from "../ui/input";
 
 export function isDeadlinePassed(deadline: string) {
 	const currentDate = new Date();
@@ -27,6 +29,8 @@ export default function StudentAssignment({
 		createdBy: string;
 	}[];
 }) {
+
+	
 	const [title, setTitle] = useState("");
 	const [file, setFile] = useState<File | null>(null);
 
@@ -86,7 +90,7 @@ export default function StudentAssignment({
 		setFile(null);
 
 		// reset the file field form
-		reset()
+		reset();
 	};
 
 	return (
@@ -157,6 +161,7 @@ export default function StudentAssignment({
 									<a
 										target="_blank"
 										href={assignment.assignmentFile}
+										download
 									>
 										Download File
 									</a>
@@ -183,18 +188,29 @@ export default function StudentAssignment({
 										Upload File
 									</h4>
 									<div className="grid grid-cols-4">
-										<input
+										<Input
 											onChange={handleFileChange}
 											type="file"
 											name="file"
 											id="file"
-											className="col-span-3 w-full border-2 border-[#777] border-dashed rounded-[2em] p-[.9em]"
+											className="col-span-3 border-2 border-[#ddd] border-dashed w-full px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full bg-white p-[1em] h-[3.8em]"
 										/>
 										<button
 											type="submit"
-											className="col-span-1 w-full rounded-[2em] bg-brand-sea-green py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
+											className="col-span-1 w-full rounded-[2em] bg-brand-sea-green py-4 h-full  text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
 										>
-											Upload
+											{isPending ? (
+												<>
+													<div className="flex justify-center items-center">
+														<Loader2Icon className="mr-2 animate-spin" />
+														<span>
+															Uploading...
+														</span>
+													</div>
+												</>
+											) : (
+												"Upload"
+											)}
 										</button>
 									</div>
 								</form>

@@ -35,14 +35,13 @@ export default function Component({
 		(ass: { _id: string }) => ass._id === number
 	);
 
-	// console.log("currentAssignment: ", currentAssignment);
+	console.log("currentAssignment: ", currentAssignment);
 
 	const mainSectionHeading = subjectName
 		? `Details: ${subjectName.name} - Assignment: ${currentAssignment.title}`
 		: `Details: ${subject} Assignment #${number}`;
 
 	// console.log("assignment ID: ", number);
-
 
 	return (
 		<>

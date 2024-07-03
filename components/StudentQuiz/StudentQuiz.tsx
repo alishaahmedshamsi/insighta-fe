@@ -74,15 +74,15 @@ export default function StudentQuiz({
 							>
 								Status
 							</h5>
-							{/* <h4
+							<h4
 								className={`text-[#111] font-medium capitalize text-[1.2em] ${
-									quiz.status.toLowerCase() == "completed"
+									quiz.status?.toLowerCase() == "completed"
 										? `text-[#5fc935]`
 										: "text-[#cf2e23]"
 								}`}
 							>
 								{quiz.status}
-							</h4>{" "} */}
+							</h4>{" "}
 						</div>
 						{isDeadlinePassed(quiz.deadline) ? (
 							<div className="h-full flex items-end">

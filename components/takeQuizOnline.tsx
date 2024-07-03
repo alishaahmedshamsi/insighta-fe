@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { onTakeQuiz } from "@/services/apis/user.api";
 import { ITakeQuiz } from "@/types/type";
 import { isDeadlinePassed } from "./StudentAssignment/StudentAssignment";
+import { Loader2Icon } from "lucide-react";
 
 export default function TakeQuizOnline({
 	quizName,
@@ -17,17 +18,18 @@ export default function TakeQuizOnline({
 	gradingQA,
 }: {
 	quizName: string;
-	quizQuestions: string[] | undefined;
+	quizQuestions: string[];
 	displayText: string;
-	role: string; 
+	role: string;
 	createdBy?: string;
 	quizId?: string;
 	quizDeadline?: string;
-	gradingQA?: {
-		question: string;
-		answer: string;
-	}[] | undefined;
-	
+	gradingQA?:
+		| {
+				question: string;
+				answer: string;
+		  }[]
+		| undefined;
 }) {
 	console.log("quizQuestions: ", quizQuestions);
 	const [open, setOpen] = useState(false);
@@ -81,7 +83,6 @@ export default function TakeQuizOnline({
 			if (!success) return toast.error(response);
 			if (success) toast.success("Quiz Submitted Successfully");
 
-			
 			// Simulate a delay for demo purposes
 			setTimeout(() => {
 				// toast.success("Quiz submitted successfully!");
@@ -446,7 +447,18 @@ export default function TakeQuizOnline({
 																cancelButtonRef
 															}
 														>
-															Submit
+															{isPending ? (
+																<>
+																	<div className="flex justify-center items-center">
+																		<Loader2Icon className="mr-2 animate-spin" />
+																		<span>
+																			Submitting...
+																		</span>
+																	</div>
+																</>
+															) : (
+																"Submit"
+															)}
 														</button>
 													</div>
 												</form>
