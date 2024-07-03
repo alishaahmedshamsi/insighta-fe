@@ -92,14 +92,16 @@ export default function DashboardLayout({
 					<div className="grid grid-cols-3 gap-[1em] w-full">
 						<PBreakdown
 							userName={user.fullname}
-							schoolName={user.school}
-							userRank={""}
+							// schoolName={user.school}
+							// userRank={""}
 							userClass={user.classes}
-							role={"student"}
+							// role={"student"}
 							points={points.total}
 							assignmentPoints={points.assignment}
 							quizPoints={points.quiz}
 							lecturePoints={points.lecture}
+							reviewPoints={25}
+							
 							open={pointsOpen}
 							setOpen={setPointsOpen}
 						>
