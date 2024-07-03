@@ -59,9 +59,11 @@ export default function AddLectureComponent() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (!classId || !subjectId || !title || !description || !file) {
+		if (!classId || !title || !description || !file) {
 			return toast.error("Please fill in all fields");
 		}
+		let subId = user?.subject.find((item) => item.class == classId)?._id;
+
 
 		// const formData = new FormData();
 		// formData.append("title", title);
@@ -91,7 +93,7 @@ export default function AddLectureComponent() {
 			title,
 			description: description,
 			className: classId,
-			subject: subjectId,
+			subject: subId,
 			// marks: marks as number,
 			lecture: file,
 		};
@@ -101,7 +103,7 @@ export default function AddLectureComponent() {
 
 		if (!success) return toast.error(response);
 		if (success) toast.success("Lecture Added Successfully");
-		router.push("/teacher-dashboard");
+		// router.push("/teacher-dashboard");
 
 		setTitle("");
 		setDescription("");
@@ -117,6 +119,7 @@ export default function AddLectureComponent() {
 
 	const handleClassChange = (value: string) => {
 		console.log("class value: ", value);
+		setClassName(value);
 
 		const classData = user?.classes.find(
 			(item) => String(item.className) === String(value)
@@ -195,6 +198,7 @@ export default function AddLectureComponent() {
 						onChange={(e) => {
 							setTitle(e.target.value);
 						}}
+						value={title}
 					/>
 				</div>
 				<div className="w-full flex flex-col">
@@ -206,12 +210,13 @@ export default function AddLectureComponent() {
 						onChange={(e) => {
 							setDescription(e.target.value);
 						}}
+						value={description}
 					/>
 				</div>
-				<div className="w-full flex flex-col">
+				<div className="col-span-2 w-full flex flex-col">
 					<label htmlFor="class">Class</label>
 
-					<Select onValueChange={handleClassChange}>
+					<Select onValueChange={handleClassChange} value={className}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Class" />
 						</SelectTrigger>
@@ -230,7 +235,7 @@ export default function AddLectureComponent() {
 						</SelectContent>
 					</Select>
 				</div>
-				<div className="w-full flex flex-col">
+				{/* <div className="w-full flex flex-col">
 					<label htmlFor="subject">Subject</label>
 
 					<Select onValueChange={handleSubjectChange}>
@@ -251,13 +256,13 @@ export default function AddLectureComponent() {
 							</SelectGroup>
 						</SelectContent>
 					</Select>
-				</div>
+				</div> */}
 				<div className="w-full flex flex-col col-span-2">
 					<label htmlFor="file">Upload file</label>
-					<input
+					<Input
 						type="file"
 						id="file"
-						className="col-span-3 w-full border-2 border-[#ddd] bg-white border-dashed rounded-[1em] p-[.8em]"
+						className="col-span-3 border-2 border-[#ddd border-dashed w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] bg-white p-[.8em] h-[3.5em]"
 						onChange={handleFileChange}
 					/>
 				</div>

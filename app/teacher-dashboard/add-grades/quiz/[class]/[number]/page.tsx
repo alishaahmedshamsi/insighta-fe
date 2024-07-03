@@ -9,7 +9,9 @@ import TakeQuizOnline from "@/components/takeQuizOnline";
 import { Button } from "@/components/ui/button";
 import TeacherGrading from "@/components/TeacherGrading/teacher-grading";
 import { useState } from "react";
-
+import { useCurrentUser } from "@/hooks/user.hook";
+import { useQuery } from "@tanstack/react-query";
+import { fetchQuiz } from "@/services/apis/teacher.api";
 const submissions = [
 	{
 		studentName: "Muhammad Usman",
@@ -18,40 +20,14 @@ const submissions = [
 		obtainedMarks: "",
 		quizQA: [
 			{
-				questionNo: "Question #1",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
 			{
-				questionNo: "Question #2",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
 			{
-				questionNo: "Question #3",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-		],
-	},
-	{
-		studentName: "Muhammad Usman",
-		rollNumber: "123456",
-		totalMarks: "10",
-		obtainedMarks: "",
-		quizQA: [
-			{
-				questionNo: "Question #1",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-			{
-				questionNo: "Question #2",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-			{
-				questionNo: "Question #3",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
@@ -64,40 +40,14 @@ const submissions = [
 		obtainedMarks: "",
 		quizQA: [
 			{
-				questionNo: "Question #1",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
 			{
-				questionNo: "Question #2",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
 			{
-				questionNo: "Question #3",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-		],
-	},
-	{
-		studentName: "Muhammad Usman",
-		rollNumber: "123456",
-		totalMarks: "10",
-		obtainedMarks: "",
-		quizQA: [
-			{
-				questionNo: "Question #1",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-			{
-				questionNo: "Question #2",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-			{
-				questionNo: "Question #3",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
@@ -110,40 +60,14 @@ const submissions = [
 		obtainedMarks: "",
 		quizQA: [
 			{
-				questionNo: "Question #1",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
 			{
-				questionNo: "Question #2",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
 			{
-				questionNo: "Question #3",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-		],
-	},
-	{
-		studentName: "Muhammad Usman",
-		rollNumber: "123456",
-		totalMarks: "10",
-		obtainedMarks: "",
-		quizQA: [
-			{
-				questionNo: "Question #1",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-			{
-				questionNo: "Question #2",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-			{
-				questionNo: "Question #3",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
@@ -156,40 +80,14 @@ const submissions = [
 		obtainedMarks: "",
 		quizQA: [
 			{
-				questionNo: "Question #1",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
 			{
-				questionNo: "Question #2",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
 			{
-				questionNo: "Question #3",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-		],
-	},
-	{
-		studentName: "Muhammad Usman",
-		rollNumber: "123456",
-		totalMarks: "10",
-		obtainedMarks: "",
-		quizQA: [
-			{
-				questionNo: "Question #1",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-			{
-				questionNo: "Question #2",
-				question: "List parts of speech",
-				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-			},
-			{
-				questionNo: "Question #3",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
@@ -202,17 +100,94 @@ const submissions = [
 		obtainedMarks: "",
 		quizQA: [
 			{
-				questionNo: "Question #1",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
 			{
-				questionNo: "Question #2",
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
 			{
-				questionNo: "Question #3",
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+		],
+	},
+	{
+		studentName: "Muhammad Usman",
+		rollNumber: "123456",
+		totalMarks: "10",
+		obtainedMarks: "",
+		quizQA: [
+			{
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+			{
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+			{
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+		],
+	},
+	{
+		studentName: "Muhammad Usman",
+		rollNumber: "123456",
+		totalMarks: "10",
+		obtainedMarks: "",
+		quizQA: [
+			{
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+			{
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+			{
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+		],
+	},
+	{
+		studentName: "Muhammad Usman",
+		rollNumber: "123456",
+		totalMarks: "10",
+		obtainedMarks: "",
+		quizQA: [
+			{
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+			{
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+			{
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+		],
+	},
+	{
+		studentName: "Muhammad Usman",
+		rollNumber: "123456",
+		totalMarks: "10",
+		obtainedMarks: "",
+		quizQA: [
+			{
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+			{
+				question: "List parts of speech",
+				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+			},
+			{
 				question: "List parts of speech",
 				answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			},
@@ -220,16 +195,33 @@ const submissions = [
 	},
 ];
 
-export default function AddAssignmentGrades({
+export default function Component({
 	params,
 }: {
 	params: { class: string; number: string };
 }) {
 	const { class: classes, number } = params;
 
-	
+	const extractClass = classes.split("-")[0].trim();
+	const { user } = useCurrentUser();
 
-	const mainSectionHeading = `Add Class: ${classes} Quiz #${number} Grades`;
+	const classId = user?.classes.find(
+		(cls) => cls.className.toString() == extractClass
+	)?._id;
+
+	const { data: allQuiz, isLoading } = useQuery({
+		queryKey: ["fetch-quiz"],
+		queryFn: () => fetchQuiz(classId!),
+	});
+
+	let currentQuiz = allQuiz?.find(
+		(quiz: { _id: string }) => quiz._id == number
+	);
+
+	const mainSectionHeading = currentQuiz
+		? `Add Quiz Grades: ${currentQuiz.title}`
+		: `Add Quiz Grades: ${number}`;
+	// const mainSectionHeading = `Add Quiz Grades: ${classes} Quiz #${number} Grades`;
 	return (
 		<>
 			<DashboardLayout
@@ -252,28 +244,31 @@ export default function AddAssignmentGrades({
 										<h4>
 											Total Marks: {submission.totalMarks}
 										</h4>
-										
+
 										<div className="flex">
 											<TeacherGrading
 												userName={
 													submission.studentName
 												}
 												userClass={classes}
-												number={number}
+												number={currentQuiz.title}
 												materialType={"Quiz"}
-												totalMarks={submission.totalMarks}
+												totalMarks={
+													submission.totalMarks
+												}
 												// open={open}
 												// setOpen={setOpen}
 											/>
-												
+
 											{/* </TeacherGrading> */}
 										</div>
 
 										<TakeQuizOnline
 											role="teacherGrading"
 											quizName={"Quiz"}
-											quizQuestions={submission.quizQA}
+											gradingQA={submission.quizQA}
 											displayText="View Questions"
+											quizQuestions={["", ""]}
 										/>
 									</div>
 								</div>

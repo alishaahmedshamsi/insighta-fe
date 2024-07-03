@@ -66,6 +66,7 @@ export default function AddAssignmentComponent() {
 	// }, [className]);
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
 		if (e.target.files && e.target.files[0]) {
 			setFile(e.target.files[0]);
 		}
@@ -74,9 +75,11 @@ export default function AddAssignmentComponent() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (!classId || !subjectId || !date || !file) {
+		if (!classId || !date || !file) {
 			return toast.error("Please fill in all fields");
 		}
+
+		let subId = user?.subject.find((item) => item.class == classId)?._id;
 
 		// const formData = new FormData();
 		// formData.append("title", title);
@@ -91,7 +94,8 @@ export default function AddAssignmentComponent() {
 			title,
 			descripition: description,
 			class: classId,
-			subject: subjectId,
+			subject: subId,
+			// subject: subjectId,
 			// marks: marks as number,
 			deadline: date!,
 			assignmentFile: file,
@@ -108,17 +112,17 @@ export default function AddAssignmentComponent() {
 		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
-		if (success) toast.success("Assignment Added Successfully");
-		// router.push("/teacher-dashboard");
-		setClassName("");
-		setSubjectName("");
-		// setMarks("");
-		setDate(null);
-		setFile(null);
-		setTitle("");
-		setDescription("");
-		queryClient.invalidateQueries({ queryKey: ["user-points"] });
-
+		if (success) {
+			toast.success("Assignment Added Successfully");
+			setClassName("");
+			setClassId(undefined);
+			setDate(null);
+			setFile(null);
+			setTitle("");
+			setDescription("");
+			queryClient.invalidateQueries({ queryKey: ["user-points"] });
+			queryClient.invalidateQueries({ queryKey: ["fetch-assignments"] });
+		}
 	};
 
 	if (isLoading) return <div>Loading...</div>;
@@ -131,6 +135,7 @@ export default function AddAssignmentComponent() {
 
 	const handleClassChange = (value: string) => {
 		console.log("class value: ", value);
+		setClassName(value)
 
 		const classData = user?.classes.find(
 			(item) => String(item.className) === String(value)
@@ -138,14 +143,14 @@ export default function AddAssignmentComponent() {
 		setClassId(classData?._id);
 	};
 
-	const handleSubjectChange = (value: string) => {
-		console.log("class value: ", value);
+	// const handleSubjectChange = (value: string) => {
+	// 	console.log("class value: ", value);
 
-		const subjectData = user?.subject.find(
-			(item) => String(item.name) === String(value)
-		);
-		setSubjectId(subjectData?._id);
-	};
+	// 	const subjectData = user?.subject.find(
+	// 		(item) => String(item.name) === String(value)
+	// 	);
+	// 	setSubjectId(subjectData?._id);
+	// };
 
 	return (
 		<>
@@ -157,6 +162,7 @@ export default function AddAssignmentComponent() {
 					onChange={(e) => {
 						setTitle(e.target.value);
 					}}
+					value={title}
 					placeholder="Title"
 					className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 				/>
@@ -164,13 +170,14 @@ export default function AddAssignmentComponent() {
 					onChange={(e) => {
 						setDescription(e.target.value);
 					}}
+					value={description}
 					placeholder="Description"
 					className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 				/>
 
 				<div className="w-full flex flex-col">
 					<label htmlFor="class">Class</label>
-					<Select onValueChange={handleClassChange}>
+					<Select onValueChange={handleClassChange} value={className}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Class" />
 						</SelectTrigger>
@@ -189,7 +196,7 @@ export default function AddAssignmentComponent() {
 						</SelectContent>
 					</Select>
 				</div>
-				<div className="w-full flex flex-col">
+				{/* <div className="w-full flex flex-col">
 					<label htmlFor="subject">Subject</label>
 					<Select onValueChange={handleSubjectChange}>
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
@@ -209,7 +216,7 @@ export default function AddAssignmentComponent() {
 							</SelectGroup>
 						</SelectContent>
 					</Select>
-				</div>
+				</div> */}
 				{/* <div className="w-full flex flex-col">
 					<label htmlFor="totalMarks">Total Marks</label>
 					<input
@@ -258,16 +265,16 @@ export default function AddAssignmentComponent() {
 				</div>
 				<div className="w-full flex flex-col col-span-2">
 					<label htmlFor="file">Upload file</label>
-					<input
+					<Input
 						type="file"
 						id="file"
-						className="col-span-3 w-full border-2 border-[#ddd] bg-white border-dashed rounded-[1em] p-[.8em]"
+						className="col-span-3 border-2 border-[#ddd] border-dashed w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] bg-white p-[.8em] h-[3.5em]"
 						onChange={handleFileChange}
 					/>
 				</div>
 				<div>
-					<button
-						className="rounded-[1em] bg-brand-sea-green py-[.9em] px-[1.5em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
+					<Button
+						className="rounded-[1em] bg-brand-sea-green py-[1.4em] px-[1.5em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
 						type="submit"
 					>
 						{isPending ? (
@@ -280,7 +287,7 @@ export default function AddAssignmentComponent() {
 						) : (
 							"Add Assignment"
 						)}
-					</button>
+					</Button>
 				</div>
 			</form>
 		</>

@@ -6,10 +6,23 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import TakeQuizOnline from "@/components/takeQuizOnline";
-
-
+import { useCurrentUser } from "@/hooks/user.hook";
+import { useQuery } from "@tanstack/react-query";
+import { fetchQuiz } from "@/services/apis/teacher.api";
 export default function Component({ params }: { params: { class: string } }) {
 	const { class: classes } = params;
+
+	const extractClass = classes.split("-")[0].trim();
+	const { user } = useCurrentUser();
+
+	const classId = user?.classes.find(
+		(cls) => cls.className.toString() == extractClass
+	)?._id;
+
+	const { data: allQuiz, isLoading } = useQuery({
+		queryKey: ["fetch-quiz"],
+		queryFn: () => fetchQuiz(classId!),
+	});
 	const quizList = [
 		{
 			name: "Quiz #1",
@@ -29,9 +42,9 @@ export default function Component({ params }: { params: { class: string } }) {
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>
 				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
-					{quizList.map((subject) => {
+					{allQuiz?.map((currentQuiz: any) => {
 						return (
-							<Link href={subject.classLink}>
+							<Link href={`/teacher-dashboard/add-grades/quiz/${classes}/${currentQuiz._id}`}>
 								<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 									<div className="w-[80px]">
 										<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -46,7 +59,7 @@ export default function Component({ params }: { params: { class: string } }) {
 									</div>
 									<div className="w-[75%]">
 										<h4 className="font-medium text-[#212121] align-middle text-[1.4em]">
-											{subject.name}
+											{currentQuiz.title}
 										</h4>
 									</div>
 								</div>

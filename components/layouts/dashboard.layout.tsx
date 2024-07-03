@@ -13,6 +13,7 @@ import { fetchPoints } from "@/services/apis/user.api";
 import { ApiResponse, ISchoolInfo } from "@/types/type";
 import { fetchSchoolsInfo } from "@/services/apis/school.api";
 import { useSchoolInfo } from "@/hooks/school.hook";
+import { Router } from "next/router";
 
 export default function DashboardLayout({
 	mainSectionHeading,
@@ -65,7 +66,7 @@ export default function DashboardLayout({
 		return <div>isPointsError</div>;
 	}
 	if (!points) {
-		return <div></div>;
+		return <div>Unable to fetch points stuff. Please reload the page</div>;
 	}
 
 	const handleLogout = async () => {

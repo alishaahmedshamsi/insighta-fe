@@ -134,6 +134,7 @@ export interface IUserUpdate {
 }
 
 export interface ISubject {
+	class: string | undefined;
 	_id: string;
 	name: string;
 }
@@ -142,7 +143,7 @@ export interface IAddAssignment {
 	title: string;
 	descripition: string;
 	class: string;
-	subject: string;
+	subject: string | undefined;
 	// marks: number;
 	deadline: Date;
 	assignmentFile: File;
@@ -161,7 +162,7 @@ export interface IAddLecture {
 	title: string;
 	description: string;
 	className: string;
-	subject: string;
+	subject: string | undefined;
 	lecture: File;
 }
 

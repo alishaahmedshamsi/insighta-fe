@@ -54,7 +54,7 @@ export default function TeacherIndividualClass({
 	const mainSectionHeading = `Class: ${teacherClass} Lectures`;
 
 	
-	const extractClass = teacherClass.split("-")[0];
+	const extractClass = teacherClass.split("-")[0].trim();
 	const { user } = useCurrentUser();
 
 	const classId = user?.classes.find(

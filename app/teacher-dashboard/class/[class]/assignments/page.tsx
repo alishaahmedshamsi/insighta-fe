@@ -34,8 +34,8 @@ export default function TeacherIndividualClassAddAssignments({
 }) {
 	const { class: teacherClass } = params;
 	const mainSectionHeading = `Manage Assignments of Class: ${teacherClass}`;
-	
-	const extractSubject = teacherClass.split("-")[1];
+
+	const extractSubject = teacherClass.split("-")[1].trim();
 	const { user } = useCurrentUser();
 
 	const subjectId = user?.subject.find(
@@ -115,13 +115,16 @@ export default function TeacherIndividualClassAddAssignments({
 														Assignment
 													</h5>
 													<h4 className="text-[#111] underline capitalize text-[1.2em]">
-														<Link
+														<a
 															href={
 																assignment.assignmentFile
 															}
+															download={
+																assignment.title
+															}
 														>
 															Download File
-														</Link>
+														</a>
 													</h4>
 												</div>
 											</div>
