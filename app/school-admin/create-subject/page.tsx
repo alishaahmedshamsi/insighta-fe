@@ -86,6 +86,8 @@ export default function Page() {
 		if (!success) return toast.error(response);
 		if (success) toast.success("Subject Created successfully");
 		formReset();
+		setSelectedClass("");
+		setSubject("")
 	};
 
 	if (isLoading) {
@@ -180,8 +182,9 @@ export default function Page() {
 								onValueChange={(value) => {
 									console.log(value);
 									setValue("name", value);
-									// setSubject(value);
+									setSubject(value);
 								}}
+								value={subject}
 							>
 								<SelectTrigger
 									className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"

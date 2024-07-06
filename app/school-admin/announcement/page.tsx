@@ -39,6 +39,11 @@ function CreateAnnouncment() {
 	const queryClient = useQueryClient();
 	const handleSubmit = async () => {
 		setIsPending(true);
+		if (!announcementText) {
+			toast.error("Please write something to post");
+			setIsPending(false);
+			return;
+		}
 		const { success, response } = await createAnnouncement({
 			content: announcementText,
 		});
@@ -87,7 +92,8 @@ function Announcements() {
 	});
 	if (error) console.log(error);
 	if (isLoading) return <div>Loading...</div>;
-	if (!data) return <div>No announcements found</div>;
+	console.log("announcements data admin: ", data.length);
+	if (data.length == 0) return <div>No announcements found</div>;
 
 	return (
 		<div className="flex flex-col w-full rounded-[1em] gap-[1.5em] p-[2em] bg-white shadow-lg">

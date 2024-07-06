@@ -51,7 +51,7 @@ import {
 } from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ArrowDownCircleIcon, Check } from "lucide-react";
+import { ArrowDownCircleIcon, Check, Loader2Icon } from "lucide-react";
 import { useCurrentUser } from "@/hooks/user.hook";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -76,7 +76,7 @@ export default function SchoolAdminCreateTeacher() {
 	});
 
 	const queryClient = useQueryClient();
-	const { mutateAsync, reset } = useMutation({
+	const { mutateAsync, reset, isPending } = useMutation({
 		mutationFn: onRegister,
 		onError: (error) => {
 			setTimeout(() => {
@@ -171,6 +171,12 @@ export default function SchoolAdminCreateTeacher() {
 		const { success, response } = await mutateAsync(data);
 		if (!success) return toast.error(response);
 		toast.success("Teacher created successfully");
+		setTeacherData({
+			name: "",
+			email: "",
+			password: "",
+			classes: [{ name: "", subject: "", nameId: "", subjectId: "" }],
+		});
 		queryClient.invalidateQueries({ queryKey: ["fetch-classes"] });
 	};
 
@@ -197,6 +203,7 @@ export default function SchoolAdminCreateTeacher() {
 									name: e.target.value,
 								})
 							}
+							value={teacherData.name ? teacherData.name : ""}
 						/>
 					</div>
 					<div className="w-full flex flex-col">
@@ -211,6 +218,7 @@ export default function SchoolAdminCreateTeacher() {
 									email: e.target.value,
 								})
 							}
+							value={teacherData.email ? teacherData.email : ""}
 						/>
 					</div>
 					<div className="w-full flex flex-col">
@@ -224,6 +232,9 @@ export default function SchoolAdminCreateTeacher() {
 									...teacherData,
 									password: e.target.value,
 								})
+							}
+							value={
+								teacherData.password ? teacherData.password : ""
 							}
 						/>
 					</div>
@@ -252,6 +263,7 @@ export default function SchoolAdminCreateTeacher() {
 									onValueChange={(value) =>
 										handleClassChange(value, classIndex)
 									}
+									value={classItem.name}
 								>
 									<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 										<SelectValue placeholder="Select a Class" />
@@ -315,6 +327,7 @@ export default function SchoolAdminCreateTeacher() {
 											classIndex
 										)
 									}
+									value={classItem.subject}
 								>
 									<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 										<SelectValue placeholder="Select a Subject" />
@@ -357,7 +370,17 @@ export default function SchoolAdminCreateTeacher() {
 
 				<div className="col-span-1 w-full">
 					<button className="rounded-[1em] bg-brand-sea-green py-[.8em] px-[1em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink">
-						Create Teacher
+						{isPending ? (
+							<>
+								<div className="flex justify-center items-center">
+									<Loader2Icon className="mr-2 animate-spin" />
+									<span>Creating...</span>
+								</div>
+							</>
+						) : (
+							"Create Teacher"
+						)}
+						
 					</button>
 				</div>
 				{/* <div className="col-span-1 w-full">

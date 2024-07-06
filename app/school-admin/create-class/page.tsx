@@ -58,10 +58,19 @@ export default function ClassCreate() {
 			inputNumber < 1 ||
 			inputNumber > 10
 		) {
+			toast.error("Please enter a single digit (1-9) or 10.");
 			setError("Please enter a single digit (1-9) or 10.");
+			setIsPending(false);
+			return;
+		} else if (section == "") {
+			toast.error("Please select a section");
+			// setError("Please select a section");
+			setIsPending(false);
+			return;
 		} else {
 			setError("");
 			let classes = inputNumber.toString();
+
 			if (section !== "no-section") {
 				classes = inputNumber + section;
 			}
@@ -69,6 +78,7 @@ export default function ClassCreate() {
 			const { response, success } = await createClass(classes);
 			if (!success) {
 				toast.error(response);
+				setIsPending(false);
 			} else {
 				setIsPending(false);
 				toast.success("Class Created successfully");
@@ -120,6 +130,7 @@ export default function ClassCreate() {
 									Section
 								</label>
 								<Select
+									value={section}
 									onValueChange={(value) => setSection(value)}
 								>
 									<SelectTrigger className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
@@ -127,12 +138,20 @@ export default function ClassCreate() {
 									</SelectTrigger>
 									<SelectContent className="w-full">
 										<SelectGroup>
+											{/* {section == "" ? (
+												<SelectItem value="no-section">
+													Select a Section
+												</SelectItem>
+											) : (
+												<> */}
 											<SelectLabel>Section</SelectLabel>
 											<SelectItem value="A">A</SelectItem>
 											<SelectItem value="B">B</SelectItem>
 											<SelectItem value="C">C</SelectItem>
 											<SelectItem value="D">D</SelectItem>
 											<SelectItem value="E">E</SelectItem>
+											{/* </>
+											)} */}
 										</SelectGroup>
 									</SelectContent>
 								</Select>

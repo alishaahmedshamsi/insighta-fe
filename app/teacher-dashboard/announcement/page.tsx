@@ -12,37 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchAnnouncements } from "@/services/apis/announcment.api";
 import { formatDate } from "@/lib/utils";
 
-const previousAnnouncements = [
-	{
-		date: "2022-10-10",
-		announcement: "This is the first announcement",
-	},
-	{
-		date: "2022-10-10",
-		announcement: "This is the first announcement",
-	},
-	{
-		date: "2022-10-10",
-		announcement: "This is the first announcement",
-	},
-	{
-		date: "2022-10-10",
-		announcement: "This is the first announcement",
-	},
-	{
-		date: "2022-10-10",
-		announcement: "This is the first announcement",
-	},
-	{
-		date: "2022-10-10",
-		announcement: "This is the first announcement",
-	},
-	{
-		date: "2022-10-10",
-		announcement: "This is the first announcement",
-	},
-];
-
 export default function Component() {
 	return (
 		<>
@@ -82,9 +51,9 @@ export function UserTeacherAnnouncements() {
 	});
 	if (error) console.log(error);
 	if (isLoading) return <div>Loading...</div>;
-	if (!data) return <div>No announcements found</div>;
+	if (data.length ==0) return <div>No announcements found</div>;
 
-	console.log("data: ", data);
+	console.log("announcements data: ", data.length);
 
 	return (
 		<div className="flex flex-col w-full rounded-[1em] gap-[1.5em] p-[2em] bg-white shadow-lg">

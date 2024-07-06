@@ -61,7 +61,8 @@ export default function SchoolAdminCreateStudent() {
 
 		if (!success) return toast.error(response);
 		if (success) toast.success("Student created successful");
-		resetForm()
+		resetForm();
+		setSelectedClass("");
 	};
 	const {
 		data,
@@ -101,10 +102,13 @@ export default function SchoolAdminCreateStudent() {
 						<div className="w-full flex flex-col">
 							<label htmlFor="rollNo">Roll No</label>
 							<Input
-								{...register("rollnumber")}
+								// sent the value of as string
+								{...register("rollnumber", {
+									valueAsNumber: false,
+								})}
 								className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 								id="rollnumnber"
-								type="text"
+								type="number"
 							/>
 						</div>
 						<div className="w-full flex flex-col">

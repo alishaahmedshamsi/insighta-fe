@@ -40,20 +40,20 @@ export const STUDENT_QUICK_START_LIST = [
 
 export const SCHOOL_ADMIN_QUICK_START_LIST = [
 	{
-		heading: "Create Student",
-		link: "/school-admin/create-student",
-	},
-	{
-		heading: "Create Teacher",
-		link: "/school-admin/create-teacher",
-	},
-	{
 		heading: "Create Class",
 		link: "/school-admin/create-class",
 	},
 	{
 		heading: "Create Subject",
 		link: "/school-admin/create-subject",
+	},
+	{
+		heading: "Create Teacher",
+		link: "/school-admin/create-teacher",
+	},
+	{
+		heading: "Create Student",
+		link: "/school-admin/create-student",
 	},
 ];
 export const SUPER_ADMIN_QUICK_START_LIST = [

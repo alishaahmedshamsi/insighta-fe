@@ -24,6 +24,8 @@ function TopFive() {
 		queryFn: () => fetchTopFivePoints(),
 	});
 
+	console.log("top five data: ", data?.data.topStudents.length);
+
 	const { data: classesData } = useQuery({
 		queryKey: ["fetch-classes-data"],
 		queryFn: () => fetchClasses(),
@@ -45,13 +47,14 @@ function TopFive() {
 		return "1A";
 	};
 
-	console.log("classesData: ", classesData?.data);
-	console.log("top five data: ", data?.data);
+	// console.log("classesData: ", classesData?.data);
+	// console.log("top five data: ", data?.data);
 
 	return isLoading ? (
 		<div>Loading...</div>
-	) : !data ? (
-		<div>Nothing to show right now</div>
+	) : data?.data.topStudents.length === 0 ||
+	  data?.data.topStudents.length === 0 ? (
+		<div>No results found. No users has been created yet to show here.</div>
 	) : (
 		<>
 			<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">

@@ -264,6 +264,7 @@ export default function AddLectureComponent() {
 						id="file"
 						className="col-span-3 border-2 border-[#ddd border-dashed w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] bg-white p-[.8em] h-[3.5em]"
 						onChange={handleFileChange}
+						// value={file?.name || ""}
 					/>
 				</div>
 				<div className="col-span-1">

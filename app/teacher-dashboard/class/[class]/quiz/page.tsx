@@ -10,7 +10,6 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchQuiz } from "@/services/apis/teacher.api";
 import { Key } from "react";
 
-
 export default function TeacherIndividualClassAddAssignments({
 	params,
 }: {
@@ -50,64 +49,68 @@ export default function TeacherIndividualClassAddAssignments({
 					<hr className="my-[1em]" />
 
 					<div className="rounded-[2em] flex flex-col gap-[2em]">
-						{allQuiz?.map(
-							(quiz: any, index: Key | null | undefined) => (
-								<div key={index}>
-									<div className="subject-quizs-container flex flex-col gap-6">
-										<div
-											key={index}
-											className="quiz flex flex-col rounded-[2em] border border-[#DBDBDB] bg-white p-[2em]"
-										>
-											<div className="assginment-details grid grid-cols-4 gap-5">
-												<div>
-													<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-														Title
-													</h5>
-													<h4 className="text-[#111] capitalize text-[1.2em]">
-														{quiz.title}
-													</h4>
-												</div>
-												<div>
-													<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-														Deadline
-													</h5>
-													<h4 className="text-[#111] capitalize text-[1.2em]">
-														{quiz.deadline.slice(
-															0,
-															10
-														)}
-													</h4>
-												</div>
-												<div>
-													<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-														Total Marks
-													</h5>
-													<h4 className="text-[#111] capitalize text-[1.2em]">
-														{quiz.marks}
-													</h4>
-												</div>
+						{allQuiz?.length == 0 || allQuiz == null ? (
+							<div>No quiz rightnow.</div>
+						) : (
+							allQuiz?.map(
+								(quiz: any, index: Key | null | undefined) => (
+									<div key={index}>
+										<div className="subject-quizs-container flex flex-col gap-6">
+											<div
+												key={index}
+												className="quiz flex flex-col rounded-[2em] border border-[#DBDBDB] bg-white p-[2em]"
+											>
+												<div className="assginment-details grid grid-cols-4 gap-5">
+													<div>
+														<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+															Title
+														</h5>
+														<h4 className="text-[#111] capitalize text-[1.2em]">
+															{quiz.title}
+														</h4>
+													</div>
+													<div>
+														<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+															Deadline
+														</h5>
+														<h4 className="text-[#111] capitalize text-[1.2em]">
+															{quiz.deadline.slice(
+																0,
+																10
+															)}
+														</h4>
+													</div>
+													<div>
+														<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+															Total Marks
+														</h5>
+														<h4 className="text-[#111] capitalize text-[1.2em]">
+															{quiz.marks}
+														</h4>
+													</div>
 
-												<div>
-													<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-														View Quiz
-													</h5>
-													<h4 className="text-[#111] underline capitalize text-[1.2em]">
-														<TakeQuizOnline
-															displayText="Quiz Questions"
-															role="teacher"
-															quizName={
-																quiz.title
-															}
-															quizQuestions={
-																quiz.question
-															}
-														/>
-													</h4>
+													<div>
+														<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+															View Quiz
+														</h5>
+														<h4 className="text-[#111] underline capitalize text-[1.2em]">
+															<TakeQuizOnline
+																displayText="Quiz Questions"
+																role="teacher"
+																quizName={
+																	quiz.title
+																}
+																quizQuestions={
+																	quiz.question
+																}
+															/>
+														</h4>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+								)
 							)
 						)}
 					</div>

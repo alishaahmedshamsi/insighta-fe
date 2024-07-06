@@ -105,50 +105,50 @@ export default function StudentSubjectQuiz({
 										key={index}
 										className="grid grid-cols-3 gap-5 items-center text-[1em] capitalize text-[#333] bg-white border border-[#DBDBDB] p-[2em] rounded-[1em]"
 									>
-											<div>
-												<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-													Title
-												</h5>
-												<h4 className="text-[#111] capitalize text-[1.2em]">
-													{submission.title}
-												</h4>
-											</div>
-											<div>
-												<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-													Status
-												</h5>
-												<h4 className="text-[#189918] capitalize text-[1.2em]">
-													Checked
-												</h4>
-											</div>
-											<div>
-												<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-													Deadline
-												</h5>
-												<h4 className="text-[#111] capitalize text-[1.2em]">
-													{submission.deadline.slice(
-														0,
-														10
-													)}
-												</h4>
-											</div>
-											<div>
-												<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-													Obt. Marks
-												</h5>
-												<h4 className="text-[#111] capitalize text-[1.2em]">
-													8
-												</h4>
-											</div>
-											<div>
-												<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-													Total Marks
-												</h5>
-												<h4 className="text-[#111] capitalize text-[1.2em]">
+										<div>
+											<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+												Title
+											</h5>
+											<h4 className="text-[#111] capitalize text-[1.2em]">
+												{submission.title}
+											</h4>
+										</div>
+										<div>
+											<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+												Status
+											</h5>
+											<h4 className="text-[#189918] capitalize text-[1.2em]">
+												Checked
+											</h4>
+										</div>
+										<div>
+											<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+												Deadline
+											</h5>
+											<h4 className="text-[#111] capitalize text-[1.2em]">
+												{submission.deadline.slice(
+													0,
 													10
-												</h4>
-											</div>
-											<div>
+												)}
+											</h4>
+										</div>
+										<div>
+											<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+												Obt. Marks
+											</h5>
+											<h4 className="text-[#111] capitalize text-[1.2em]">
+												8
+											</h4>
+										</div>
+										<div>
+											<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+												Total Marks
+											</h5>
+											<h4 className="text-[#111] capitalize text-[1.2em]">
+												10
+											</h4>
+										</div>
+										{/* <div>
 												<TakeQuizOnline
 													role="teacher"
 													quizName={submission.title}
@@ -158,8 +158,8 @@ export default function StudentSubjectQuiz({
 														submission.question
 													}
 												/>
-											</div>
-										</div>
+											</div> */}
+									</div>
 								</div>
 							</div>
 						))}
