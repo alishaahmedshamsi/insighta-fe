@@ -4,8 +4,10 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import TeacherGrading from "@/components/TeacherGrading/teacher-grading";
+import { useCurrentUser } from "@/hooks/user.hook";
 
-
+import { fetchAssignments } from "@/services/apis/teacher.api";
+import { useQuery } from "@tanstack/react-query";
 const submissions = [
 	{
 		studentName: "Muhammad Usman",
@@ -50,8 +52,31 @@ export default function Component({
 	params: { class: string; number: string };
 }) {
 	const { class: classes, number } = params;
+	const extractSubject = classes.split("-")[1].trim();
+	const { user } = useCurrentUser();
 
-	const mainSectionHeading = `Add Class: ${classes} Assignment #${number} Grades`;
+	const subjectId = user?.subject.find(
+		(subject) => subject.name == extractSubject
+	)?._id;
+
+	// console.log("user: ", user?.subject);
+	// console.log("subjectId: ", subjectId);
+
+	const { data: allAssignments, isLoading } = useQuery({
+		queryKey: ["fetch-assignments"],
+		queryFn: () => fetchAssignments(subjectId!),
+	});
+
+	let currentAssignment = allAssignments?.find(
+		(assignment: { _id: string }) => assignment._id == number
+	);
+
+	console.log("currentAssignment: ", currentAssignment);
+	// const mainSectionHeading = `Add Grades: ${currentAssignment?.title}`;
+	const mainSectionHeading = currentAssignment
+		? `Add Grades: ${currentAssignment.title}`
+		: `Add Grades: ${number}`;
+
 	return (
 		<>
 			<DashboardLayout

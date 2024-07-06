@@ -6,6 +6,7 @@ import Link from "next/link";
 import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import TakeQuizOnline from "@/components/takeQuizOnline";
+import { useStudentSubject } from "@/hooks/user.hook";
 
 const subjectList = [
 	{
@@ -27,6 +28,13 @@ const subjectList = [
 ];
 
 export default function StudentQuiz() {
+	const { subjectsList, isLoading } = useStudentSubject();
+
+	console.log("subjectsList: ", subjectsList);
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 	return (
 		<>
 			<DashboardLayout
@@ -35,9 +43,11 @@ export default function StudentQuiz() {
 				leftSidebarLinks={studentLeftSidebarLinks()}
 			>
 				<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
-					{subjectList.map((subject) => {
+					{subjectsList.map((subject: { _id: any; name: string }) => {
 						return (
-							<Link href={subject.subjectLink}>
+							<Link
+								href={`/student-dashboard/quiz/${subject._id}`}
+							>
 								<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 									<div className="w-[80px]">
 										<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -63,5 +73,4 @@ export default function StudentQuiz() {
 			</DashboardLayout>
 		</>
 	);
-
 }

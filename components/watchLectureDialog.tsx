@@ -56,11 +56,28 @@ export default function WatchLectureDialog({
 													Watch Lecture
 												</Dialog.Title>
 												<div className="mt-2">
-													<video
-														src={lectureFile}
+													{/* <video
+														src={
+															"https://res.cloudinary.com/dh0kktlun/image/upload/v1719785678/g2cfksnrit9ljuzkkpn5.webp"
+														}
 														controls
 														className="w-full"
-													></video>
+														></video> */}
+
+													<video
+														className="w-full"
+														controls
+													>
+														<source
+															src={lectureFile}
+															type="video/mp4"
+														/>
+														
+													</video>
+													{/* 
+													<video src="">
+														<source />
+													</video> */}
 												</div>
 											</div>
 										</div>

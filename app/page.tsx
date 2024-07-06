@@ -73,6 +73,7 @@ export default function FrontPage() {
 
 								<span className="py-1 px-2 rounded-full text-[#333] text-[22px] bg-[#8640cd27] mt-4">
 									<PointsBreakdown
+										reviewPoints={200}
 										userName="Waqqam Usman"
 										schoolName="Karachi Public School"
 										userRank={"1st"}
@@ -115,6 +116,7 @@ export default function FrontPage() {
 								<span className="py-1 px-2 rounded-full text-[#333] text-[22px] bg-[#8640cd27] mt-4">
 									{/* ⭐ <span>500+ Points</span> */}
 									<PointsBreakdown
+										reviewPoints={200}
 										userName="Mr. Mobin Idrees"
 										schoolName="Headstart School"
 										userRank={"1st"}
@@ -183,6 +185,7 @@ export default function FrontPage() {
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
 												{/* ⭐ 400+ Points */}
 												<PointsBreakdown
+													reviewPoints={200}
 													userName="Waqqam Usman"
 													schoolName="Karachi Public School"
 													userRank={"2nd"}
@@ -252,6 +255,7 @@ export default function FrontPage() {
 											<span className="py-1 px-2 rounded-full text-[#333] bg-[#8640cd27]">
 												{/* ⭐ 400+ Points */}
 												<PointsBreakdown
+													reviewPoints={200}
 													userName="Waqqam Usman"
 													schoolName="Karachi Public School"
 													userRank={"2nd"}

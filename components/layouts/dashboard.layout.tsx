@@ -13,6 +13,7 @@ import { fetchPoints } from "@/services/apis/user.api";
 import { ApiResponse, ISchoolInfo } from "@/types/type";
 import { fetchSchoolsInfo } from "@/services/apis/school.api";
 import { useSchoolInfo } from "@/hooks/school.hook";
+import { Router } from "next/router";
 
 export default function DashboardLayout({
 	mainSectionHeading,
@@ -49,14 +50,23 @@ export default function DashboardLayout({
 		queryFn: fetchPoints,
 	});
 
-	const {schoolData} = useSchoolInfo()
+	const { schoolData } = useSchoolInfo();
 
 	if (isLoading && isLoadingPoints) {
 		return <div>Loading...</div>;
 	}
 
-	if (isError || !user || isPointsError || !points) {
-		return <div>Error loading user data</div>;
+	if (isError) {
+		return <div>isError</div>;
+	}
+	if (!user) {
+		return <div>!user</div>;
+	}
+	if (isPointsError) {
+		return <div>isPointsError</div>;
+	}
+	if (!points) {
+		return <div>Unable to fetch points stuff. Please reload the page</div>;
 	}
 
 	const handleLogout = async () => {
@@ -75,10 +85,6 @@ export default function DashboardLayout({
 	// 	queryFn: () => fetchSchoolsInfo(),
 	// });
 
-
-
-
-
 	const topBoxes = () => {
 		if (user.role === "student" || user.role === "teacher") {
 			return (
@@ -86,14 +92,15 @@ export default function DashboardLayout({
 					<div className="grid grid-cols-3 gap-[1em] w-full">
 						<PBreakdown
 							userName={user.fullname}
-							schoolName={user.school}
-							userRank={""}
+							// schoolName={user.school}
+							// userRank={""}
 							userClass={user.classes}
-							role={"student"}
+							// role={"student"}
 							points={points.total}
 							assignmentPoints={points.assignment}
 							quizPoints={points.quiz}
 							lecturePoints={points.lecture}
+							reviewPoints={25}
 							open={pointsOpen}
 							setOpen={setPointsOpen}
 						>
@@ -148,7 +155,7 @@ export default function DashboardLayout({
 							</CalenderDialog>
 						</div>
 						{user.role === "student" ? (
-							<Link href="#">
+							<Link href="/student-dashboard/grades">
 								<div className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 									<Image
 										alt=""

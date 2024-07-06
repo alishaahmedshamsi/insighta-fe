@@ -134,6 +134,7 @@ export interface IUserUpdate {
 }
 
 export interface ISubject {
+	class: string | undefined;
 	_id: string;
 	name: string;
 }
@@ -142,7 +143,7 @@ export interface IAddAssignment {
 	title: string;
 	descripition: string;
 	class: string;
-	subject: string;
+	subject: string | undefined;
 	// marks: number;
 	deadline: Date;
 	assignmentFile: File;
@@ -151,7 +152,7 @@ export interface IAddAssignment {
 export interface IAddQuiz {
 	title: string;
 	class: string | undefined;
-	// subjectName: string;
+	subject: string | undefined;
 	deadline: Date;
 	question: string[];
 	marks: number;
@@ -161,34 +162,39 @@ export interface IAddLecture {
 	title: string;
 	description: string;
 	className: string;
-	subject: string;
+	subject: string | undefined;
 	lecture: File;
 }
 
 export interface IUploadAssignment {
-	studentId: string;
-	subjectId: string;
 	assignmentId: string;
-	title: string;
-	assignmentFile: File;
+	isLate: string;
+	teacher: string;
+	isQuiz: string;
+	pdf: File;
 }
 
 export interface ITakeQuiz {
-	studentId: string;
-	subjectId: string;
 	quizId: string;
-	quizName: string;
-	answers: {
-		questionNo: string;
-		question: string;
-		answer: string;
-	}[];
+	teacher: string;
+	isLate: boolean;
+	isQuiz: boolean;
+	question: string[];
+	answers: string[];
+
+
+
+	// answers: {
+	// 	questionNo: string;
+	// 	question: string;
+	// 	answer: string;
+	// }[];
 }
 
 
 export interface ISendMessage {
-	studentId: string;
-	subjectId: string;
-	assignmentId: string;
+	// studentId: string;
+	// subjectId: string;
+	chat: string;
 	message: string;
 }

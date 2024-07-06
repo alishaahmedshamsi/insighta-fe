@@ -3,27 +3,13 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import Link from "next/link";
 import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
+import { fetchStudentAssignments } from "@/services/apis/user.api";
 import { useStudentSubject, useStudentAssignments } from "@/hooks/user.hook";
+import { useQuery } from "@tanstack/react-query";
 import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, Key } from "react";
-
 
 export default function Component({ params }: { params: { subject: string } }) {
 	const { subject } = params;
-
-	// fetch assignment list based on subjectId
-	const allAssignments = [
-		{
-			title: "Assignment #1",
-			deadline: "5 May 2024",
-			viewLink: `/student-dashboard/assignments/${subject}/1`,
-		},
-		{
-			title: "Assignment #2",
-			deadline: "7 May 2024",
-			viewLink: `/student-dashboard/assignments/${subject}/2`,
-		},
-	];
-
 
 	const { assignmentsList } = useStudentAssignments(subject);
 
@@ -38,7 +24,6 @@ export default function Component({ params }: { params: { subject: string } }) {
 		? `${subjectName.name} Assignments`
 		: `${subject} Assignments`;
 
-	// const mainSectionHeading = `${subject} Assignments`;
 	return (
 		<>
 			<DashboardLayout
@@ -67,6 +52,14 @@ export default function Component({ params }: { params: { subject: string } }) {
 									</div>
 									<div>
 										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+											Status
+										</h5>
+										<h4 className="text-[#189918] capitalize text-[1.2em]">
+											Checked
+										</h4>
+									</div>
+									<div>
+										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
 											Deadline
 										</h5>
 										<h4 className="text-[#111] capitalize text-[1.2em]">
@@ -75,16 +68,32 @@ export default function Component({ params }: { params: { subject: string } }) {
 									</div>
 									<div>
 										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+											Obt. Marks
+										</h5>
+										<h4 className="text-[#111] capitalize text-[1.2em]">
+											8
+										</h4>
+									</div>
+									<div>
+										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+											Total Marks
+										</h5>
+										<h4 className="text-[#111] capitalize text-[1.2em]">
+											10
+										</h4>
+									</div>
+									{/* <div>
+										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
 											View Details
 										</h5>
 										<Link
-											href={`/student-dashboard/assignments/${subject}/${assignment._id}`}
+											href={`/student-dashboard/subject/${subject}/assignments/${assignment._id}`}
 										>
 											<h4 className="text-[#111] capitalize text-[1.2em] underline">
 												Open Assignment
 											</h4>
 										</Link>
-									</div>
+									</div> */}
 								</div>
 							</div>
 						))}

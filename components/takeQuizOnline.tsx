@@ -4,22 +4,34 @@ import { toast } from "sonner"; // Assuming you have toast notifications set up
 import { useMutation } from "@tanstack/react-query";
 import { onTakeQuiz } from "@/services/apis/user.api";
 import { ITakeQuiz } from "@/types/type";
+import { isDeadlinePassed } from "./StudentAssignment/StudentAssignment";
+import { Loader2Icon } from "lucide-react";
 
 export default function TakeQuizOnline({
 	quizName,
 	quizQuestions,
 	displayText,
 	role,
+	createdBy,
+	quizId,
+	quizDeadline,
+	gradingQA,
 }: {
 	quizName: string;
-	quizQuestions: Array<{
-		questionNo: string;
-		question: string;
-		answer?: string;
-	}>;
+	quizQuestions: string[];
 	displayText: string;
 	role: string;
+	createdBy?: string;
+	quizId?: string;
+	quizDeadline?: string;
+	gradingQA?:
+		| {
+				question: string;
+				answer: string;
+		  }[]
+		| undefined;
 }) {
+	console.log("quizQuestions: ", quizQuestions);
 	const [open, setOpen] = useState(false);
 	const [openCount, setOpenCount] = useState(0);
 	const [studentAnswers, setStudentAnswers] = useState<
@@ -55,11 +67,12 @@ export default function TakeQuizOnline({
 
 			// Prepare data for submission
 			const studentSubmission: ITakeQuiz = {
-				studentId: "studentId",
-				subjectId: "subjectId",
-				quizId: "quizId",
-				quizName,
-				answers: studentAnswers,
+				quizId: quizId,
+				teacher: createdBy,
+				isLate: isDeadlinePassed(quizDeadline),
+				isQuiz: true,
+				question: studentAnswers.map((question) => question.question),
+				answers: studentAnswers.map((answer) => answer.answer),
 			};
 			console.log("studentAnswers: ", studentAnswers);
 
@@ -69,20 +82,6 @@ export default function TakeQuizOnline({
 
 			if (!success) return toast.error(response);
 			if (success) toast.success("Quiz Submitted Successfully");
-
-			// Simulate API call or actual submission logic here
-			// Replace this with your actual API call
-			// const response = await submitQuiz(studentSubmission);
-
-			// Example of handling success response
-			// if (response.success) {
-			//   toast.success("Quiz submitted successfully!");
-			//   setOpen(false);
-			//   // Optionally reset form or state
-			//   setStudentAnswers([]);
-			// } else {
-			//   toast.error(response.message || "Failed to submit quiz.");
-			// }
 
 			// Simulate a delay for demo purposes
 			setTimeout(() => {
@@ -100,12 +99,13 @@ export default function TakeQuizOnline({
 	};
 
 	const handleAnswerChange = (
-		questionNo: string,
+		// questionNo: string,
 		question: string,
 		answer: string,
 		index: number
 	) => {
 		const updatedAnswers = [...studentAnswers];
+		let questionNo = `Question #${index + 1}`;
 		updatedAnswers[index] = { questionNo, question, answer };
 		setStudentAnswers(updatedAnswers);
 	};
@@ -164,27 +164,32 @@ export default function TakeQuizOnline({
 															<hr className="my-4" />
 														</Dialog.Title>
 														<div className="mt-2 overflow-y-scroll max-h-[350px] pr-4">
-															{quizQuestions.map(
-																(question) => (
+															{gradingQA?.map(
+																(
+																	currentQuestion,
+																	i
+																) => (
 																	<div
 																		key={
-																			question.questionNo
+																			i +
+																			1
 																		}
 																		className="flex flex-col mb-12"
 																	>
 																		<h3 className="font-medium uppercase text-[#494949] align-middle text-[1em] tracking-[2px]">
-																			{
-																				question.questionNo
-																			}
+																			Question
+																			#
+																			{i +
+																				1}
 																		</h3>
 																		<h3 className="font-medium text-[#212121] align-middle text-[1.4em]">
 																			{
-																				question.question
+																				currentQuestion.question
 																			}
 																		</h3>
 																		<h3 className="font-normal text-[#666] align-middle text-[1em]">
 																			{
-																				question.answer
+																				currentQuestion.answer
 																			}
 																		</h3>
 																	</div>
@@ -265,7 +270,7 @@ export default function TakeQuizOnline({
 															<hr className="my-4" />
 														</Dialog.Title>
 														<div className="mt-2 overflow-y-scroll pr-4">
-															{quizQuestions.map(
+															{quizQuestions?.map(
 																(
 																	question,
 																	i
@@ -282,7 +287,7 @@ export default function TakeQuizOnline({
 																		</h3>
 																		<h3 className="font-medium text-[#212121] align-middle text-[1.4em]">
 																			{
-																				question.question
+																				question
 																			}
 																		</h3>
 																	</div>
@@ -322,7 +327,7 @@ export default function TakeQuizOnline({
 						{displayText}
 					</span>
 
-					{openCount <= 1 && (
+					{openCount < 1 && (
 						<Transition.Root show={open} as={Fragment}>
 							<Dialog
 								className="relative z-10"
@@ -365,31 +370,31 @@ export default function TakeQuizOnline({
 																	<hr className="my-4" />
 																</Dialog.Title>
 																<div className="mt-2 overflow-y-scroll h-[450px] pr-4">
-																	{quizQuestions.map(
+																	{quizQuestions?.map(
 																		(
 																			question,
 																			index
 																		) => (
 																			<div
 																				key={
-																					question.questionNo
+																					index
 																				}
 																				className="flex flex-col mb-4"
 																			>
 																				<label
-																					htmlFor={
-																						question.questionNo
-																					}
+																					// htmlFor={
+																					// 	question.questionNo
+																					// }
 																					className="font-medium text-[#212121] align-middle text-[1.2em]"
 																				>
 																					{
-																						question.question
+																						question
 																					}
 																				</label>
 																				<textarea
-																					id={
-																						question.questionNo
-																					}
+																					// id={
+																					// 	question.questionNo
+																					// }
 																					value={
 																						studentAnswers[
 																							index
@@ -401,8 +406,8 @@ export default function TakeQuizOnline({
 																						e
 																					) =>
 																						handleAnswerChange(
-																							question.questionNo,
-																							question.question,
+																							// question.questionNo,
+																							question,
 																							e
 																								.target
 																								.value,
@@ -442,7 +447,18 @@ export default function TakeQuizOnline({
 																cancelButtonRef
 															}
 														>
-															Submit
+															{isPending ? (
+																<>
+																	<div className="flex justify-center items-center">
+																		<Loader2Icon className="mr-2 animate-spin" />
+																		<span>
+																			Submitting...
+																		</span>
+																	</div>
+																</>
+															) : (
+																"Submit"
+															)}
 														</button>
 													</div>
 												</form>

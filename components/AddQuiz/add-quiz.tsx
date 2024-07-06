@@ -36,6 +36,9 @@ export default function AddQuizComponent() {
 	const [question, setQuestion] = useState([{ id: 1, text: "" }]);
 
 	const { user, isLoading, error } = useCurrentUser();
+
+	console.log("user from teacher quiz module: ", user?.subject[0].class);
+
 	const queryClient = useQueryClient();
 	const { mutateAsync, reset } = useMutation({
 		mutationFn: onAddQuiz,
@@ -49,10 +52,20 @@ export default function AddQuizComponent() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
+		let subId = user?.subject.find((item) => item.class == classId)?._id;
+
+		console.log("subId: ", subId);
+
+		if (!title || !classId || !marks || !date)
+			return toast.error("Please fill all the fields");
+
+		if (question.some((q) => q.text === ""))
+			return toast.error("Please fill the questions field");
+
 		const data: IAddQuiz = {
 			title,
 			class: classId,
-			// subjectName,
+			subject: subId,
 			marks,
 			deadline: date!,
 			question: question.map((q) => q.text),
@@ -65,6 +78,15 @@ export default function AddQuizComponent() {
 		if (!success) return toast.error(response);
 		if (success) toast.success("Quiz Added Successfully");
 		queryClient.invalidateQueries({ queryKey: ["user-points"] });
+		queryClient.invalidateQueries({ queryKey: ["fetch-quiz"] });
+
+		reset();
+
+		setTitle("");
+		setDate(new Date());
+		setClassName("");
+		setMarks(0);
+		setQuestion([{ id: 1, text: "" }]);
 	};
 
 	const addQuestion = () => {
@@ -90,6 +112,7 @@ export default function AddQuizComponent() {
 
 	const handleClassChange = (value: string) => {
 		// console.log("class value: ", value);
+		setClassName(value);
 
 		const classData = user?.classes.find(
 			(item) => String(item.className) === String(value)
@@ -113,11 +136,12 @@ export default function AddQuizComponent() {
 						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 							setTitle(e.target.value)
 						}
+						value={title}
 					/>
 				</div>
 				<div className="w-full flex flex-col">
 					<label htmlFor="class">Class</label>
-					<Select onValueChange={handleClassChange}>
+					<Select onValueChange={handleClassChange} value={className}>
 						{/* <Select onValueChange={(e) => setClassName(e.target.value)}> */}
 						<SelectTrigger className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 							<SelectValue placeholder="Select a Class" />
@@ -177,6 +201,7 @@ export default function AddQuizComponent() {
 						id="totalMarks"
 						type="number"
 						onChange={(e) => setMarks(Number(e.target.value))}
+						value={marks}
 					/>
 				</div>
 				<div className="w-full flex flex-col justify-end">

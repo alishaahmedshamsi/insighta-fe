@@ -1,15 +1,17 @@
 "use client";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
+import Link from "next/link";
 import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
-import TakeQuizOnline from "@/components/takeQuizOnline";
-
 import StudentQuiz from "@/components/StudentQuiz/StudentQuiz";
+import { useStudentSubject } from "@/hooks/user.hook";
+import { useQuery } from "@tanstack/react-query";
+import { fetchStudentQuiz } from "@/services/apis/user.api";
 
 const allQuiz = [
 	{
 		title: "Quiz #1",
-		deadline: "11 july 2024",
+		deadline: "5 June 2024",
 		totalMarks: "10",
 		obtMarks: "--",
 		status: "Not completed",
@@ -19,22 +21,22 @@ const allQuiz = [
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #2",
+				questionNo: "Question #1",
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #3",
+				questionNo: "Question #1",
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #4",
+				questionNo: "Question #1",
 				question: "List all parts of speech?",
 			},
 		],
 	},
 	{
 		title: "Quiz #2",
-		deadline: "1 May 2024",
+		deadline: "1 August 2024",
 		totalMarks: "10",
 		obtMarks: "8",
 		status: "Completed",
@@ -44,35 +46,46 @@ const allQuiz = [
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #2",
+				questionNo: "Question #1",
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #3",
+				questionNo: "Question #1",
 				question: "List all parts of speech?",
 			},
 			{
-				questionNo: "Question #4",
+				questionNo: "Question #1",
 				question: "List all parts of speech?",
 			},
 		],
 	},
 ];
 
-// function isDeadlinePassed(deadline: string) {
-// 	const currentDate = new Date();
-// 	const deadlineDate = new Date(deadline);
-// 	return currentDate > deadlineDate;
-// }
-
-export default function Component({ params }: { params: { subject: string } }) {
+export default function StudentSubjectQuiz({
+	params,
+}: {
+	params: { subject: string };
+}) {
 	const { subject } = params;
 
-	const mainSectionHeading = `${subject} Quiz`;
+	const { subjectsList } = useStudentSubject();
+	const subjectName = subjectsList?.find(
+		(sub: { _id: string }) => sub._id === subject
+	);
 
-	// const currentDate = new Date();
-	// const deadline = new Date(allQuiz[0].deadline);
-	// const isDeadlinePassed = currentDate > deadline;
+	const { data: myAllQuiz, isLoading } = useQuery({
+		queryKey: ["fetch-student-quiz"],
+		queryFn: () => fetchStudentQuiz(subject),
+	});
+
+	const mainSectionHeading = subjectName
+	? `${subjectName.name} Quiz`
+	: `${subject} Quiz`;
+
+	console.log("myAllQuiz: ", myAllQuiz)
+
+
+	// const mainSectionHeading = `${subject} Quiz`;
 	return (
 		<>
 			<DashboardLayout
@@ -86,7 +99,7 @@ export default function Component({ params }: { params: { subject: string } }) {
 						<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
 							Quiz
 						</h3>
-						{allQuiz.map((quiz, index) => (
+						{myAllQuiz?.map((quiz: any, index: any) => (
 							<StudentQuiz index={index} quiz={[quiz]} />
 						))}
 					</div>

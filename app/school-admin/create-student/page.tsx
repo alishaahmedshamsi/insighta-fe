@@ -27,10 +27,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { ArrowDownCircleIcon, Check } from "lucide-react";
+import { ArrowDownCircleIcon, Check, Loader2Icon } from "lucide-react";
 
 export default function SchoolAdminCreateStudent() {
-	const { mutateAsync, error, reset } = useMutation({
+	const { mutateAsync, error, reset, isPending } = useMutation({
 		mutationFn: onRegister,
 		onError: (error) => {
 			console.log(error.message);
@@ -46,6 +46,7 @@ export default function SchoolAdminCreateStudent() {
 		handleSubmit,
 		setValue,
 		formState: { errors, isSubmitting }, // isSubmitting for loading state
+		reset: resetForm,
 	} = useForm<IRegisterFields>({
 		resolver: zodResolver(registerStudentSchema),
 	});
@@ -60,6 +61,8 @@ export default function SchoolAdminCreateStudent() {
 
 		if (!success) return toast.error(response);
 		if (success) toast.success("Student created successful");
+		resetForm();
+		setSelectedClass("");
 	};
 	const {
 		data,
@@ -88,7 +91,7 @@ export default function SchoolAdminCreateStudent() {
 							<label htmlFor="name">Name</label>
 							<Input
 								{...register("fullname")}
-								className=""
+								className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 								id="name"
 								type="text"
 							/>
@@ -99,17 +102,20 @@ export default function SchoolAdminCreateStudent() {
 						<div className="w-full flex flex-col">
 							<label htmlFor="rollNo">Roll No</label>
 							<Input
-								{...register("rollnumber")}
-								className=""
+								// sent the value of as string
+								{...register("rollnumber", {
+									valueAsNumber: false,
+								})}
+								className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 								id="rollnumnber"
-								type="text"
+								type="number"
 							/>
 						</div>
 						<div className="w-full flex flex-col">
 							<label htmlFor="email">Email</label>
 							<Input
 								{...register("email")}
-								className=""
+								className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 								id="email"
 								type="email"
 							/>
@@ -121,7 +127,7 @@ export default function SchoolAdminCreateStudent() {
 							<label htmlFor="password">Password</label>
 							<Input
 								{...register("password")}
-								className=""
+								className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 								id="password"
 								type="text"
 							/>
@@ -134,7 +140,7 @@ export default function SchoolAdminCreateStudent() {
 										variant="outline"
 										role="combobox"
 										aria-expanded={open}
-										className="w-full  justify-between"
+										className="justify-between w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 									>
 										{selectedClass
 											? data?.data.find(
@@ -188,8 +194,24 @@ export default function SchoolAdminCreateStudent() {
 							{errors.classes && (
 								<span>{errors.classes.message}</span>
 							)}
-							<Button type="submit" className="mt-3">
+							{/* <Button type="submit" className="mt-3">
 								Submit
+							</Button> */}
+
+							<Button
+								className="rounded-[1em] mt-4 bg-brand-sea-green py-[.9em] px-[1.5em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
+								type="submit"
+							>
+								{isPending ? (
+									<>
+										<div className="flex justify-center items-center">
+											<Loader2Icon className="mr-2 animate-spin" />
+											<span>Creating...</span>
+										</div>
+									</>
+								) : (
+									"Submit"
+								)}
 							</Button>
 						</div>
 					</form>

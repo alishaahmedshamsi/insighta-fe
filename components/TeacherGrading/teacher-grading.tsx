@@ -78,7 +78,7 @@ export default function TeacherGrading({
 													as="h3"
 													className="text-base text-[20px] font-semibold leading-6 text-gray-900 mt-4 mb-2"
 												>
-													{materialType} #{number}
+													{materialType}: {number}
 												</Dialog.Title>
 												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
 													Total Marks: {totalMarks}

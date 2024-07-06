@@ -3,7 +3,10 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import Link from "next/link";
 import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
-
+import { fetchStudentAssignments } from "@/services/apis/user.api";
+import { useStudentSubject, useStudentAssignments } from "@/hooks/user.hook";
+import { useQuery } from "@tanstack/react-query";
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, Key } from "react";
 
 export default function Component({ params }: { params: { subject: string } }) {
 	const { subject } = params;
@@ -21,7 +24,28 @@ export default function Component({ params }: { params: { subject: string } }) {
 		},
 	];
 
-	const mainSectionHeading = `${subject} Assignments`;
+	// const {
+	// 	data: assignmentsList,
+	// 	isLoading,
+	// 	error,
+	// } = useQuery({
+	// 	queryKey: ["fetch-student-assignments-list"],
+	// 	queryFn: () => fetchStudentAssignments(subject),
+	// });
+
+	const { assignmentsList } = useStudentAssignments(subject);
+
+	console.log("assignmentsList: ", assignmentsList);
+
+	const { subjectsList } = useStudentSubject();
+	const subjectName = subjectsList?.find(
+		(sub: { _id: string }) => sub._id === subject
+	);
+
+	const mainSectionHeading = subjectName
+		? `${subjectName.name} Assignments`
+		: `${subject} Assignments`;
+
 	return (
 		<>
 			<DashboardLayout
@@ -34,7 +58,7 @@ export default function Component({ params }: { params: { subject: string } }) {
 						<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
 							Assignments
 						</h3>
-						{allAssignments.map((assignment, index) => (
+						{assignmentsList?.map((assignment: { title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; deadline: string | any[]; _id: any; }, index: Key | null | undefined) => (
 							<div
 								key={index}
 								className="assignment flex flex-col rounded-[2em] border border-[#DBDBDB] bg-white p-[2em]"
@@ -53,14 +77,16 @@ export default function Component({ params }: { params: { subject: string } }) {
 											Deadline
 										</h5>
 										<h4 className="text-[#111] capitalize text-[1.2em]">
-											{assignment.deadline}
+											{assignment.deadline.slice(0, 10)}
 										</h4>
 									</div>
 									<div>
 										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
 											View Details
 										</h5>
-										<Link href={assignment.viewLink}>
+										<Link
+											href={`/student-dashboard/subject/${subject}/assignments/${assignment._id}`}
+										>
 											<h4 className="text-[#111] capitalize text-[1.2em] underline">
 												Open Assignment
 											</h4>
@@ -76,22 +102,6 @@ export default function Component({ params }: { params: { subject: string } }) {
 	);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // "use client";
 // import DashboardLayout from "@/components/layouts/dashboard.layout";
 // import Link from "next/link";
@@ -99,7 +109,6 @@ export default function Component({ params }: { params: { subject: string } }) {
 // import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 // import Image from "next/image";
 // import StudentAssignment from "@/components/StudentAssignment/StudentAssignment";
-
 
 // const allAssignments = [
 //   {

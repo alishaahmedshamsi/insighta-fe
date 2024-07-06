@@ -30,9 +30,21 @@ export const fetchClasses = async () => {
 	}
 };
 
+export const fetchTopFivePoints = async () => {
+	try {
+		const response = await api.get("/point");
+		console.log("fetchTopFivePoints: ", response.data.data);
+		return response.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+};
+
 export const fetchSubjects = async (id?:string) => {
 	try {
 		const response = await api.get(`/school/get/subjects/${id?id:undefined}`);
+
+		// console.log("data from api: ", response)
 		return response.data.data;
 	} catch (error: any) {
 		throw new Error(error ?? error.message.data);

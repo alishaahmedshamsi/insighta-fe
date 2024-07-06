@@ -5,6 +5,7 @@ import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 
 import StudentAssignment from "@/components/StudentAssignment/StudentAssignment";
 import ChatBoxComponent from "@/components/ChatBox/ChatBoxComponent";
+import { useStudentAssignments, useStudentSubject } from "@/hooks/user.hook";
 
 const allAssignments = [
 	{
@@ -24,9 +25,23 @@ export default function Component({
 }) {
 	const { subject, number } = params;
 
-	const mainSectionHeading = `Subejct: ${subject} - Assignment #${number}`;
+	const { subjectsList } = useStudentSubject();
+	const subjectName = subjectsList?.find(
+		(sub: { _id: string }) => sub._id === subject
+	);
 
-	// fetch specific assignment  based on assignmentId (subjectId is optional)
+	const { assignmentsList } = useStudentAssignments(subject);
+	const currentAssignment = assignmentsList?.find(
+		(ass: { _id: string }) => ass._id === number
+	);
+
+	console.log("currentAssignment: ", currentAssignment);
+
+	const mainSectionHeading = subjectName
+		? `Details: ${subjectName.name} - Assignment: ${currentAssignment.title}`
+		: `Details: ${subject} Assignment #${number}`;
+
+	// console.log("assignment ID: ", number);
 
 	return (
 		<>
@@ -40,12 +55,11 @@ export default function Component({
 						<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
 							Assignments
 						</h3>
-						{allAssignments.map((assignment, index) => (
-							<StudentAssignment
-								index={index}
-								assignment={[assignment]}
-							/>
-						))}
+						{/* {allAssignments.map((assignment, index) => ( */}
+						<StudentAssignment
+							index={number}
+							assignment={[currentAssignment]}
+						/>
 
 						<hr />
 
@@ -56,8 +70,8 @@ export default function Component({
 						{/* Chat box */}
 
 						<ChatBoxComponent
-							assignmentId="assignmentId"
-							subjectId="subjectId"
+							assignmentId={number}
+							// subjectId="subjectId"
 						/>
 					</div>
 				</div>

@@ -7,32 +7,32 @@ export default function PointsBreakdown({
 	assignmentPoints,
 	quizPoints,
 	lecturePoints,
+	reviewPoints,
 	userName,
-	schoolName,
-	userRank,
+	// schoolName,
+	// userRank,
 	userClass,
-	qualification,
-	role,
+	// qualification,
+	// role,
 	children,
 	open,
-	setOpen
+	setOpen,
 }: {
 	points: number;
 	assignmentPoints: number;
 	quizPoints: number;
 	lecturePoints: number;
+	reviewPoints: number;
 	userName: string;
-	schoolName: string;
-	userRank: string;
+	// schoolName: string;
+	// userRank: string;
 	userClass?: IClass[];
-	qualification?: string;
-	role: string;
-	children: React.ReactNode
-	open: boolean
-	setOpen: React.Dispatch<React.SetStateAction<boolean>>
+	// qualification?: string;
+	// role: string;
+	children: React.ReactNode;
+	open: boolean;
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-
-
 	const cancelButtonRef = useRef(null);
 
 	console.log(userClass);
@@ -82,22 +82,24 @@ export default function PointsBreakdown({
 												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
 													Name: {userName}
 												</p>
-												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+												{/* <p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
 													School: {schoolName}
-												</p>
-												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+												</p> */}
+												{/* <p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
 													Rank: {userRank}
+												</p> */}
+												{/* {role === "student" && ( */}
+												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+													Class:{" "}
+													{userClass &&
+														userClass
+															.map(
+																(c) =>
+																	c.className
+															)
+															.join(", ")}
 												</p>
-												{role === "student" ? (
-													<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
-														Class: {userClass && userClass.map((c) => c.className).join(', ')}
-													</p>
-												) : (
-													<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
-														Qualification:{" "}
-														{qualification}
-													</p>
-												)}
+												{/* )} */}
 
 												<Dialog.Title
 													as="h3"
@@ -123,6 +125,12 @@ export default function PointsBreakdown({
 														<span>Lectures</span>
 														<span>
 															⭐ {lecturePoints}
+														</span>
+													</div>
+													<div className="flex justify-between items-center w-full bg-[#eee] p-2 px-4 rounded-md">
+														<span>Review</span>
+														<span>
+															⭐ {reviewPoints}
 														</span>
 													</div>
 													<hr />

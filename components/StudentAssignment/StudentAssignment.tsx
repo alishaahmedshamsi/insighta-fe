@@ -5,8 +5,10 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { onUploadAssignment } from "@/services/apis/user.api";
 import { IUploadAssignment } from "@/types/type";
+import { Loader2Icon } from "lucide-react";
+import { Input } from "../ui/input";
 
-function isDeadlinePassed(deadline: string) {
+export function isDeadlinePassed(deadline: string) {
 	const currentDate = new Date();
 	const deadlineDate = new Date(deadline);
 	return currentDate > deadlineDate;
@@ -16,16 +18,19 @@ export default function StudentAssignment({
 	index,
 	assignment,
 }: {
-	index: number;
+	index: string;
 	assignment: {
 		title: string;
 		deadline: string;
-		totalMarks: string;
+		marks: string;
 		obtMarks: string;
 		status: string;
-		assignment: string;
+		assignmentFile: string;
+		createdBy: string;
 	}[];
 }) {
+
+	
 	const [title, setTitle] = useState("");
 	const [file, setFile] = useState<File | null>(null);
 
@@ -61,12 +66,11 @@ export default function StudentAssignment({
 		// formData.append("assignmentFile", file);
 
 		const data: IUploadAssignment = {
-			studentId: "studentId", // fetch from the current user api
-			// subject and assignment ids could be extracted from the param
-			subjectId: "subjectId",
-			assignmentId: "assignmentId",
-			title: assignment[0].title,
-			assignmentFile: file,
+			assignmentId: index,
+			isLate: String(isDeadlinePassed(assignment[0].deadline)),
+			teacher: assignment[0].createdBy,
+			isQuiz: "false",
+			pdf: file,
 		};
 
 		console.log("Assignment data: ", data);
@@ -84,6 +88,9 @@ export default function StudentAssignment({
 		// router.push("/teacher-dashboard");
 
 		setFile(null);
+
+		// reset the file field form
+		reset();
 	};
 
 	return (
@@ -107,7 +114,7 @@ export default function StudentAssignment({
 								Deadline
 							</h5>
 							<h4 className="text-[#111] capitalize text-[1.2em]">
-								{assignment.deadline}
+								{assignment.deadline.slice(0, 10)}
 							</h4>
 						</div>
 						<div>
@@ -115,7 +122,7 @@ export default function StudentAssignment({
 								Total Marks
 							</h5>
 							<h4 className="text-[#111] capitalize text-[1.2em]">
-								{assignment.totalMarks}
+								{assignment.marks}
 							</h4>
 						</div>
 						<div>
@@ -151,9 +158,13 @@ export default function StudentAssignment({
 									Assignment
 								</h5>
 								<h4 className="text-[#111] underline capitalize text-[1.2em]">
-									<Link href={assignment.assignment}>
+									<a
+										target="_blank"
+										href={assignment.assignmentFile}
+										download
+									>
 										Download File
-									</Link>
+									</a>
 								</h4>
 							</div>
 						) : (
@@ -164,8 +175,8 @@ export default function StudentAssignment({
 							</div>
 						)}
 					</div>
-					{!isDeadlinePassed(assignment.deadline) &&
-					assignment.status.toLowerCase() === "not completed" ? (
+					{/* assignment.status.toLowerCase() === "not completed" */}
+					{!isDeadlinePassed(assignment.deadline) ? (
 						<>
 							<hr className="my-[1em]" />
 							<div className="upload-file-container">
@@ -177,18 +188,29 @@ export default function StudentAssignment({
 										Upload File
 									</h4>
 									<div className="grid grid-cols-4">
-										<input
+										<Input
 											onChange={handleFileChange}
 											type="file"
 											name="file"
 											id="file"
-											className="col-span-3 w-full border-2 border-[#777] border-dashed rounded-[2em] p-[.9em]"
+											className="col-span-3 border-2 border-[#ddd] border-dashed w-full px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full bg-white p-[1em] h-[3.8em]"
 										/>
 										<button
 											type="submit"
-											className="col-span-1 w-full rounded-[2em] bg-brand-sea-green py-3 text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
+											className="col-span-1 w-full rounded-[2em] bg-brand-sea-green py-4 h-full  text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
 										>
-											Upload
+											{isPending ? (
+												<>
+													<div className="flex justify-center items-center">
+														<Loader2Icon className="mr-2 animate-spin" />
+														<span>
+															Uploading...
+														</span>
+													</div>
+												</>
+											) : (
+												"Upload"
+											)}
 										</button>
 									</div>
 								</form>

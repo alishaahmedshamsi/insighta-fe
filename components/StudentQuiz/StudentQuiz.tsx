@@ -17,15 +17,15 @@ export default function StudentQuiz({
 	quiz: {
 		title: string;
 		deadline: string;
-		totalMarks: string;
+		marks: string;
 		obtMarks: string;
 		status: string;
-		quizQuestions: {
-			questionNo: string;
-			question: string;
-		}[];
+		question: string[];
+		createdBy: string;
+		_id: string;
 	}[];
 }) {
+	console.log("quiz in StudentQuiz: ", quiz);
 	return (
 		<>
 			{quiz.map((quiz) => (
@@ -47,7 +47,7 @@ export default function StudentQuiz({
 								Deadline
 							</h5>
 							<h4 className="text-[#111] capitalize text-[1.2em]">
-								{quiz.deadline}
+								{quiz.deadline.slice(0, 10)}
 							</h4>
 						</div>
 						<div>
@@ -55,17 +55,17 @@ export default function StudentQuiz({
 								Total Marks
 							</h5>
 							<h4 className="text-[#111] capitalize text-[1.2em]">
-								{quiz.totalMarks}
+								{quiz.marks}
 							</h4>
 						</div>
-						<div>
+						{/* <div>
 							<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
 								Obt. Marks
 							</h5>
 							<h4 className="text-[#111] capitalize text-[1.2em]">
 								{quiz.obtMarks}
 							</h4>
-						</div>
+						</div> */}
 						<div>
 							<h5
 								className={
@@ -76,7 +76,7 @@ export default function StudentQuiz({
 							</h5>
 							<h4
 								className={`text-[#111] font-medium capitalize text-[1.2em] ${
-									quiz.status.toLowerCase() == "completed"
+									quiz.status?.toLowerCase() == "completed"
 										? `text-[#5fc935]`
 										: "text-[#cf2e23]"
 								}`}
@@ -99,8 +99,11 @@ export default function StudentQuiz({
 									<TakeQuizOnline
 										displayText="Start Quiz"
 										quizName={quiz.title}
-										quizQuestions={quiz.quizQuestions}
+										quizQuestions={quiz.question}
 										role="student"
+										createdBy={quiz.createdBy}
+										quizId={quiz._id}
+										quizDeadline={quiz.deadline}
 									/>
 								</h4>
 							</div>
