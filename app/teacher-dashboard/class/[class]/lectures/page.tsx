@@ -86,7 +86,7 @@ export default function TeacherIndividualClass({
 						</h3>
 
 						<AddLectureComponent />
-						<hr className="my-[1em]" />
+						{/* <hr className="my-[1em]" />
 
 						<div className="rounded-[2em] flex flex-col gap-[2em] pb-[2em]">
 							{allClassesLectures?.length == 0 || allClassesLectures == null ? (
@@ -147,7 +147,7 @@ export default function TeacherIndividualClass({
 									</div>
 								))
 							)}
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</DashboardLayout>

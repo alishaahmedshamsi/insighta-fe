@@ -275,6 +275,17 @@ export const fetchSubmission = async (id?: string, subject?: string) => {
 	}
 };
 
+export const fetchQuizSubmission = async (id?: string, subject?: string) => {
+	try {
+		const { data } = await api.get(
+			`/submission/?isQuiz=true&id=${id}&subject=${subject}`
+		);
+		return data.data;
+	} catch (error: any) {
+		console.log(error);
+	}
+};
+
 export const gradeSubmission = async (
 	grade: number | undefined,
 	id: string

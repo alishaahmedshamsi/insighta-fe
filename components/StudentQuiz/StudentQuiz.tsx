@@ -111,7 +111,7 @@ export default function StudentQuiz({
 								</h4>
 							</div>
 						) : (
-							studentQuizStatus.toLowerCase() !== "submitted" && (
+							studentQuizStatus?.toLowerCase() !== "submitted" && (
 								<div>
 									<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
 										Quiz

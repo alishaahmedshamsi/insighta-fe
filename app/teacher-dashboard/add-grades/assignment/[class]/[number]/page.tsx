@@ -75,7 +75,7 @@ export default function Component({
 												}
 												userClass={classes}
 												number={number}
-												materialType={"Quiz"}
+												materialType={"Assignment"}
 												totalMarks={
 													submission.totalMarks
 												}

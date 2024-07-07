@@ -80,7 +80,7 @@ export default function Component({ params }: { params: { subject: string } }) {
 											Total Marks
 										</h5>
 										<h4 className="text-[#111] capitalize text-[1.2em]">
-											10
+										{assignment.assignmentId.totalMarks}
 										</h4>
 									</div>
 								

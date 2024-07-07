@@ -217,11 +217,7 @@ export default function StudentAssignment({
 							)}
 						</>
 					) : (
-						<div className="h-full flex items-end">
-							<h4 className="text-[#cf2e23] font-medium capitalize text-[1.2em]">
-								Deadline Passed
-							</h4>
-						</div>
+						null
 					)}
 				</div>
 			))}

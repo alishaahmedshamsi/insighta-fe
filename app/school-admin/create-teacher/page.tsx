@@ -247,13 +247,13 @@ export default function SchoolAdminCreateTeacher() {
 							key={classIndex}
 						>
 							<div className="flex items-center h-full absolute top-1 left-[-40px]">
-								<Button
+								{/* <Button
 									disabled={teacherData.classes.length === 1}
 									onClick={() => removeClass(classIndex)}
 									className="text-red-500 bg-transparent rounded-full font-semibold text-[20px] mt-[5px] hover:bg-transparent"
 								>
 									&times;
-								</Button>
+								</Button> */}
 							</div>
 							<div className="flex flex-col w-full">
 								<label htmlFor={`class-${classIndex}`}>
@@ -363,9 +363,9 @@ export default function SchoolAdminCreateTeacher() {
 						</div>
 					))}
 					<hr className="my-2" />
-					<div className="flex justify-end">
+					{/* <div className="flex justify-end">
 						<Button onClick={addClass}>Add Class</Button>
-					</div>
+					</div> */}
 				</div>
 
 				<div className="col-span-1 w-full">
