@@ -1,8 +1,8 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { toast } from "sonner"; // Assuming you have toast notifications set up
-import { useMutation } from "@tanstack/react-query";
-import { onTakeQuiz } from "@/services/apis/user.api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { fetchStatus, onTakeQuiz } from "@/services/apis/user.api";
 import { ITakeQuiz } from "@/types/type";
 import { isDeadlinePassed } from "./StudentAssignment/StudentAssignment";
 import { Loader2Icon } from "lucide-react";
@@ -42,7 +42,7 @@ export default function TakeQuizOnline({
 		}>
 	>([]);
 	const [submitting, setSubmitting] = useState(false);
-
+	const queryClient = useQueryClient();
 	const cancelButtonRef = useRef(null);
 
 	const { mutateAsync, reset, isPending } = useMutation({
@@ -82,7 +82,7 @@ export default function TakeQuizOnline({
 
 			if (!success) return toast.error(response);
 			if (success) toast.success("Quiz Submitted Successfully");
-
+			queryClient.invalidateQueries({ queryKey: ["student-quiz-status"] });
 			// Simulate a delay for demo purposes
 			setTimeout(() => {
 				// toast.success("Quiz submitted successfully!");
@@ -110,6 +110,7 @@ export default function TakeQuizOnline({
 		setStudentAnswers(updatedAnswers);
 	};
 
+	
 	return (
 		<>
 			{role === "teacherGrading" ? (

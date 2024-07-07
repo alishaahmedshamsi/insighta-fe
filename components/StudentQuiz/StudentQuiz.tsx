@@ -2,7 +2,8 @@ import React from "react";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import Link from "next/link";
 import TakeQuizOnline from "../takeQuizOnline";
-
+import { useQuery } from "@tanstack/react-query";
+import { fetchQuizStatus, fetchStatus } from "@/services/apis/user.api";
 function isDeadlinePassed(deadline: string) {
 	const currentDate = new Date();
 	const deadlineDate = new Date(deadline);
@@ -26,6 +27,18 @@ export default function StudentQuiz({
 	}[];
 }) {
 	console.log("quiz in StudentQuiz: ", quiz);
+	const {
+		data: studentQuizStatus,
+		isLoading,
+		isError,
+	} = useQuery({
+		queryKey: ["student-quiz-status", quiz[0]._id],
+		queryFn: () => fetchQuizStatus(quiz[0]._id),
+		retry: false, // Avoid retrying on error
+	});
+
+	console.log("quiz[0]._id: ", quiz[0]._id);
+	console.log("studentQuizStatus: ", studentQuizStatus);
 	return (
 		<>
 			{quiz.map((quiz) => (
@@ -76,12 +89,19 @@ export default function StudentQuiz({
 							</h5>
 							<h4
 								className={`text-[#111] font-medium capitalize text-[1.2em] ${
-									quiz.status?.toLowerCase() == "completed"
+									studentQuizStatus?.toLowerCase() ==
+									"submitted"
 										? `text-[#5fc935]`
 										: "text-[#cf2e23]"
 								}`}
 							>
-								{quiz.status}
+								{isLoading ? (
+									<div>Loading...</div>
+								) : isError ? (
+									<div>Error</div>
+								) : (
+									capitalizeFirstLetter(studentQuizStatus)
+								)}
 							</h4>{" "}
 						</div>
 						{isDeadlinePassed(quiz.deadline) ? (
@@ -91,22 +111,24 @@ export default function StudentQuiz({
 								</h4>
 							</div>
 						) : (
-							<div>
-								<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-									Quiz
-								</h5>
-								<h4 className="text-[#111] underline capitalize text-[1.2em]">
-									<TakeQuizOnline
-										displayText="Start Quiz"
-										quizName={quiz.title}
-										quizQuestions={quiz.question}
-										role="student"
-										createdBy={quiz.createdBy}
-										quizId={quiz._id}
-										quizDeadline={quiz.deadline}
-									/>
-								</h4>
-							</div>
+							studentQuizStatus.toLowerCase() !== "submitted" && (
+								<div>
+									<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+										Quiz
+									</h5>
+									<h4 className="text-[#111] underline capitalize text-[1.2em]">
+										<TakeQuizOnline
+											displayText="Start Quiz"
+											quizName={quiz.title}
+											quizQuestions={quiz.question}
+											role="student"
+											createdBy={quiz.createdBy}
+											quizId={quiz._id}
+											quizDeadline={quiz.deadline}
+										/>
+									</h4>
+								</div>
+							)
 						)}
 					</div>
 				</div>

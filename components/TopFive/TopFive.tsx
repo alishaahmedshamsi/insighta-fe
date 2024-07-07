@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchClasses, fetchTopFivePoints } from "@/services/apis/school.api";
 import PointsBreakdown from "../points-breakdown";
 
-function getRank(number: number) {
+export function getRank(number: number) {
 	switch (number) {
 		case 1:
 			return "1st";

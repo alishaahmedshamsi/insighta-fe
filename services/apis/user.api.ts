@@ -225,40 +225,77 @@ export const fetchStudentQuizSubmission = async (id?: string) => {
 	}
 };
 
-export const fetchStatus = async (index:string) => {
+export const fetchStatus = async (index: string) => {
 	try {
-		const {data}= await api.get(`/submission/status?assignmentId=${index}`);
-		return data.data
+		const { data } = await api.get(
+			`/submission/status?assignmentId=${index}`
+		);
+
+		return data.data;
 	} catch (error: any) {
 		console.log(error);
-		
 	}
 };
 
-export const fetchSubmission = async (id?:string,subject?:string) => {
-	try {
-		const {data}= await api.get(`/submission/?isQuiz=false&id=${id}&subject=${subject}`);
-		return data.data
-	} catch (error: any) {
-		console.log(error);
-	}
-}
+// export const fetchQuizStatus = async (index: string) => {
+// 	try {
+// 		const { data } = await api.get(`/status/quiz?quizId=${index}`);
 
-export const gradeSubmission = async(grade:number | undefined,id:string)=>{
-	try {
-		const {data}= await api.put(`/submission/${id}`,{grade});
-		return data.data
-	} catch (error: any) {
-		console.log(error);
-	}
-}
+// 		console.log("data from quiz status: ", data)
+// 		return data.data;
+// 	} catch (error: any) {
+// 		console.log(error);
+// 	}
+// };
 
-export const submitReview = async(text:string,teacherId:string)=>{
+export const fetchQuizStatus = async (index: string) => {
 	try {
-		const {data}= await api.post(`/student/review/`,{text,teacherId});
-		return {success:true,response:data.data}
+		const { data } = await api.get(
+			`/submission/status/quiz?quizId=${index}`
+		);
+		console.log("data from quiz status: ", data);
+		return data.data;
+	} catch (error: any) {
+		console.error(
+			"Error fetching quiz status:",
+			error.response?.data || error.message
+		);
+		throw new Error("Failed to fetch quiz status");
+	}
+};
+
+export const fetchSubmission = async (id?: string, subject?: string) => {
+	try {
+		const { data } = await api.get(
+			`/submission/?isQuiz=false&id=${id}&subject=${subject}`
+		);
+		return data.data;
 	} catch (error: any) {
 		console.log(error);
-		return {success:false,response:error.response.data.message}
 	}
-}
+};
+
+export const gradeSubmission = async (
+	grade: number | undefined,
+	id: string
+) => {
+	try {
+		const { data } = await api.put(`/submission/${id}`, { grade });
+		return data.data;
+	} catch (error: any) {
+		console.log(error);
+	}
+};
+
+export const submitReview = async (text: string, teacherId: string) => {
+	try {
+		const { data } = await api.post(`/student/review/`, {
+			text,
+			teacherId,
+		});
+		return { success: true, response: data.data };
+	} catch (error: any) {
+		console.log(error);
+		return { success: false, response: error.response.data.message };
+	}
+};

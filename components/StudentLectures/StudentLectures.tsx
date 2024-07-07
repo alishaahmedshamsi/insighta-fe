@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchStudentLectures } from "@/services/apis/user.api";
 
 function StudentLectures({ subjectId }: { subjectId: string }) {
-    console.log("subjectId: ", subjectId);
+	console.log("subjectId: ", subjectId);
 	const {
 		data: lecturesList,
 		isLoading,
@@ -18,30 +18,30 @@ function StudentLectures({ subjectId }: { subjectId: string }) {
 
 	return (
 		<>
-				{lecturesList?.map((lecture: any, index: any) => (
-							<div
-								key={index}
-								className="assignment flex flex-col rounded-[2em] border border-[#DBDBDB] bg-white p-[2em]"
-							>
-								<div className="assginment-details grid grid-cols-4 gap-5">
-									<div>
-										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-											Title
-										</h5>
-										<h4 className="text-[#111] capitalize text-[1.2em]">
-											{lecture.title}
-										</h4>
-									</div>
-									<div>
-										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-											Date uploaded
-										</h5>
-										<h4 className="text-[#111] capitalize text-[1.2em]">
-											{lecture.createdAt.slice(0, 10)}
-										</h4>
-									</div>
+			{lecturesList?.map((lecture: any, index: any) => (
+				<div
+					key={index}
+					className="assignment flex flex-col rounded-[2em] border border-[#DBDBDB] bg-white p-[2em]"
+				>
+					<div className="assginment-details grid grid-cols-4 gap-5">
+						<div>
+							<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+								Title
+							</h5>
+							<h4 className="text-[#111] capitalize text-[1.2em]">
+								{lecture.title}
+							</h4>
+						</div>
+						<div>
+							<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+								Date uploaded
+							</h5>
+							<h4 className="text-[#111] capitalize text-[1.2em]">
+								{lecture.createdAt.slice(0, 10)}
+							</h4>
+						</div>
 
-									<div>
+						{/* <div>
 										<h5
 											className={
 												"text-[#777] font-medium uppercase text-[.9em] tracking-wider"
@@ -57,38 +57,36 @@ function StudentLectures({ subjectId }: { subjectId: string }) {
 											}`}
 										>
 											{lecture.status}
-										</h4>{" "}
-										{/* Completed/Checked/Not Completed */}
-									</div>
-									<div>
-										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-											Lecture File
-										</h5>
-										<h4 className="text-[#111] underline capitalize text-[1.2em]">
-											{/* <Link href={lecture.lectureFile}>
+										</h4>
+									</div> */}
+						<div>
+							<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+								Lecture File
+							</h5>
+							<h4 className="text-[#111] underline capitalize text-[1.2em]">
+								{/* <Link href={lecture.lectureFile}>
 												Download File
 											</Link> */}
-											{lecture.isVideo ? 
-											<WatchLectureDialog
-												lectureFile={
-													lecture.lecture
-												}
-											/> 
-											: <a href={lecture.lecture} >Download File</a>
-											}
-										</h4>
-									</div>
-									<div className="col-span-4">
-										<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-											Description
-										</h5>
-										<h4 className="text-[#111] text-[1.2em]">
-											{lecture.description}
-										</h4>
-									</div>
-								</div>
-							</div>
-						))}
+								{lecture.isVideo ? (
+									<WatchLectureDialog
+										lectureFile={lecture.lecture}
+									/>
+								) : (
+									<a href={lecture.lecture}>Download File</a>
+								)}
+							</h4>
+						</div>
+						<div className="col-span-4">
+							<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+								Description
+							</h5>
+							<h4 className="text-[#111] text-[1.2em]">
+								{lecture.description}
+							</h4>
+						</div>
+					</div>
+				</div>
+			))}
 		</>
 	);
 }

@@ -45,7 +45,7 @@ function SchoolAdminDashboard() {
 					</h3>
 					<div className="rounded-[2em] grid grid-cols-2 gap-[2em]">
 						{" "}
-						<Link href={"/school-admin/students"}>
+						<Link href={"/school-admin/students?search="}>
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">
 									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
@@ -68,7 +68,7 @@ function SchoolAdminDashboard() {
 								</div>
 							</div>
 						</Link>
-						<Link href={"/school-admin/teachers"}>
+						<Link href={"/school-admin/teachers?search="}>
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">
 									<div className="bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] p-[.5em] w-[100%] rounded-[.5em] ">
