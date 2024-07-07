@@ -68,11 +68,14 @@ function StudentLectures({ subjectId }: { subjectId: string }) {
 											{/* <Link href={lecture.lectureFile}>
 												Download File
 											</Link> */}
+											{lecture.isVideo ? 
 											<WatchLectureDialog
 												lectureFile={
 													lecture.lecture
 												}
-											/>
+											/> 
+											: <a href={lecture.lecture} >Download File</a>
+											}
 										</h4>
 									</div>
 									<div className="col-span-4">

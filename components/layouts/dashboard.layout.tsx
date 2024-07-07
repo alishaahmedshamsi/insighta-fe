@@ -62,13 +62,7 @@ export default function DashboardLayout({
 	if (!user) {
 		return <div>!user</div>;
 	}
-	if (isPointsError) {
-		return <div>isPointsError</div>;
-	}
-	if (!points) {
-		return <div>Unable to fetch points stuff. Please reload the page</div>;
-	}
-
+	
 	const handleLogout = async () => {
 		await logout();
 		window.location.href = "/login";
@@ -90,20 +84,23 @@ export default function DashboardLayout({
 			return (
 				<>
 					<div className="grid grid-cols-3 gap-[1em] w-full">
+						{points && (
 						<PBreakdown
-							userName={user.fullname}
-							// schoolName={user.school}
-							// userRank={""}
-							userClass={user.classes}
-							// role={"student"}
-							points={points.total}
-							assignmentPoints={points.assignment}
-							quizPoints={points.quiz}
-							lecturePoints={points.lecture}
-							reviewPoints={25}
-							open={pointsOpen}
-							setOpen={setPointsOpen}
-						>
+						userName={user.fullname}
+						// schoolName={user.school}
+						// userRank={""}
+						userClass={user.classes}
+						// role={"student"}
+						points={points.total}
+						assignmentPoints={points.assignment}
+						quizPoints={points.quiz}
+						lecturePoints={points.lecture}
+						reviewPoints={25}
+						open={pointsOpen}
+						setOpen={setPointsOpen}
+					>	
+							
+						
 							<div
 								onClick={() => setPointsOpen(!pointsOpen)}
 								className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] "
@@ -125,6 +122,7 @@ export default function DashboardLayout({
 								</div>
 							</div>
 						</PBreakdown>
+						)}
 						<div className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 							<Image
 								alt=""

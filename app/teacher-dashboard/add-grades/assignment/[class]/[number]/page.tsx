@@ -4,47 +4,10 @@ import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import TeacherGrading from "@/components/TeacherGrading/teacher-grading";
-import { useCurrentUser } from "@/hooks/user.hook";
+import { useCurrentUser, useStudentSubmission } from "@/hooks/user.hook";
 
 import { fetchAssignments } from "@/services/apis/teacher.api";
 import { useQuery } from "@tanstack/react-query";
-const submissions = [
-	{
-		studentName: "Muhammad Usman",
-		rollNumber: "123456",
-		totalMarks: "10",
-		obtainedMarks: "",
-		downloadFile: "#",
-	},
-	{
-		studentName: "Muhammad Usman",
-		rollNumber: "123456",
-		totalMarks: "10",
-		obtainedMarks: "",
-		downloadFile: "#",
-	},
-	{
-		studentName: "Muhammad Usman",
-		rollNumber: "123456",
-		totalMarks: "10",
-		obtainedMarks: "",
-		downloadFile: "#",
-	},
-	{
-		studentName: "Muhammad Usman",
-		rollNumber: "123456",
-		totalMarks: "10",
-		obtainedMarks: "",
-		downloadFile: "#",
-	},
-	{
-		studentName: "Muhammad Usman",
-		rollNumber: "123456",
-		totalMarks: "10",
-		obtainedMarks: "",
-		downloadFile: "#",
-	},
-];
 
 export default function Component({
 	params,
@@ -71,12 +34,16 @@ export default function Component({
 		(assignment: { _id: string }) => assignment._id == number
 	);
 
-	console.log("currentAssignment: ", currentAssignment);
-	// const mainSectionHeading = `Add Grades: ${currentAssignment?.title}`;
+	const { submissionList,isLoading:submissionLoading } = useStudentSubmission(number);
+	if(submissionLoading) return <div>Loading...</div>
+	
+	// console.log("currentAssignment: ", currentAssignment);
 	const mainSectionHeading = currentAssignment
 		? `Add Grades: ${currentAssignment.title}`
 		: `Add Grades: ${number}`;
 
+		console.log("submissionList: ",submissionList);
+		
 	return (
 		<>
 			<DashboardLayout
@@ -87,20 +54,22 @@ export default function Component({
 				<div className="rounded-[2em] flex flex-col">
 					<div className="results-container flex flex-col gap-8 pb-[2em]">
 						{/* results */}
-						{submissions.map((submission, index) => (
+						
+						{submissionList && submissionList.map((submission:any, index:number) => (
 							<div key={index} className="submission">
 								<div className="submissions flex flex-col gap-3">
 									<div
 										key={index}
 										className="grid grid-cols-5 items-center text-[1em] capitalize text-[#333] bg-white border border-[#DBDBDB] p-[1em] rounded-[1em]"
 									>
-										<h4>{submission.studentName}</h4>
-										<h4>{submission.rollNumber}</h4>
+										<h4>{submission.student.fullname}</h4>
+										<h4>{submission.student.rollNumber}</h4>
 										<h4>
-											Total Marks: {submission.totalMarks}
+											Late Submitted : {submission.isLate == 'true' ? 'Yes' : 'No' }
 										</h4>
 										<div className="flex">
 											<TeacherGrading
+											submissionId={submission._id}
 												userName={
 													submission.studentName
 												}
@@ -116,7 +85,7 @@ export default function Component({
 										</div>
 										<Link
 											className="text-center underline text-[1em] text-[#15B5D5] font-medium"
-											href={submission.downloadFile}
+											href={submission.pdf}
 										>
 											Download File
 										</Link>

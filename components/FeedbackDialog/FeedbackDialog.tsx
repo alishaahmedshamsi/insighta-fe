@@ -1,18 +1,28 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
+import { submitReview } from "@/services/apis/user.api";
 
 export default function FeedbackDialog({
 	userName,
 	subject,
+	teacherId
 }: {
 	userName: string;
+	teacherId:string;
 	subject?: string;
 }) {
 	const [open, setOpen] = useState(false);
-
+	const [text, setText] = useState("");
 	const cancelButtonRef = useRef(null);
-
+	const submit = async () => {
+		console.log("Feedback submitted");
+		const {response,success} = await submitReview(text,teacherId);
+		if(!success) return toast.error(response);
+		setOpen(false);
+		toast.success("Feedback submitted successfully");
+	}
 	return (
 		<>
 			<Button onClick={() => setOpen(!open)} className="align-end ">
@@ -74,6 +84,7 @@ export default function FeedbackDialog({
 													<textarea
 														name="feedback"
 														id="feedback"
+														onChange={(e) => setText(e.target.value)}
 														className="w-full border border-gray-300 rounded-md p-2"
 														placeholder="Enter your feedback here..."
 													></textarea>
@@ -81,9 +92,7 @@ export default function FeedbackDialog({
 														<button
 															type="button"
 															className="inline-flex justify-center rounded-md bg-blue-500 text-white px-3 py-2 text-sm font-semibold shadow-sm hover:bg-blue-600"
-															onClick={() =>
-																setOpen(false)
-															}
+															onClick={submit}
 														>
 															Submit
 														</button>

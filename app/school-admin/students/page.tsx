@@ -40,9 +40,7 @@ export default function Page({ searchParams }: SearchParams) {
     toast.error(error);
   }
 
-  if (!data) {
-    return;
-  }
+
 
   return (
     <DashboardLayout
@@ -52,18 +50,22 @@ export default function Page({ searchParams }: SearchParams) {
       leftSidebarLinks={schoolAdminLeftSidebarLinks()}
     >
       <div className="flex flex-col min-h-screen">
-        <SearchBar />
+        <SearchBar initialValue={search} />
         <div className="mb-6"></div>
         <hr className="py-6" />
         <div className="flex-grow">
-          <SchoolTable
-            caption="A list of your School Students"
-            data={data.data}
-            role="student"
-          />
+          {data?.data &&
+            <SchoolTable
+              caption="A list of your School Students"
+              data={data.data}
+              role="student"
+            />
+          }
         </div>
         <div className="sticky bottom-0  py-4">
-          <Pagination data={data.pagination} />
+          {data?.pagination &&
+            <Pagination data={data.pagination} />
+          }
         </div>
       </div>
     </DashboardLayout>

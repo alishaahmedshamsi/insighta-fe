@@ -3,8 +3,21 @@ import Image from "next/image";
 
 import PointsBreakdown from "@/components/points-breakdown";
 import HeaderComponent from "@/components/header.component";
+import { useQuery } from "@tanstack/react-query";
+import api from "@/services/middleware/middleware";
 
 export default function FrontPage() {
+
+	const {data} = useQuery({
+		queryKey: ["class-teachers"],
+		queryFn: async () => {
+			const {data} = await api.get(`/point/global`);
+			return data.data;
+		}
+	})
+
+	console.log("Top students",data);
+	
 	return (
 		<>
 			<HeaderComponent />
@@ -52,17 +65,19 @@ export default function FrontPage() {
 									Top Student
 								</h3>
 								<div className="my-4 w-full flex justify-center">
+									{data && 
 									<Image
 										alt=""
 										className="object-cover w-[100px] h-auto"
-										src={"/assets/student.png"}
+										src={data && data.topStudents[0].profilePicture}
 										width={600}
 										height={600}
 									/>
+}
 								</div>
 
 								<h4 className="text-[#333] uppercase text-[22px]">
-									Waqqam Usman
+									{ data && data.topStudents[0].fullname}
 								</h4>
 								<span className="text-[#bbb] text-[22px]">
 									from
@@ -84,7 +99,6 @@ export default function FrontPage() {
 										quizPoints={150}
 										lecturePoints={200}
 									/>
-									{/* ⭐ <span>500+ Points</span> */}
 								</span>
 							</div>
 						</div>

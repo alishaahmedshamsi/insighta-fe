@@ -4,6 +4,10 @@ import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import { useState } from "react";
 import { RecommendTable } from "@/components/RecommendTable/RecommendTable";
+import { useQuery } from "@tanstack/react-query";
+import api from "@/services/middleware/middleware";
+import { useCurrentUser } from "@/hooks/user.hook";
+import { redirect } from "next/navigation";
 
 const teachersList = [
 	{
@@ -30,6 +34,24 @@ const teachersList = [
 
 export default function StudentDashboard() {
 	const [allowReview, setAllowReview] = useState(true);
+
+	const {user,isLoading} = useCurrentUser();
+	
+	console.log("user-current-class",user?.classes[0]);
+	
+	const {data} = useQuery({
+		queryKey: ["class-teachers"],
+		queryFn: async () => {
+			const {data} = await api.get(`/teacher/get/all/class/teachers?class=${user!.classes[0]._id}`);
+			return data.data.data;
+		}
+	})
+	
+	if(isLoading)
+	if(!user) return redirect("/login");
+	
+	console.log("Teacher DATA",data);
+	
 	return (
 		<>
 			<DashboardLayout
@@ -39,10 +61,12 @@ export default function StudentDashboard() {
 			>
 				{allowReview ? (
 					<div className="flex flex-col gap-[2em]">
+						{data && 
 						<RecommendTable
 							caption="A list of your Teachers"
-							data={teachersList}
+							data={data}
 						/>
+}
 					</div>
 				) : (
 					<div className="flex flex-col gap-[2em]">

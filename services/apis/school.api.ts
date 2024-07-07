@@ -103,3 +103,44 @@ export const  createSubject = async (data: any) => {
 		};
 	}
 }
+
+export const updateDisplayPoints = async (data: boolean) => {
+	try {
+		const response = await api.put("/school/update-display-points", {
+			displayPoints:data
+		});
+		console.log("Data",data);
+		
+		if (response.status === STATUS.UNPROCESSABLE_ENTITY || response.status === STATUS.BAD_REQUEST) {
+			return { success: false, response: response.data.message };
+		}
+		return { success: true, response: response.data };
+	} catch (error: any) {
+		console.error(error);
+		return {
+			success: false,
+			response: error.response?.data?.message || "An error occurred",
+		};
+	}
+}
+
+export const updateIsReview = async (data: boolean) => {
+	try {
+		const response = await api.put("/school/update-review-open", {
+			isReviewOpen:data
+		});
+		console.log("Data",data);
+		
+		if (response.status === STATUS.UNPROCESSABLE_ENTITY || response.status === STATUS.BAD_REQUEST) {
+			return { success: false, response: response.data.message };
+		}
+		
+		return { success: true, response: response.data };
+	} catch (error: any) {
+		console.error(error);
+		return {
+			success: false,
+			response: error.response?.data?.message || "An error occurred",
+		};
+	}
+}

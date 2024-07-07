@@ -1,15 +1,18 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Button } from "../ui/button";
-import { Tiro_Tamil } from "next/font/google";
+import { gradeSubmission } from "@/services/apis/user.api";
+import { toast } from "sonner";
 
 export default function TeacherGrading({
 	userName,
 	userClass,
 	number,
 	materialType,
+	submissionId,
 	totalMarks,
 }: {
+	submissionId:string;
 	userName: string;
 	userClass: string;
 	number: string;
@@ -18,7 +21,13 @@ export default function TeacherGrading({
 }) {
 	const [open, setOpen] = useState(false);
 	const cancelButtonRef = useRef(null);
+	const [marks, setMarks] = useState<number |  undefined>(undefined);
+	const Submit = () => {
 
+		gradeSubmission(marks,submissionId);
+		setOpen(false)
+		toast.success("Graded Successfully")
+	}
 	return (
 		<>
 			<Button onClick={() => setOpen(!open)}>Grading</Button>
@@ -87,6 +96,7 @@ export default function TeacherGrading({
 													Obtained Marks:
 												</p>
 												<input
+												onChange={(els) => setMarks(Number(els.target.value))}
 													className="w-full p-[.5em] rounded-[1em] border border-[#DBDBDB] bg-[#f4f8fb]"
 													type="number"
 													placeholder="Enter Marks"
@@ -106,7 +116,7 @@ export default function TeacherGrading({
 										<button
 											type="button"
 											className="mt-3 inline-flex w-full justify-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black sm:mt-0 sm:w-auto"
-											onClick={() => setOpen(false)}
+											onClick={Submit}
 											ref={cancelButtonRef}
 										>
 											Submit

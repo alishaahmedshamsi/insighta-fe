@@ -1,5 +1,6 @@
 import { fetchCurrentUser } from "@/services/apis";
-import { fetchStudentAssignments, fetchStudentSubjects } from "@/services/apis/user.api";
+import { fetchStudentAssignments, fetchStudentSubjects, fetchSubmission } from "@/services/apis/user.api";
+import api from "@/services/middleware/middleware";
 import { IUser } from "@/types/type";
 import { useQuery } from "@tanstack/react-query";
 
@@ -52,3 +53,27 @@ export const useStudentAssignments = (subject: string) => {
 	return { assignmentsList, isLoading, error };
 };
 
+export const useStudentSubmission = (assignmentId?:string,subject?:string) => {
+	const {
+		  data: submissionList,
+		  isLoading,
+		  error,
+	  } = useQuery({
+		  queryKey: ["fetch-student-submission-list",assignmentId,subject],
+		  queryFn: ()=>fetchSubmission(assignmentId,subject)
+	  });
+  
+	  // console.log("user: ", user)
+  
+	  return { submissionList, isLoading, error };
+  };
+  export const useStudentReviewStatus = (teacherId:string) => {
+	const {data:reviewStatus} = useQuery({
+		queryKey: ["class-teachers"],
+		queryFn: async () => {
+			const {data:status} = await api.get(`review?teacherId=${teacherId}`);
+			return status.data.data;
+		}
+	})
+  }
+ 

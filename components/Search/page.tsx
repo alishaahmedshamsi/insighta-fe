@@ -5,12 +5,12 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { Input } from "../ui/input";
 
 export const SearchBar = ({ initialValue }: { initialValue?: string }) => {
-  const [value, setValue] = useState(initialValue || "");
+  const [value, setValue] = useState('');
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const query = useDebounce(value, 1200);
+  const query = useDebounce(value, 700);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -24,7 +24,7 @@ export const SearchBar = ({ initialValue }: { initialValue?: string }) => {
 
   useEffect(() => {
     const currentQuery = searchParams.get("search") || "";
-    // Reset page to 1 only when the search query changes
+
     if (query !== currentQuery) {
       router.push(`${pathname}?${createQueryString("search", query)}`);
     }

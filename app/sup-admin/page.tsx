@@ -14,7 +14,6 @@ export default function SchoolAdminDashboard() {
 	const {
 		isLoading,
 		data,
-		error,
 	}: {
 		data: ApiResponse<ISchoolInfo> | undefined;
 		error: any;

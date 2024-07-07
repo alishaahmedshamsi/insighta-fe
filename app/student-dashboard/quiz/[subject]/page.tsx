@@ -8,58 +8,6 @@ import { useStudentSubject } from "@/hooks/user.hook";
 import { useQuery } from "@tanstack/react-query";
 import { fetchStudentQuiz } from "@/services/apis/user.api";
 
-const allQuiz = [
-	{
-		title: "Quiz #1",
-		deadline: "5 June 2024",
-		totalMarks: "10",
-		obtMarks: "--",
-		status: "Not completed",
-		quizQuestions: [
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-		],
-	},
-	{
-		title: "Quiz #2",
-		deadline: "1 August 2024",
-		totalMarks: "10",
-		obtMarks: "8",
-		status: "Completed",
-		quizQuestions: [
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-		],
-	},
-];
 
 export default function StudentSubjectQuiz({
 	params,

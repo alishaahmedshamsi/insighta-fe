@@ -56,14 +56,7 @@ export default function AddAssignmentComponent() {
 		},
 	});
 
-	// useEffect(() => {
-	// 	setClassIndex(() => (
-	// 		user?.classes.findIndex(
-	// 			(item) => item.className.toString() === className
-	// 		)
-	// 	)
-	// 	);
-	// }, [className]);
+
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -96,7 +89,7 @@ export default function AddAssignmentComponent() {
 			class: classId,
 			subject: subId,
 			// subject: subjectId,
-			// marks: marks as number,
+			totalMarks: marks as number,
 			deadline: date!,
 			assignmentFile: file,
 		};
@@ -174,7 +167,7 @@ export default function AddAssignmentComponent() {
 					placeholder="Description"
 					className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 				/>
-
+			
 				<div className="w-full flex flex-col">
 					<label htmlFor="class">Class</label>
 					<Select onValueChange={handleClassChange} value={className}>
@@ -196,6 +189,7 @@ export default function AddAssignmentComponent() {
 						</SelectContent>
 					</Select>
 				</div>
+				
 				{/* <div className="w-full flex flex-col">
 					<label htmlFor="subject">Subject</label>
 					<Select onValueChange={handleSubjectChange}>
@@ -262,7 +256,17 @@ export default function AddAssignmentComponent() {
 							/>
 						</PopoverContent>
 					</Popover>
+					
 				</div>
+				<Input
+					onChange={(e) => {
+						setMarks(Number(e.target.value));
+					}}
+					type="number"
+					value={marks}
+					placeholder="Total Marks"
+					className="rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
+				/>
 				<div className="w-full flex flex-col col-span-2">
 					<label htmlFor="file">Upload file</label>
 					<Input

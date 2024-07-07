@@ -28,7 +28,6 @@ export function SchoolTable({
 					<TableHead>Name</TableHead>
 					<TableHead>Email</TableHead>
 					<TableHead>Status</TableHead>
-					<TableHead>Points</TableHead>
 					<TableHead>Class</TableHead>
 				</TableRow>
 			</TableHeader>
@@ -38,7 +37,6 @@ export function SchoolTable({
 						<TableCell>{user.fullname}</TableCell>
 						<TableCell>{user.email}</TableCell>
 						<TableCell>{"paid"}</TableCell>
-						<TableCell className="px-8">0</TableCell>
 						<TableCell className="px-8">
 							{user.classes.map((classObj, classIndex) => (
 								<span key={classIndex}>

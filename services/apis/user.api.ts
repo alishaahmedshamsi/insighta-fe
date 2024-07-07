@@ -54,7 +54,6 @@ export const onUploadAssignment = async (data: IUploadAssignment) => {
 			},
 		});
 
-		// console.log("api data: ", data);
 		if (response.status === STATUS.UNPROCESSABLE_ENTITY) {
 			return { success: false, response: response.data.message };
 		}
@@ -66,7 +65,6 @@ export const onUploadAssignment = async (data: IUploadAssignment) => {
 			return { success: false, response: response.data.message };
 		}
 
-		// console.log("api data: ", data);
 		return { success: true, response: response.data };
 	} catch (error) {
 		console.error(error);
@@ -216,3 +214,51 @@ export const fetchStudentQuiz = async (id?: string) => {
 		throw new Error(error ?? error.message.data);
 	}
 };
+export const fetchStudentQuizSubmission = async (id?: string) => {
+	try {
+		const response = await api.get(
+			`/submission?subject=${id ? id : undefined}&isQuiz=true`
+		);
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+};
+
+export const fetchStatus = async (index:string) => {
+	try {
+		const {data}= await api.get(`/submission/status?assignmentId=${index}`);
+		return data.data
+	} catch (error: any) {
+		console.log(error);
+		
+	}
+};
+
+export const fetchSubmission = async (id?:string,subject?:string) => {
+	try {
+		const {data}= await api.get(`/submission/?isQuiz=false&id=${id}&subject=${subject}`);
+		return data.data
+	} catch (error: any) {
+		console.log(error);
+	}
+}
+
+export const gradeSubmission = async(grade:number | undefined,id:string)=>{
+	try {
+		const {data}= await api.put(`/submission/${id}`,{grade});
+		return data.data
+	} catch (error: any) {
+		console.log(error);
+	}
+}
+
+export const submitReview = async(text:string,teacherId:string)=>{
+	try {
+		const {data}= await api.post(`/student/review/`,{text,teacherId});
+		return {success:true,response:data.data}
+	} catch (error: any) {
+		console.log(error);
+		return {success:false,response:error.response.data.message}
+	}
+}

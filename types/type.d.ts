@@ -91,6 +91,8 @@ export interface IUser {
 	email: string;
 	qualification: string;
 	address: string;
+	isReviewOpen: boolean;
+	displayPoints:boolean
 	password: string;
 	role: ROLES;
 	classes: IClass[];
@@ -144,7 +146,7 @@ export interface IAddAssignment {
 	descripition: string;
 	class: string;
 	subject: string | undefined;
-	// marks: number;
+	totalMarks: number;
 	deadline: Date;
 	assignmentFile: File;
 }
@@ -169,6 +171,7 @@ export interface IAddLecture {
 export interface IUploadAssignment {
 	assignmentId: string;
 	isLate: string;
+	subject:string
 	teacher: string;
 	isQuiz: string;
 	pdf: File;

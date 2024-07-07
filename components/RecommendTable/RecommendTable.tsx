@@ -7,9 +7,11 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { IUser } from "@/types/type";
+
 import { Button } from "../ui/button";
 import FeedbackDialog from "../FeedbackDialog/FeedbackDialog";
+import { useQuery } from "@tanstack/react-query";
+import api from "@/services/middleware/middleware";
 
 export function RecommendTable({
 	caption,
@@ -17,18 +19,23 @@ export function RecommendTable({
 }: {
 	caption: string;
 	data: Array<{
+		_id: string;
 		fullname: string;
 		subject: string;
+		email:string
 		submitted: boolean;
 	}>;
 }) {
+
+	
+	
 	return (
 		<Table>
 			<TableCaption>{caption}</TableCaption>
 			<TableHeader>
 				<TableRow>
 					<TableHead>Name</TableHead>
-					<TableHead>Subjects</TableHead>
+					<TableHead>Email</TableHead>
 					<TableHead>Status</TableHead>
 					<TableHead className="flex justify-end">
 						Recommend
@@ -39,7 +46,7 @@ export function RecommendTable({
 				{data.map((user, index: number) => (
 					<TableRow key={index}>
 						<TableCell>{user.fullname}</TableCell>
-						<TableCell>{user.subject}</TableCell>
+						<TableCell>{user.email}</TableCell>
 						<TableCell
 							className={`${
 								user.submitted
@@ -52,6 +59,7 @@ export function RecommendTable({
 						{!user.submitted ? (
 							<TableCell className="flex justify-end">
 								<FeedbackDialog
+								teacherId={user._id}
 									userName={user.fullname}
 									subject={user.subject}
 								/>

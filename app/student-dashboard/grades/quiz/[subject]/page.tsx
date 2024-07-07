@@ -6,7 +6,7 @@ import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import StudentQuiz from "@/components/StudentQuiz/StudentQuiz";
 import { useStudentSubject } from "@/hooks/user.hook";
 import { useQuery } from "@tanstack/react-query";
-import { fetchStudentQuiz } from "@/services/apis/user.api";
+import { fetchStudentQuiz, fetchStudentQuizSubmission } from "@/services/apis/user.api";
 import TeacherGrading from "@/components/TeacherGrading/teacher-grading";
 import TakeQuizOnline from "@/components/takeQuizOnline";
 
@@ -77,14 +77,13 @@ export default function StudentSubjectQuiz({
 
 	const { data: myAllQuiz, isLoading } = useQuery({
 		queryKey: ["fetch-student-quiz"],
-		queryFn: () => fetchStudentQuiz(subject),
+		queryFn: () => fetchStudentQuizSubmission(subject),
 	});
 
 	const mainSectionHeading = subjectName
 		? `${subjectName.name} Quiz`
 		: `${subject} Quiz`;
 
-	console.log("myAllQuiz: ", myAllQuiz);
 
 	// const mainSectionHeading = `${subject} Quiz`;
 	return (
@@ -118,7 +117,7 @@ export default function StudentSubjectQuiz({
 												Status
 											</h5>
 											<h4 className="text-[#189918] capitalize text-[1.2em]">
-												Checked
+												{submission.status}
 											</h4>
 										</div>
 										<div>
@@ -126,10 +125,7 @@ export default function StudentSubjectQuiz({
 												Deadline
 											</h5>
 											<h4 className="text-[#111] capitalize text-[1.2em]">
-												{submission.deadline.slice(
-													0,
-													10
-												)}
+											
 											</h4>
 										</div>
 										<div>
@@ -137,7 +133,7 @@ export default function StudentSubjectQuiz({
 												Obt. Marks
 											</h5>
 											<h4 className="text-[#111] capitalize text-[1.2em]">
-												8
+												{submission.obtainMarks}
 											</h4>
 										</div>
 										<div>

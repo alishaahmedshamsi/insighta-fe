@@ -1,31 +1,13 @@
 "use client";
-import { useRouter } from "next/navigation";
+
 import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import Link from "next/link";
 import { STUDENT_QUICK_START_LIST } from "@/utils/constant/constant";
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
-import TakeQuizOnline from "@/components/takeQuizOnline";
+
 import { useStudentSubject } from "@/hooks/user.hook";
 
-const subjectList = [
-	{
-		name: "English",
-		subjectLink: "/student-dashboard/quiz/english",
-	},
-	{
-		name: "Maths",
-		subjectLink: "/student-dashboard/quiz/maths",
-	},
-	{
-		name: "Computer",
-		subjectLink: "/student-dashboard/quiz/computer",
-	},
-	{
-		name: "Science",
-		subjectLink: "/student-dashboard/quiz/science",
-	},
-];
 
 export default function StudentQuiz() {
 	const { subjectsList, isLoading } = useStudentSubject();
