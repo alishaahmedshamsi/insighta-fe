@@ -13,6 +13,7 @@ function isDeadlinePassed(deadline: string) {
 export default function StudentQuiz({
 	index,
 	quiz,
+	subject
 }: {
 	index: number;
 	quiz: {
@@ -25,6 +26,7 @@ export default function StudentQuiz({
 		createdBy: string;
 		_id: string;
 	}[];
+	subject: string;
 }) {
 	console.log("quiz in StudentQuiz: ", quiz);
 	const {
@@ -125,6 +127,7 @@ export default function StudentQuiz({
 											createdBy={quiz.createdBy}
 											quizId={quiz._id}
 											quizDeadline={quiz.deadline}
+											subject={subject}
 										/>
 									</h4>
 								</div>

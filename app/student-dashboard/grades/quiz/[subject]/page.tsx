@@ -13,59 +13,6 @@ import {
 import TeacherGrading from "@/components/TeacherGrading/teacher-grading";
 import TakeQuizOnline from "@/components/takeQuizOnline";
 
-const allQuiz = [
-	{
-		title: "Quiz #1",
-		deadline: "5 June 2024",
-		totalMarks: "10",
-		obtMarks: "--",
-		status: "Not completed",
-		quizQuestions: [
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-		],
-	},
-	{
-		title: "Quiz #2",
-		deadline: "1 August 2024",
-		totalMarks: "10",
-		obtMarks: "8",
-		status: "Completed",
-		quizQuestions: [
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-			{
-				questionNo: "Question #1",
-				question: "List all parts of speech?",
-			},
-		],
-	},
-];
-
 export default function StudentSubjectQuiz({
 	params,
 }: {
@@ -73,21 +20,40 @@ export default function StudentSubjectQuiz({
 }) {
 	const { subject } = params;
 
-	const { quizSubmissionList, isLoading: submissionLoading, error } =
-		useStudentQuizSubmission(undefined, subject);
+	const {
+		quizSubmissionList,
+		isLoading: submissionLoading,
+		error,
+	} = useStudentQuizSubmission(undefined, subject);
 
 	console.log("quizSubmissionList: ", quizSubmissionList);
-	
+
 	const { subjectsList } = useStudentSubject();
 	const subjectName = subjectsList?.find(
 		(sub: { _id: string }) => sub._id === subject
 	);
 
+	const { data: myAllQuiz, isLoading } = useQuery({
+		queryKey: ["fetch-student-quiz"],
+		queryFn: () => fetchStudentQuiz(subject),
+	});
+
+	console.log("myAllQuiz: ", myAllQuiz);
+	// let quizTitle = [];
+	// if (
+	// 	quizSubmissionList &&
+	// 	quizSubmissionList.length > 0 &&
+	// 	quizSubmissionList[0]?.quizId
+	// ) {
+	// 	quizTitle = myAllQuiz?.filter(
+	// 		(quiz: any) => quiz._id == quizSubmissionList[0].quizId
+	// 	);
+	// }
 	// const { data: myAllQuiz, isLoading } = useQuery({
 	// 	queryKey: ["fetch-student-quiz"],
 	// 	queryFn: () => fetchStudentQuizSubmission(subject),
 	// });
-	
+
 	// console.log("myAllQuiz: ", myAllQuiz);
 
 	const mainSectionHeading = subjectName
@@ -95,6 +61,11 @@ export default function StudentSubjectQuiz({
 		: `${subject} Quiz`;
 
 	// const mainSectionHeading = `${subject} Quiz`;
+
+	const getQuizTitle = (quizId: string) => {
+		const quiz = myAllQuiz?.find((quiz: any) => quiz._id === quizId);
+		return quiz ? quiz.title : quizId;
+	};
 	return (
 		<>
 			<DashboardLayout
@@ -108,7 +79,7 @@ export default function StudentSubjectQuiz({
 						{/* results */}
 						{submissionLoading ? (
 							<div>loading...</div>
-						) : (error ? (
+						) : error ? (
 							<div>Error loading data.</div>
 						) : (
 							quizSubmissionList?.map(
@@ -124,10 +95,9 @@ export default function StudentSubjectQuiz({
 														Title
 													</h5>
 													<h4 className="text-[#111] capitalize text-[1.2em]">
-														{
-															submission.assignmentId
-																.title
-														}
+														{getQuizTitle(
+															submission.quizId
+														)}
 													</h4>
 												</div>
 												<div>
@@ -138,7 +108,7 @@ export default function StudentSubjectQuiz({
 														{submission.status}
 													</h4>
 												</div>
-												<div>
+												{/* <div>
 													<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
 														Deadline
 													</h5>
@@ -148,7 +118,7 @@ export default function StudentSubjectQuiz({
 																.deadline
 														}
 													</h4>
-												</div>
+												</div> */}
 												<div>
 													<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
 														Obt. Marks
@@ -157,7 +127,7 @@ export default function StudentSubjectQuiz({
 														{submission.obtainMarks}
 													</h4>
 												</div>
-												<div>
+												{/* <div>
 													<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
 														Total Marks
 													</h5>
@@ -167,7 +137,7 @@ export default function StudentSubjectQuiz({
 																.totalMarks
 														}
 													</h4>
-												</div>
+												</div> */}
 												{/* <div>
 													<TakeQuizOnline
 														role="teacher"
@@ -184,8 +154,7 @@ export default function StudentSubjectQuiz({
 									</div>
 								)
 							)
-						)) 
-						}
+						)}
 					</div>
 				</div>
 				{/* <div className="rounded-[2em] flex flex-col gap-[2em] pb-[2em]">

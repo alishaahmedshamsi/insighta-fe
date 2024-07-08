@@ -16,6 +16,7 @@ export default function TakeQuizOnline({
 	quizId,
 	quizDeadline,
 	gradingQA,
+	subject
 }: {
 	quizName: string;
 	quizQuestions: string[];
@@ -24,6 +25,7 @@ export default function TakeQuizOnline({
 	createdBy?: string;
 	quizId?: string;
 	quizDeadline?: string;
+	subject: string;
 	gradingQA?:
 		| {
 				question: string;
@@ -73,6 +75,7 @@ export default function TakeQuizOnline({
 				isQuiz: true,
 				question: studentAnswers.map((question) => question.question),
 				answers: studentAnswers.map((answer) => answer.answer),
+				subject: subject
 			};
 			console.log("studentAnswers: ", studentAnswers);
 

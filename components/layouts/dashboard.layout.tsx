@@ -153,18 +153,18 @@ export default function DashboardLayout({
 							</CalenderDialog>
 						</div>
 						{user.role === "student" ? (
-							<Link href="/profile">
+							<Link href="/student-dashboard/grades">
 								<div className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 									<Image
 										alt=""
 										className="object-cover mx-auto w-[40%] h-auto"
-										src={"/assets/profile.png"}
+										src={"/assets/scoreboard.png"}
 										width={600}
 										height={600}
 									/>
 									<div className="flex justify-between w-full items-center mt-[1em]">
 										<h3 className="text-white font-semibold text-[1.5em]">
-											Profile
+											Grades
 										</h3>
 										{/* <p className="text-[#581D7D] font-semibold text-[1.2em]">
 										B+
