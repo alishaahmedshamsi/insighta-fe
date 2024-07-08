@@ -12,7 +12,7 @@ export default function TeacherGrading({
 	submissionId,
 	totalMarks,
 }: {
-	submissionId:string;
+	submissionId: string;
 	userName: string;
 	userClass: string;
 	number: string;
@@ -21,13 +21,12 @@ export default function TeacherGrading({
 }) {
 	const [open, setOpen] = useState(false);
 	const cancelButtonRef = useRef(null);
-	const [marks, setMarks] = useState<number |  undefined>(undefined);
+	const [marks, setMarks] = useState<number | undefined>(undefined);
 	const Submit = () => {
-
-		gradeSubmission(marks,submissionId);
-		setOpen(false)
-		toast.success("Graded Successfully")
-	}
+		gradeSubmission(marks, submissionId);
+		setOpen(false);
+		toast.success("Graded Successfully");
+	};
 	return (
 		<>
 			<Button onClick={() => setOpen(!open)}>Grading</Button>
@@ -89,17 +88,23 @@ export default function TeacherGrading({
 												>
 													{materialType}: {number}
 												</Dialog.Title>
-												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+												{/* <p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
 													Total Marks: {totalMarks}
-												</p>
-												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+												</p> */}
+												{/* <p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
 													Obtained Marks:
-												</p>
+												</p> */}
 												<input
-												onChange={(els) => setMarks(Number(els.target.value))}
+													onChange={(els) =>
+														setMarks(
+															Number(
+																els.target.value
+															)
+														)
+													}
 													className="w-full p-[.5em] rounded-[1em] border border-[#DBDBDB] bg-[#f4f8fb]"
 													type="number"
-													placeholder="Enter Marks"
+													placeholder="Enter Obtained Marks"
 												/>
 											</div>
 										</div>

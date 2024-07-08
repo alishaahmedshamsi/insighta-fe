@@ -80,10 +80,10 @@ export default function PBreakdown({
 												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
 													School: {schoolName}
 												</p>
-												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+												{/* <p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
 													Rank: {userRank}
-												</p>
-												{role === "student" ? (
+												</p> */}
+												{/* {role === "student" ? (
 													<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
 														Grade: {userClass}
 													</p>
@@ -92,7 +92,7 @@ export default function PBreakdown({
 														Qualification:{" "}
 														{qualification}
 													</p>
-												)}
+												)} */}
 
 												<Dialog.Title
 													as="h3"

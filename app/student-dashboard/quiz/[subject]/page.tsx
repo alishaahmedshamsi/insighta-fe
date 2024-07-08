@@ -48,7 +48,7 @@ export default function StudentSubjectQuiz({
 							Quiz
 						</h3>
 						{myAllQuiz?.map((quiz: any, index: any) => (
-							<StudentQuiz index={index} quiz={[quiz]} />
+							<StudentQuiz index={index} quiz={[quiz]} subject={subject} />
 						))}
 					</div>
 				</div>

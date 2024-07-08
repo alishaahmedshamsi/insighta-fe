@@ -27,7 +27,7 @@ export function RecommendTable({
 	}>;
 }) {
 
-	
+	console.log("RecommendTable",data);
 	
 	return (
 		<Table>
@@ -36,7 +36,7 @@ export function RecommendTable({
 				<TableRow>
 					<TableHead>Name</TableHead>
 					<TableHead>Email</TableHead>
-					<TableHead>Status</TableHead>
+					{/* <TableHead>Status</TableHead> */}
 					<TableHead className="flex justify-end">
 						Recommend
 					</TableHead>
@@ -47,7 +47,7 @@ export function RecommendTable({
 					<TableRow key={index}>
 						<TableCell>{user.fullname}</TableCell>
 						<TableCell>{user.email}</TableCell>
-						<TableCell
+						{/* <TableCell
 							className={`${
 								user.submitted
 									? `text-green-600`
@@ -55,7 +55,7 @@ export function RecommendTable({
 							} font-semibold`}
 						>
 							{user.submitted ? "Submitted" : "Not Submitted"}
-						</TableCell>
+						</TableCell> */}
 						{!user.submitted ? (
 							<TableCell className="flex justify-end">
 								<FeedbackDialog

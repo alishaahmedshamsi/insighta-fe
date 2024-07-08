@@ -50,6 +50,8 @@ export default function DashboardLayout({
 		queryFn: fetchPoints,
 	});
 
+	console.log("points: ", points)
+
 	const { schoolData } = useSchoolInfo();
 
 	if (isLoading && isLoadingPoints) {
@@ -62,7 +64,7 @@ export default function DashboardLayout({
 	if (!user) {
 		return <div>!user</div>;
 	}
-	
+
 	const handleLogout = async () => {
 		await logout();
 		window.location.href = "/login";
@@ -85,43 +87,41 @@ export default function DashboardLayout({
 				<>
 					<div className="grid grid-cols-3 gap-[1em] w-full">
 						{points && (
-						<PBreakdown
-						userName={user.fullname}
-						// schoolName={user.school}
-						// userRank={""}
-						userClass={user.classes}
-						// role={"student"}
-						points={points.total}
-						assignmentPoints={points.assignment}
-						quizPoints={points.quiz}
-						lecturePoints={points.lecture}
-						reviewPoints={25}
-						open={pointsOpen}
-						setOpen={setPointsOpen}
-					>	
-							
-						
-							<div
-								onClick={() => setPointsOpen(!pointsOpen)}
-								className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] "
+							<PBreakdown
+								userName={user.fullname}
+								// schoolName={user.school}
+								// userRank={""}
+								userClass={user.classes}
+								// role={"student"}
+								points={points.total}
+								assignmentPoints={points.assignment}
+								quizPoints={points.quiz}
+								lecturePoints={points.lecture}
+								reviewPoints={points.review}
+								open={pointsOpen}
+								setOpen={setPointsOpen}
 							>
-								<Image
-									alt=""
-									className="object-cover mx-auto w-[40%] h-auto"
-									src={"/assets/credit-card.png"}
-									width={600}
-									height={600}
-								/>
-								<div className="flex justify-between w-full items-center mt-[1em]">
-									<h3 className="text-white font-semibold text-[1.5em]">
-										Points Earned
-									</h3>
-									<p className="text-[#581D7D] font-semibold text-[1.2em]">
-										⭐ {points.total}
-									</p>
+								<div
+									onClick={() => setPointsOpen(!pointsOpen)}
+									className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] "
+								>
+									<Image
+										alt=""
+										className="object-cover mx-auto w-[40%] h-auto"
+										src={"/assets/credit-card.png"}
+										width={600}
+										height={600}
+									/>
+									<div className="flex justify-between w-full items-center mt-[1em]">
+										<h3 className="text-white font-semibold text-[1.5em]">
+											Points Earned
+										</h3>
+										<p className="text-[#581D7D] font-semibold text-[1.2em]">
+											⭐ {points.total}
+										</p>
+									</div>
 								</div>
-							</div>
-						</PBreakdown>
+							</PBreakdown>
 						)}
 						<div className="h-full flex flex-col justify-between items-center p-[2em] rounded-[2em] bg-gradient-to-b from-[#FB8397] to-[#B1CBF2] ">
 							<Image

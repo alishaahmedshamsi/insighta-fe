@@ -28,8 +28,6 @@ export default function StudentAssignment({
 		createdBy: string;
 	}[];
 }) {
-
-
 	const [file, setFile] = useState<File | null>(null);
 	const queryClient = useQueryClient();
 
@@ -50,8 +48,7 @@ export default function StudentAssignment({
 	};
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		
-		
+
 		if (!file) {
 			return toast.error("Please select a file.");
 		}
@@ -84,11 +81,11 @@ export default function StudentAssignment({
 
 		const { success, response } = await mutateAsync(data);
 		console.log(response);
-		
+
 		if (!success) return toast.error(response);
 		if (success) toast.success("Assignment Uploaded Successfully");
 		queryClient.invalidateQueries({ queryKey: ["assignment-status"] });
-		
+
 		// router.push("/teacher-dashboard");
 
 		setFile(null);
@@ -97,11 +94,11 @@ export default function StudentAssignment({
 		reset();
 	};
 
-	const {data:status} = useQuery({
+	const { data: status } = useQuery({
 		queryKey: ["assignment-status"],
-		queryFn:()=>fetchStatus(index)
-	})
-	
+		queryFn: () => fetchStatus(index),
+	});
+
 	return (
 		<>
 			{assignment.map((assignment) => (
@@ -143,10 +140,11 @@ export default function StudentAssignment({
 								Status
 							</h5>
 							<h4
-								className={`text-[#111] font-medium capitalize text-[1.2em] ${status == "Submitted"
+								className={`text-[#111] font-medium capitalize text-[1.2em] ${
+									status == "Submitted"
 										? `text-[#5fc935]`
 										: "text-[#cf2e23]"
-									}`}
+								}`}
 							>
 								{capitalizeFirstLetter(status)}
 							</h4>{" "}
@@ -166,7 +164,6 @@ export default function StudentAssignment({
 										Download File
 									</a>
 								</h4>
-
 							</div>
 						) : (
 							<div className="h-full flex items-end">
@@ -179,46 +176,49 @@ export default function StudentAssignment({
 					{/* assignment.status.toLowerCase() === "not completed" */}
 					{!isDeadlinePassed(assignment.deadline) ? (
 						<>
-						{status !== "Submitted" && (
-						  <>
-							<hr className="my-[1em]" />
-							<div className="upload-file-container">
-							  <form onSubmit={handleSubmit}>
-								<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-								  Submit Assignment
-								</h5>
-								<h4 className="text-[#111] capitalize text-[1.2em] mb-[1em]">
-								  Upload File
-								</h4>
-								<div className="grid grid-cols-4">
-								  <Input
-									onChange={handleFileChange}
-									type="file"
-									name="file"
-									id="file"
-									className="col-span-3 border-2 border-[#ddd] border-dashed w-full px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full bg-white p-[1em] h-[3.8em]"
-								  />
-								  <button
-									type="submit"
-									className="col-span-1 w-full rounded-[2em] bg-brand-sea-green py-4 h-full text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
-								  >
-									{isPending ? (
-									  <div className="flex justify-center items-center">
-										<Loader2Icon className="mr-2 animate-spin" />
-										<span>Uploading...</span>
-									  </div>
-									) : (
-									  "Upload"
-									)}
-								  </button>
-								</div>
-							  </form>
-							</div>
-						  </>
-						)}
-					  </>
-					  
-					) : null}
+							{status !== "Submitted" && (
+								<>
+									<hr className="my-[1em]" />
+									<div className="upload-file-container">
+										<form onSubmit={handleSubmit}>
+											<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+												Submit Assignment
+											</h5>
+											<h4 className="text-[#111] capitalize text-[1.2em] mb-[1em]">
+												Upload File
+											</h4>
+											<div className="grid grid-cols-4">
+												<Input
+													onChange={handleFileChange}
+													type="file"
+													name="file"
+													id="file"
+													className="col-span-3 border-2 border-[#ddd] border-dashed w-full px-3 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full bg-white p-[1em] h-[3.8em]"
+												/>
+												<button
+													type="submit"
+													className="col-span-1 w-full rounded-[2em] bg-brand-sea-green py-4 h-full text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
+												>
+													{isPending ? (
+														<div className="flex justify-center items-center">
+															<Loader2Icon className="mr-2 animate-spin" />
+															<span>
+																Uploading...
+															</span>
+														</div>
+													) : (
+														"Upload"
+													)}
+												</button>
+											</div>
+										</form>
+									</div>
+								</>
+							)}
+						</>
+					) : (
+						null
+					)}
 				</div>
 			))}
 		</>

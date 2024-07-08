@@ -179,6 +179,7 @@ export interface IUploadAssignment {
 
 export interface ITakeQuiz {
 	quizId: string;
+	subject: string;
 	teacher: string;
 	isLate: boolean;
 	isQuiz: boolean;

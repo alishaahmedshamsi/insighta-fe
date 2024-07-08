@@ -33,6 +33,8 @@ export default function Page({ searchParams }: SearchParams) {
       queryFn: () => fetchUsers({ page, search, role: "student" }),
     });
 
+    console.log("students data: ", data)
+
   if (isLoading) {
     <div>loading...</div>;
   }
