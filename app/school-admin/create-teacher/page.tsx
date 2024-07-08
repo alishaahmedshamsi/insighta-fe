@@ -363,9 +363,9 @@ export default function SchoolAdminCreateTeacher() {
 						</div>
 					))}
 					<hr className="my-2" />
-					{/* <div className="flex justify-end">
+					<div className="flex justify-end">
 						<Button onClick={addClass}>Add Class</Button>
-					</div> */}
+					</div>
 				</div>
 
 				<div className="col-span-1 w-full">
