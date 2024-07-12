@@ -10,7 +10,7 @@ export default function Component({ params }: { params: { class: string } }) {
 	// const { className } = teacherClass;
 	console.log("teacherClass: ", teacherClass)
 	const mainSectionHeading = `Class: ${teacherClass}`;
-
+	const decodeMainSectionheading = decodeURI(mainSectionHeading);
 	// const subjectList = [
 	// 	{
 	// 		name: "English",
@@ -20,7 +20,7 @@ export default function Component({ params }: { params: { class: string } }) {
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={mainSectionHeading}
+				mainSectionHeading={decodeMainSectionheading}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

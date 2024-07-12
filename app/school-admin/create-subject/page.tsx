@@ -215,6 +215,21 @@ export default function Page() {
 										<SelectItem value="Social St.">
 											Social St.
 										</SelectItem>
+										<SelectItem value="Physice">
+										Physice 
+										</SelectItem>
+										<SelectItem value="Bio">
+											Bio
+										</SelectItem>
+										<SelectItem value="Accounting">
+											Accounting
+										</SelectItem>
+										<SelectItem value="Business Maths">
+											Business Maths
+										</SelectItem>
+										<SelectItem value="chemistry">
+										chemistry 
+										</SelectItem>
 									</SelectGroup>
 								</SelectContent>
 							</Select>

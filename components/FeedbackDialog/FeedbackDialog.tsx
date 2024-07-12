@@ -11,7 +11,7 @@ export default function FeedbackDialog({
 }: {
 	userName: string;
 	teacherId:string;
-	subject?: string;
+	subject?: any;
 }) {
 	const [open, setOpen] = useState(false);
 	const [text, setText] = useState("");
@@ -23,6 +23,8 @@ export default function FeedbackDialog({
 		setOpen(false);
 		toast.success("Feedback submitted successfully");
 	}
+
+	
 	return (
 		<>
 			<Button onClick={() => setOpen(!open)} className="align-end ">
@@ -71,7 +73,7 @@ export default function FeedbackDialog({
 													Name: {userName}
 												</p>
 												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
-													Subject: {subject}
+													Subject: {subject.map((sub: any) => sub.name).join(", ")}
 												</p>
 
 												<Dialog.Title
