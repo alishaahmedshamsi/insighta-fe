@@ -49,7 +49,7 @@ export const studentLeftSidebarLinks = () => {
 			</Link>
 
 			<Link
-				href="/points-log"
+				href="/student-dashboard/points-log"
 				className="flex w-full text-center text-[1.1em] font-normal text-[#ccc] hover:text-[#ddd] mt-[1em]"
 			>
 				<Image
