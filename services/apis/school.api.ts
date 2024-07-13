@@ -144,3 +144,12 @@ export const updateIsReview = async (data: boolean) => {
 		};
 	}
 }
+
+export const fetchPointsLog = async (id?:string) => {
+	try {
+		const response = await api.get(`/point/detail/log/${id?id:undefined}`);
+		return response.data.data;
+	} catch (error: any) {
+		throw new Error(error ?? error.message.data);
+	}
+}

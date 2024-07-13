@@ -180,6 +180,17 @@ export default function SchoolAdminCreateTeacher() {
 		queryClient.invalidateQueries({ queryKey: ["fetch-classes"] });
 	};
 
+	const getAvailableClasses = (index: number) => {
+		const selectedClassNames = teacherData.classes.map(
+			(classItem) => classItem.name
+		);
+		return data?.data.filter(
+			(classItem: { className: string }) =>
+				!selectedClassNames.includes(classItem.className) ||
+				teacherData.classes[index].name === classItem.className
+		);
+	};
+
 	return (
 		<DashboardLayout
 			mainSectionHeading={"Create Teacher"}
@@ -276,7 +287,9 @@ export default function SchoolAdminCreateTeacher() {
 											) : error ? (
 												<div>Error loading classes</div>
 											) : (
-												data?.data.map(
+												getAvailableClasses(
+													classIndex
+												)?.map(
 													(item: {
 														_id:
 														| Key
