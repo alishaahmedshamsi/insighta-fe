@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 import FeedbackDialog from "../FeedbackDialog/FeedbackDialog";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/services/middleware/middleware";
+import { useStudentSubject } from "@/hooks/user.hook";
 
 export function RecommendTable({
 	caption,
@@ -21,13 +22,15 @@ export function RecommendTable({
 	data: Array<{
 		_id: string;
 		fullname: string;
-		subject: string;
+		subject: string[];
 		email:string
 		submitted: boolean;
+		
 	}>;
 }) {
 
-	console.log("RecommendTable",data);
+	console.log("RecommendTable: ",data);
+	
 	
 	return (
 		<Table>

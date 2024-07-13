@@ -3,26 +3,43 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { submitReview } from "@/services/apis/user.api";
+import { useStudentSubject } from "@/hooks/user.hook";
 
 export default function FeedbackDialog({
 	userName,
 	subject,
-	teacherId
+	teacherId,
 }: {
 	userName: string;
-	teacherId:string;
-	subject?: string;
+	teacherId: string;
+	subject?: string[];
 }) {
 	const [open, setOpen] = useState(false);
 	const [text, setText] = useState("");
 	const cancelButtonRef = useRef(null);
 	const submit = async () => {
 		console.log("Feedback submitted");
-		const {response,success} = await submitReview(text,teacherId);
-		if(!success) return toast.error(response);
+		const { response, success } = await submitReview(text, teacherId);
+		if (!success) return toast.error(response);
 		setOpen(false);
 		toast.success("Feedback submitted successfully");
-	}
+	};
+
+	const { subjectsList, isLoading: subjectsLoading } = useStudentSubject();
+	console.log("subjectsList: ", subjectsList);
+	console.log("subject: ", subject);
+
+	// let currentSubjectName = subjectsList?.find((item: { _id: string; }) => item._id === subject)?.name;
+	// console.log("currentSubjectName: ",currentSubjectName);
+
+	const getCurrentSubjectName = (subjectId: string) => {
+		let currentSubjectName = subjectsList?.find(
+			(item: { _id: string }) => item._id === subjectId
+		)?.name;
+		console.log("currentSubjectName: ", currentSubjectName);
+		return currentSubjectName;
+	};
+
 	return (
 		<>
 			<Button onClick={() => setOpen(!open)} className="align-end ">
@@ -71,7 +88,12 @@ export default function FeedbackDialog({
 													Name: {userName}
 												</p>
 												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
-													Subject: {subject}
+													Subject:{" "}
+													{subject?.map((sub) =>
+														getCurrentSubjectName(
+															sub
+														)
+													)}
 												</p>
 
 												<Dialog.Title
@@ -84,7 +106,11 @@ export default function FeedbackDialog({
 													<textarea
 														name="feedback"
 														id="feedback"
-														onChange={(e) => setText(e.target.value)}
+														onChange={(e) =>
+															setText(
+																e.target.value
+															)
+														}
 														className="w-full border border-gray-300 rounded-md p-2"
 														placeholder="Enter your feedback here..."
 													></textarea>
