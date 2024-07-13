@@ -350,7 +350,7 @@ export default function DashboardLayout({
 				<div className="avatar-box w-[65%]">
 					<Image
 						alt=""
-						className="object-cover w-[60%] h-auto rounded-full"
+						className="object-cover w-[10em] h-[10em] rounded-full"
 						src={user.profilePicture || defaultUserPicture}
 						width={600}
 						height={600}
@@ -392,7 +392,7 @@ export default function DashboardLayout({
 					<div className="avatar-box w-[100%]">
 						<Image
 							alt=""
-							className="object-cover mx-auto w-[40%] h-auto -mb-[2em] mt-[1em] rounded-full"
+							className="object-cover mx-auto w-[10em] h-[10em] -mb-[2em] mt-[1em] rounded-full"
 							src={user.profilePicture || defaultUserPicture}
 							width={600}
 							height={600}

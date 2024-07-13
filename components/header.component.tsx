@@ -46,38 +46,38 @@ function HeaderComponent() {
 					</div>
 					<Popover.Group className="hidden lg:flex lg:gap-x-12">
 						<a
-							href="#"
+							href="#ranking-section"
 							className="text-sm font-semibold leading-6 text-white"
 						>
-							Product
+							Rankings
 						</a>
 
 						<a
-							href="#"
+							href="#about-section"
 							className="text-sm font-semibold leading-6 text-white"
 						>
 							Features
 						</a>
 						<a
-							href="#"
+							href="#contact-section"
 							className="text-sm font-semibold leading-6 text-white"
 						>
-							Marketplace
+							Contact
 						</a>
-						<a
+						{/* <a
 							href="#"
 							className="text-sm font-semibold leading-6 text-white"
 						>
 							Company
-						</a>
+						</a> */}
 					</Popover.Group>
 					<div className="hidden lg:flex lg:flex-1 lg:justify-end">
-						<a
+						{/* <a
 							href="#"
 							className="transition ml-2 text-sm font-semibold leading-6 text-white px-4 py-2 border rounded-md shadow-sm border-[#ccc] hover:bg-brand-pink hover:text-[#fff] hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-sea-green"
 						>
 							Request a Demo <span aria-hidden="true"></span>
-						</a>
+						</a> */}
 						<a
 							href="/login"
 							className="transition ml-2 text-sm font-semibold leading-6 text-gray-900 px-4 py-2 border border-transparent rounded-md shadow-sm bg-brand-sea-green hover:text-[#fff] hover:bg-brand-pink focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-sea-green"
