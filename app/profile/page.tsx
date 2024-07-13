@@ -34,11 +34,11 @@ export default function Page() {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const [coverFile, setCoverFile] = useState();
-	const [cover, setCover] = useState("");
+
 
 	const { user, isError, isLoading } = useCurrentUser();
   console.log("user: ", user)
-
+  const [cover, setCover] = useState(user?.profilePicture || "");
 	const { mutateAsync, error, reset, isPending } = useMutation({
 		mutationFn: updateUser,
 
@@ -131,11 +131,13 @@ export default function Page() {
 							{...register("fullname")}
 							className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 							type="text"
+							value={user.fullname}
 							placeholder="Enter your name"
 						/>
 					</div>
 					<div className="mb-4">
 						<Input
+							value={user.location}
 							{...register("location")}
 							className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 							type="text"

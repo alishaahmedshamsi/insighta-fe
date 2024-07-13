@@ -34,7 +34,7 @@ export default function TeacherIndividualClassAddAssignments({
 }) {
 	const { class: teacherClass } = params;
 	const mainSectionHeading = `Manage Assignments of Class: ${teacherClass}`;
-
+	const decodeMainSectionheading = decodeURI(mainSectionHeading);
 	const extractSubject = teacherClass.split("-")[1].trim();
 	const { user } = useCurrentUser();
 
@@ -59,7 +59,7 @@ export default function TeacherIndividualClassAddAssignments({
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={mainSectionHeading}
+				mainSectionHeading={decodeMainSectionheading}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

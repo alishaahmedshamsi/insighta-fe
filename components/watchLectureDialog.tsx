@@ -1,14 +1,25 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Link from "next/link";
+import { UpdateUserLecturePoints } from "@/services/apis/lecture.api";
+import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function WatchLectureDialog({
 	lectureFile,
 }: {
 	lectureFile: string;
 }) {
+	const queryClient = useQueryClient();
 	const [open, setOpen] = useState(false);
-
+	const updateLecturePoints = async () => {
+		// console.log("Video has been ended");
+		await UpdateUserLecturePoints();
+		toast.success("Lecture watched successfully");
+		queryClient.invalidateQueries({
+			queryKey: ["user-points"],
+		})
+	}
 	const cancelButtonRef = useRef(null);
 
 	return (
@@ -67,6 +78,7 @@ export default function WatchLectureDialog({
 													<video
 														className="w-full"
 														controls
+														onEnded={updateLecturePoints}
 													>
 														<source
 															src={lectureFile}

@@ -11,8 +11,10 @@ export default function FeedbackDialog({
 	teacherId,
 }: {
 	userName: string;
+
 	teacherId: string;
 	subject?: string[];
+
 }) {
 	const [open, setOpen] = useState(false);
 	const [text, setText] = useState("");
@@ -23,6 +25,7 @@ export default function FeedbackDialog({
 		if (!success) return toast.error(response);
 		setOpen(false);
 		toast.success("Feedback submitted successfully");
+
 	};
 
 	const { subjectsList, isLoading: subjectsLoading } = useStudentSubject();
@@ -39,6 +42,8 @@ export default function FeedbackDialog({
 		console.log("currentSubjectName: ", currentSubjectName);
 		return currentSubjectName;
 	};
+
+
 
 	return (
 		<>
@@ -88,12 +93,14 @@ export default function FeedbackDialog({
 													Name: {userName}
 												</p>
 												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
+
 													Subject:{" "}
 													{subject?.map((sub) =>
 														getCurrentSubjectName(
 															sub
 														)
 													)}
+
 												</p>
 
 												<Dialog.Title

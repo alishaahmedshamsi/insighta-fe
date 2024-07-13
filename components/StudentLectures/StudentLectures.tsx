@@ -4,10 +4,10 @@ import { fetchStudentLectures } from "@/services/apis/user.api";
 
 function StudentLectures({ subjectId }: { subjectId: string }) {
 	console.log("subjectId: ", subjectId);
+	
 	const {
 		data: lecturesList,
 		isLoading,
-		// isError,
 		error,
 	} = useQuery({
 		queryKey: ["fetch-student-lectures-list"],
@@ -15,6 +15,7 @@ function StudentLectures({ subjectId }: { subjectId: string }) {
 	});
 
 	console.log("lecturesList: ", lecturesList);
+	
 
 	return (
 		<>
@@ -72,7 +73,7 @@ function StudentLectures({ subjectId }: { subjectId: string }) {
 										lectureFile={lecture.lecture}
 									/>
 								) : (
-									<a href={lecture.lecture}>Download File</a>
+									<a href={lecture.lecture} >Download File</a>
 								)}
 							</h4>
 						</div>

@@ -15,10 +15,14 @@ export default function TeacherIndividualClass({
 	const { class: teacherClass, subject } = params;
 
 	const mainSectionHeading = `Class: ${teacherClass} - ${subject}`;
+	const decodeMainSectionHeading = decodeURI(mainSectionHeading);
+
+	console.log("Teacher Subject",subject);
+	
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={mainSectionHeading}
+				mainSectionHeading={decodeMainSectionHeading}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

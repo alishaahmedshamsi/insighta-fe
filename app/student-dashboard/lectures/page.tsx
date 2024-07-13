@@ -7,24 +7,6 @@ import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import { useStudentSubject } from "@/hooks/user.hook";
 
 import { AwaitedReactNode, JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useState } from "react";
-// const subjectList = [
-// 	{
-// 		name: "English",
-// 		subjectLink: "/student-dashboard/lectures/english",
-// 	},
-// 	{
-// 		name: "Maths",
-// 		subjectLink: "/student-dashboard/lectures/maths",
-// 	},
-// 	{
-// 		name: "Computer",
-// 		subjectLink: "/student-dashboard/lectures/computer",
-// 	},
-// 	{
-// 		name: "Science",
-// 		subjectLink: "/student-dashboard/lectures/science",
-// 	},
-// ];
 
 export default function Component() {
 	const { subjectsList, isLoading } = useStudentSubject();

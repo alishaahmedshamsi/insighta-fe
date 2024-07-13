@@ -10,38 +10,6 @@ import AddLectureComponent from "@/components/AddLecture/add-lecture";
 import { useCurrentUser } from "@/hooks/user.hook";
 import { useQuery } from "@tanstack/react-query";
 import { fetchLectures, fetchQuiz } from "@/services/apis/teacher.api";
-import { Key } from "react";
-
-const allClassesLectures = [
-	{
-		title: "Lecture #1",
-		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		dateUploaded: "1 May 2024",
-		lectureFile: "https://youtu.be/EFg3u_E6eHU?si=t0kV0D4ei0mSGT9w",
-	},
-	{
-		title: "Lecture #2",
-		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		dateUploaded: "4 May 2024",
-		lectureFile: "https://youtu.be/EFg3u_E6eHU?si=t0kV0D4ei0mSGT9w",
-	},
-	{
-		title: "Lecture #3",
-		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		dateUploaded: "7 May 2024",
-		lectureFile: "https://youtu.be/EFg3u_E6eHU?si=t0kV0D4ei0mSGT9w",
-	},
-	{
-		title: "Lecture #4",
-		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		dateUploaded: "7 May 2024",
-		lectureFile: "https://youtu.be/EFg3u_E6eHU?si=t0kV0D4ei0mSGT9w",
-	},
-];
 
 export default function TeacherIndividualClass({
 	params,
@@ -51,7 +19,7 @@ export default function TeacherIndividualClass({
 	const { class: teacherClass, subject } = params;
 
 	const mainSectionHeading = `Class: ${teacherClass} Lectures`;
-
+	const decodeMainSectionheading = decodeURI(mainSectionHeading);
 	const extractClass = teacherClass.split("-")[0].trim();
 	const { user } = useCurrentUser();
 
@@ -68,14 +36,22 @@ export default function TeacherIndividualClass({
 	});
 
 	console.log("All lectures: ", allClassesLectures);
+	const extractSubject = teacherClass.split("-")[1].trim();
+
+	const subjectId = user?.subject.find(
+		(subject) => subject.name == extractSubject
+	)?._id;
 
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
+
+	console.log("Teacher-Subject",subjectId);
+	
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={mainSectionHeading}
+				mainSectionHeading={decodeMainSectionheading}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

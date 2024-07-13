@@ -24,7 +24,7 @@ export default function FrontPage() {
 
 	let assignmentPoints, lecturePoints, quizPoints, reviewPoints;
 
-	if (data?.topStudents[0]?.points) {
+	if (data?.topStudents?.[0]?.points) {
 		({
 			assignment: assignmentPoints,
 			lecture: lecturePoints,
@@ -33,12 +33,8 @@ export default function FrontPage() {
 		} = data.topStudents[0].points);
 	}
 
-	const otherStudents = data?.topStudents.slice(1);
-	const otherTeachers = data?.topTeachers.slice(1);
-
-	// console.log("other students: ", otherStudents);
-
-	console.log("Points: ", assignmentPoints, lecturePoints, quizPoints);
+	const otherStudents = data?.topStudents?.slice(1) || [];
+	const otherTeachers = data?.topTeachers?.slice(1) || [];
 
 	return (
 		<>
@@ -89,7 +85,9 @@ export default function FrontPage() {
 						<>
 							<div className="flex space-between w-full mt-10">
 								<div className="w-[50%] flex justify-center">
+
 									{data.topStudents.lenght !== 0 && (
+
 										<div className="flex flex-col justify-center text-center p-[5em] bg-white shadow-lg shadow-gray-500/.5 gap-1 w-[500px]">
 											<h3 className="text-[#6B27B0] text-[24px] font-semibold">
 												Top Student
@@ -160,7 +158,7 @@ export default function FrontPage() {
 									)}
 								</div>
 								<div className="w-[50%] flex justify-center">
-									{data && (
+									{data?.topTeachers?.[0] && (
 										<div className="flex flex-col justify-center text-center p-[5em] bg-white shadow-lg shadow-gray-500/.5  gap-1 w-[500px]">
 											<h3 className="text-[#6B27B0] text-[24px] font-semibold">
 												Top Faculty
@@ -256,9 +254,12 @@ export default function FrontPage() {
 										</tr>
 									</thead>
 									<tbody>
-										{otherStudents?.map(
+										{otherStudents.map(
 											(student: any, index: number) => (
-												<tr className="bg-white shadow-lg shadow-gray-500/.5 mt-[20px]">
+												<tr
+													className="bg-white shadow-lg shadow-gray-500/.5 mt-[20px]"
+													key={student.id}
+												>
 													<td>
 														<div className="bg-white p-[20px]">
 															{getRank(index + 2)}
@@ -270,7 +271,8 @@ export default function FrontPage() {
 																alt=""
 																className="object-cover items-center w-[40px] h-auto mr-[10px]"
 																src={
-																	"/assets/male.png"
+																	student.profilePicture ||
+																	defaultImage
 																}
 																width={600}
 																height={600}
@@ -364,9 +366,12 @@ export default function FrontPage() {
 										</tr>
 									</thead>
 									<tbody>
-										{otherTeachers?.map(
+										{otherTeachers.map(
 											(teacher: any, index: number) => (
-												<tr className="bg-white shadow-lg shadow-gray-500/.5 mt-[20px]">
+												<tr
+													className="bg-white shadow-lg shadow-gray-500/.5 mt-[20px]"
+													key={teacher.id}
+												>
 													<td>
 														<div className="bg-white p-[20px]">
 															{getRank(index + 2)}
@@ -378,7 +383,8 @@ export default function FrontPage() {
 																alt=""
 																className="object-cover items-center w-[40px] h-auto mr-[10px]"
 																src={
-																	"/assets/male.png"
+																	teacher.profilePicture ||
+																	defaultImage
 																}
 																width={600}
 																height={600}
