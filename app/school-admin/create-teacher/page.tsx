@@ -247,13 +247,13 @@ export default function SchoolAdminCreateTeacher() {
 							key={classIndex}
 						>
 							<div className="flex items-center h-full absolute top-1 left-[-40px]">
-								{/* <Button
+								<Button
 									disabled={teacherData.classes.length === 1}
 									onClick={() => removeClass(classIndex)}
 									className="text-red-500 bg-transparent rounded-full font-semibold text-[20px] mt-[5px] hover:bg-transparent"
 								>
 									&times;
-								</Button> */}
+								</Button>
 							</div>
 							<div className="flex flex-col w-full">
 								<label htmlFor={`class-${classIndex}`}>
@@ -279,23 +279,23 @@ export default function SchoolAdminCreateTeacher() {
 												data?.data.map(
 													(item: {
 														_id:
-															| Key
-															| null
-															| undefined;
+														| Key
+														| null
+														| undefined;
 														className:
+														| string
+														| number
+														| boolean
+														| ReactElement<
+															any,
 															| string
-															| number
-															| boolean
-															| ReactElement<
-																	any,
-																	| string
-																	| JSXElementConstructor<any>
-															  >
-															| Iterable<ReactNode>
-															| ReactPortal
-															| Promise<AwaitedReactNode>
-															| null
-															| undefined;
+															| JSXElementConstructor<any>
+														>
+														| Iterable<ReactNode>
+														| ReactPortal
+														| Promise<AwaitedReactNode>
+														| null
+														| undefined;
 													}) => (
 														<SelectItem
 															key={item._id}
@@ -380,7 +380,7 @@ export default function SchoolAdminCreateTeacher() {
 						) : (
 							"Create Teacher"
 						)}
-						
+
 					</button>
 				</div>
 				{/* <div className="col-span-1 w-full">

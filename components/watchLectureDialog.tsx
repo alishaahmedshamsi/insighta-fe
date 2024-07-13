@@ -7,13 +7,18 @@ import { useQueryClient } from "@tanstack/react-query";
 
 export default function WatchLectureDialog({
 	lectureFile,
+	isTeacherWatch=false
 }: {
 	lectureFile: string;
+	isTeacherWatch?: boolean;
 }) {
 	const queryClient = useQueryClient();
 	const [open, setOpen] = useState(false);
 	const updateLecturePoints = async () => {
 		// console.log("Video has been ended");
+		if (isTeacherWatch) {
+			return;
+		}
 		await UpdateUserLecturePoints();
 		toast.success("Lecture watched successfully");
 		queryClient.invalidateQueries({

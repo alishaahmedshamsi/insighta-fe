@@ -29,7 +29,6 @@ export default function FeedbackDialog({
 	};
 
 	const { subjectsList, isLoading: subjectsLoading } = useStudentSubject();
-	console.log("subjectsList: ", subjectsList);
 	console.log("subject: ", subject);
 
 	// let currentSubjectName = subjectsList?.find((item: { _id: string; }) => item._id === subject)?.name;
@@ -43,7 +42,7 @@ export default function FeedbackDialog({
 		return currentSubjectName;
 	};
 
-
+	
 
 	return (
 		<>
@@ -93,14 +92,7 @@ export default function FeedbackDialog({
 													Name: {userName}
 												</p>
 												<p className="text-[16px] font-normal leading-6 text-gray-500 mb-2">
-
-													Subject:{" "}
-													{subject?.map((sub) =>
-														getCurrentSubjectName(
-															sub
-														)
-													)}
-
+													Subject: { subject?.map((sub: any) => sub.name).join(", ")}
 												</p>
 
 												<Dialog.Title

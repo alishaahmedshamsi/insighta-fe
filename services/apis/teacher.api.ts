@@ -120,10 +120,12 @@ export const fetchQuiz = async (classroom?: string) => {
 export const fetchLectures = async (classroom?: string) => {
 	try {
 		const response = await api.get(
-			`/teacher/lecture?class=${classroom ? classroom : undefined}`
+			`/student-lecture/get?subject=${classroom ? classroom : undefined}`
 		);
 		return response.data.data;
 	} catch (error: any) {
+		console.log(error);
+		
 		throw new Error(error ?? error.message.data);
 	}
 };

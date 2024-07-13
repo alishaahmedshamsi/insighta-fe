@@ -10,6 +10,8 @@ import AddLectureComponent from "@/components/AddLecture/add-lecture";
 import { useCurrentUser } from "@/hooks/user.hook";
 import { useQuery } from "@tanstack/react-query";
 import { fetchLectures, fetchQuiz } from "@/services/apis/teacher.api";
+import { fetchStudentLectures } from "@/services/apis/user.api";
+import { format } from "date-fns";
 
 export default function TeacherIndividualClass({
 	params,
@@ -21,27 +23,32 @@ export default function TeacherIndividualClass({
 	const mainSectionHeading = `Class: ${teacherClass} Lectures`;
 	const decodeMainSectionheading = decodeURI(mainSectionHeading);
 	const extractClass = teacherClass.split("-")[0].trim();
+
 	const { user } = useCurrentUser();
 
 	const classId = user?.classes.find(
 		(cls) => cls.className.toString() == extractClass
 	)?._id;
 
-	console.log("user: ", user);
-	console.log("classId: ", classId);
+	// console.log("user: ", user);
+	// console.log("classId: ", classId);
 
-	const { data: allClassesLectures, isLoading } = useQuery({
-		queryKey: ["fetch-lectures"],
-		queryFn: () => fetchLectures(classId!),
-	});
 
-	console.log("All lectures: ", allClassesLectures);
+
+
 	const extractSubject = teacherClass.split("-")[1].trim();
 
 	const subjectId = user?.subject.find(
 		(subject) => subject.name == extractSubject
 	)?._id;
 
+	const { data: allClassesLectures, isLoading } = useQuery({
+		queryKey: ["fetch-lectures"],
+		queryFn: () => fetchStudentLectures(subjectId),
+	});
+
+	console.log("Subject",subjectId);
+	console.log("All lectures:=== ", allClassesLectures);
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
@@ -62,7 +69,7 @@ export default function TeacherIndividualClass({
 						</h3>
 
 						<AddLectureComponent />
-						{/* <hr className="my-[1em]" />
+						 <hr className="my-[1em]" />
 
 						<div className="rounded-[2em] flex flex-col gap-[2em] pb-[2em]">
 							{allClassesLectures?.length == 0 || allClassesLectures == null ? (
@@ -90,7 +97,7 @@ export default function TeacherIndividualClass({
 														</h5>
 														<h4 className="text-[#111] capitalize text-[1.2em]">
 															{
-																lecture.dateUploaded
+																format(lecture.createdAt, "yyyy-MM-dd HH:mm:ss")
 															}
 														</h4>
 													</div>
@@ -101,8 +108,9 @@ export default function TeacherIndividualClass({
 														</h5>
 														<h4 className="text-[#111] underline capitalize text-[1.2em]">
 															<WatchLectureDialog
+															isTeacherWatch={true}
 																lectureFile={
-																	lecture.lectureFile
+																	lecture.lecture
 																}
 															/>
 														</h4>
@@ -117,13 +125,33 @@ export default function TeacherIndividualClass({
 															}
 														</h4>
 													</div>
+													<div className="col-span-2">
+														<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+															Class
+														</h5>
+														<h4 className="text-[#111] text-[1.2em]">
+															{
+																extractClass
+															}
+														</h4>
+													</div>
+													<div className="col-span-2">
+														<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
+														Subject
+														</h5>
+														<h4 className="text-[#111] text-[1.2em]">
+															{
+																extractSubject
+															}
+														</h4>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								))
 							)}
-						</div> */}
+						</div> 
 					</div>
 				</div>
 			</DashboardLayout>
