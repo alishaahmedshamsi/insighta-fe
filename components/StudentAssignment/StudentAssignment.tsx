@@ -85,6 +85,8 @@ export default function StudentAssignment({
 		if (!success) return toast.error(response);
 		if (success) toast.success("Assignment Uploaded Successfully");
 		queryClient.invalidateQueries({ queryKey: ["assignment-status"] });
+		queryClient.invalidateQueries({ queryKey: ["user-points"] });
+
 
 		// router.push("/teacher-dashboard");
 

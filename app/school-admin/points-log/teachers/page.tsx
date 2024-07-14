@@ -51,7 +51,7 @@ function SchoolAdminDashboard({ searchParams }: SearchParams) {
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={"Student Points Log"}
+				mainSectionHeading={"Teacher Points Log"}
 				quickStartList={SCHOOL_ADMIN_QUICK_START_LIST}
 				leftSidebarLinks={schoolAdminLeftSidebarLinks()}
 			>

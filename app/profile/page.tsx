@@ -34,9 +34,10 @@ export default function Page() {
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const [coverFile, setCoverFile] = useState();
-
-
+	
 	const { user, isError, isLoading } = useCurrentUser();
+	const [name, setName] = useState(user?.fullname || "");
+	
   console.log("user: ", user)
   const [cover, setCover] = useState(user?.profilePicture || "");
 	const { mutateAsync, error, reset, isPending } = useMutation({
@@ -131,7 +132,8 @@ export default function Page() {
 							{...register("fullname")}
 							className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 							type="text"
-							value={user.fullname}
+							value={name}
+							onChange={(e) => setName(e.target.value)}
 							placeholder="Enter your name"
 						/>
 					</div>

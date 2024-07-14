@@ -87,7 +87,7 @@ export default function Page() {
 		if (success) toast.success("Subject Created successfully");
 		formReset();
 		setSelectedClass("");
-		setSubject("")
+		setSubject("");
 	};
 
 	if (isLoading) {
@@ -186,9 +186,7 @@ export default function Page() {
 								}}
 								value={subject}
 							>
-								<SelectTrigger
-									className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
-								>
+								<SelectTrigger className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]">
 									<SelectValue placeholder="Select a Subject" />
 								</SelectTrigger>
 								<SelectContent className="w-full">
@@ -215,11 +213,11 @@ export default function Page() {
 										<SelectItem value="Social St.">
 											Social St.
 										</SelectItem>
-										<SelectItem value="Physice">
-										Physice 
+										<SelectItem value="Physics">
+											Physics
 										</SelectItem>
-										<SelectItem value="Bio">
-											Bio
+										<SelectItem value="Biology">
+											Biology
 										</SelectItem>
 										<SelectItem value="Accounting">
 											Accounting
@@ -227,8 +225,8 @@ export default function Page() {
 										<SelectItem value="Business Maths">
 											Business Maths
 										</SelectItem>
-										<SelectItem value="chemistry">
-										chemistry 
+										<SelectItem value="Chemistry">
+											Chemistry
 										</SelectItem>
 									</SelectGroup>
 								</SelectContent>
