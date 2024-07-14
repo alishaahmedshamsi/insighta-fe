@@ -4,6 +4,7 @@ import { schoolAdminLeftSidebarLinks } from "@/components/left-sidebar/schoolAdm
 import { studentLeftSidebarLinks } from "@/components/left-sidebar/student";
 import { superAdminLeftSidebarLinks } from "@/components/left-sidebar/supAdmin";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
+import PointsLogComponent from "@/components/PointsLog/PointsLogComponent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GalleryUpload } from "@/components/upload/GalleryUpload";
@@ -104,24 +105,15 @@ export default function Page({ params }: { params: { users: string } }) {
 					</div>
 				) : (
 					logData?.map((item: any) => (
-						<div
-							className="flex justify-between items-center border-b border-gray-200 py-2"
-							key={item._id}
-						>
-							<div>
-								<p className="text-gray-800 font-semibold">
-									{item.title}
-								</p>
-								<p className="text-gray-500 text-sm">
-									{item.createdAt}
-								</p>
-							</div>
-							<p className="text-gray-800 font-semibold">
-								{item.points} Points
-							</p>
-						</div>
+						<PointsLogComponent
+							id={item._id}
+							title={item.title}
+							createdAt={item.createdAt}
+							points={item.points}
+						/>
 					))
 				)}
+
 				{/* { } */}
 			</div>
 		</DashboardLayout>

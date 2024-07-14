@@ -33,7 +33,7 @@ export default function forgetPassword() {
 		const { success, response } = await mutateAsync(data.email);
 		if (!success) return toast.error(response);
 		toast.success(
-			"OTP Code sent to your email." + " " + response.data.data
+			"OTP Code sent to your Email"
 		);
 		router.push(`/otp-code/${data.email}`);
 		reset();

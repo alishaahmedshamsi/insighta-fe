@@ -131,9 +131,9 @@ export default function Login() {
 				</div>
 			</form>
 
-			<hr className="my-[20px] opacity-[.5]" />
+			{/* <hr className="my-[20px] opacity-[.5]" /> */}
 
-			<div className="w-full flex justify-center gap-5">
+			{/* <div className="w-full flex justify-center gap-5">
 				<Link href={"/google-login"}>
 					<Image
 						alt=""
@@ -153,7 +153,7 @@ export default function Login() {
 						height={600}
 					/>
 				</Link>
-			</div>
+			</div> */}
 		</AuthLayout>
 	);
 }
