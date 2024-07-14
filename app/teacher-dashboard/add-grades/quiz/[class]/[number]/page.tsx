@@ -56,7 +56,11 @@ export default function Component({
 				<div className="rounded-[2em] flex flex-col">
 					<div className="results-container flex flex-col gap-8 pb-[2em]">
 						{/* results */}
-						{quizSubmissionList?.map(
+						{quizSubmissionList.length == 0 ? (
+							<div>No submissions.</div>
+						) : (
+
+							quizSubmissionList?.map(
 							(submission: any, index: number) => {
 								// Combine questions and answers into an array of objects
 								const quizQA = submission.question.map(
@@ -118,6 +122,7 @@ export default function Component({
 												</div>
 
 												<TakeQuizOnline
+													subject=""
 													role="teacherGrading"
 													quizName={"Quiz"}
 													gradingQA={
@@ -131,6 +136,7 @@ export default function Component({
 									</div>
 								);
 							}
+						)
 						)}
 					</div>
 				</div>

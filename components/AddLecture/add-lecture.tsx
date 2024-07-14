@@ -10,7 +10,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery,useQueryClient } from "@tanstack/react-query";
 import { ApiResponse, IAddLecture, IClasses } from "@/types/type";
 import { createSubject, fetchClasses } from "@/services/apis/school.api";
 import { toast } from "sonner";
@@ -55,6 +55,7 @@ export default function AddLectureComponent() {
 			setFile(e.target.files[0]);
 		}
 	};
+	const queryClient = useQueryClient();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -104,6 +105,9 @@ export default function AddLectureComponent() {
 		if (!success) return toast.error(response);
 		if (success) toast.success("Lecture Added Successfully");
 		// router.push("/teacher-dashboard");
+		queryClient.invalidateQueries({ queryKey: ["fetch-lectures"] });
+		queryClient.invalidateQueries({ queryKey: ["user-points"] });
+
 
 		setTitle("");
 		setDescription("");

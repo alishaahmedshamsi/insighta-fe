@@ -124,7 +124,9 @@ export default function StudentSubjectQuiz({
 														Obt. Marks
 													</h5>
 													<h4 className="text-[#111] capitalize text-[1.2em]">
-														{submission.obtainMarks}
+														{/* {submission.obtainMarks} */}
+														{submission.obtainMarks ||
+														"-"}
 													</h4>
 												</div>
 												{/* <div>

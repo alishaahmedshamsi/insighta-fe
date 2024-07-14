@@ -15,7 +15,7 @@ export default function TeacherGrading({
 	submissionId: string;
 	userName: string;
 	userClass: string;
-	number: string;
+	number: string | undefined;
 	materialType: string;
 	totalMarks: string;
 }) {

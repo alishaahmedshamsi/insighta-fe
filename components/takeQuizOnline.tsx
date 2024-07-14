@@ -16,7 +16,7 @@ export default function TakeQuizOnline({
 	quizId,
 	quizDeadline,
 	gradingQA,
-	subject
+	subject,
 }: {
 	quizName: string;
 	quizQuestions: string[];
@@ -75,7 +75,7 @@ export default function TakeQuizOnline({
 				isQuiz: true,
 				question: studentAnswers.map((question) => question.question),
 				answers: studentAnswers.map((answer) => answer.answer),
-				subject: subject
+				subject: subject,
 			};
 			console.log("studentAnswers: ", studentAnswers);
 
@@ -85,7 +85,11 @@ export default function TakeQuizOnline({
 
 			if (!success) return toast.error(response);
 			if (success) toast.success("Quiz Submitted Successfully");
-			queryClient.invalidateQueries({ queryKey: ["student-quiz-status"] });
+			queryClient.invalidateQueries({
+				queryKey: ["student-quiz-status"],
+			});
+			queryClient.invalidateQueries({ queryKey: ["user-points"] });
+
 			// Simulate a delay for demo purposes
 			setTimeout(() => {
 				// toast.success("Quiz submitted successfully!");
@@ -113,7 +117,6 @@ export default function TakeQuizOnline({
 		setStudentAnswers(updatedAnswers);
 	};
 
-	
 	return (
 		<>
 			{role === "teacherGrading" ? (

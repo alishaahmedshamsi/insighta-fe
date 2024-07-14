@@ -125,7 +125,7 @@ export default function TeacherIndividualClass({
 															}
 														</h4>
 													</div>
-													<div className="col-span-2">
+													<div className="col-span-1">
 														<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
 															Class
 														</h5>
@@ -135,7 +135,7 @@ export default function TeacherIndividualClass({
 															}
 														</h4>
 													</div>
-													<div className="col-span-2">
+													<div className="col-span-1">
 														<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
 														Subject
 														</h5>
