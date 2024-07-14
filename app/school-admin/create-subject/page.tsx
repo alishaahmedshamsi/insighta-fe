@@ -222,11 +222,14 @@ export default function Page() {
 										<SelectItem value="Accounting">
 											Accounting
 										</SelectItem>
-										<SelectItem value="Business Maths">
-											Business Maths
+										<SelectItem value="Business Studies">
+											Business Studies
 										</SelectItem>
 										<SelectItem value="Chemistry">
 											Chemistry
+										</SelectItem>
+										<SelectItem value="Economics">
+											Economics
 										</SelectItem>
 									</SelectGroup>
 								</SelectContent>
