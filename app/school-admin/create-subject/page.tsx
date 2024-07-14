@@ -231,6 +231,9 @@ export default function Page() {
 										<SelectItem value="Economics">
 											Economics
 										</SelectItem>
+										<SelectItem value="Urdu">
+											Urdu
+										</SelectItem>
 									</SelectGroup>
 								</SelectContent>
 							</Select>
