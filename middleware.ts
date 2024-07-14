@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
     "/sup-admin",
     "/teacher-dashboard",
     "/student-dashboard",
-    "/reset-password",
+    // "/reset-password",
   ];
 
   const isPrivatePath = privatePaths.includes(path);
