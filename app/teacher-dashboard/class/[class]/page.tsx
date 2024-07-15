@@ -4,19 +4,17 @@ import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
+import {  useSearchParams } from "next/navigation";
 
-export default function Component({ params }: { params: { class: string } }) {
+export default function Component({ params }: { params: { class: string,subjectId:string } }) {
 	const { class: teacherClass } = params;
-	// const { className } = teacherClass;
-	console.log("teacherClass: ", teacherClass)
+
+	const searchParams = useSearchParams()
+	console.log("Subject ID ", searchParams.get('subjectId'))
+
 	const mainSectionHeading = `Class: ${teacherClass}`;
 	const decodeMainSectionheading = decodeURI(mainSectionHeading);
-	// const subjectList = [
-	// 	{
-	// 		name: "English",
-	// 		subjectLink: `/teacher-dashboard/class/${teacherClass}/english`,
-	// 	},
-	// ];
+	
 	return (
 		<>
 			<DashboardLayout
@@ -28,7 +26,7 @@ export default function Component({ params }: { params: { class: string } }) {
 					<div className="grid grid-cols-2 gap-[2em]">
 						<Link
 							// href={`/teacher-dashboard/class/${teacherClass}/${subject}/assignments`}
-							href={`/teacher-dashboard/class/${teacherClass}/assignments`}
+							href={`/teacher-dashboard/class/${teacherClass}/assignments?subjectId=${searchParams.get('subjectId')}`}
 						>
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">
@@ -51,7 +49,7 @@ export default function Component({ params }: { params: { class: string } }) {
 						</Link>
 						<Link
 							// href={`/teacher-dashboard/class/${teacherClass}/${subject}/quiz`}
-							href={`/teacher-dashboard/class/${teacherClass}/quiz`}
+							href={`/teacher-dashboard/class/${teacherClass}/quiz?subjectId=${searchParams.get('subjectId')}`}
 						>
 							<div className="flex justify-start items-center w-full bg-white rounded-[1em] gap-[1.5em] px-[1em] py-[1em]">
 								<div className="w-[80px]">
@@ -96,86 +94,6 @@ export default function Component({ params }: { params: { class: string } }) {
 							</div>
 						</Link>
 					</div>
-
-					{/* <hr className="my-[1em]" /> */}
-
-					{/* <div className="flex flex-col gap-6">
-						<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
-							All lectures
-						</h3>
-
-						<div className="rounded-[2em] flex flex-col gap-[2em] pb-[2em]">
-							{allClassesLectures.map((teacherClass) =>
-								teacherClass.subjects.map((subject) => (
-									<div>
-										<h3 className="uppercase text-[1.2em] font-semibold text-[#111]">
-											Class: {teacherClass.class} -{" "}
-											{subject.subject}
-										</h3>
-										<div className="subject-assignments-container flex flex-col gap-6">
-											{subject.lectures.map(
-												(lecture, index) => (
-													<div
-														key={index}
-														className="assignment flex flex-col rounded-[2em] border border-[#DBDBDB] bg-white p-[2em]"
-													>
-														<div className="assginment-details grid grid-cols-3 gap-5">
-															<div>
-																<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-																	Title
-																</h5>
-																<h4 className="text-[#111] capitalize text-[1.2em]">
-																	{
-																		lecture.title
-																	}
-																</h4>
-															</div>
-															<div>
-																<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-																	Date
-																	uploaded
-																</h5>
-																<h4 className="text-[#111] capitalize text-[1.2em]">
-																	{
-																		lecture.dateUploaded
-																	}
-																</h4>
-															</div>
-
-															<div>
-																<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-																	Lecture File
-																</h5>
-																<h4 className="text-[#111] underline capitalize text-[1.2em]">
-																
-																	<WatchLectureDialog
-																		lectureFile={
-																			lecture.lectureFile
-																		}
-																	/>
-																</h4>
-															</div>
-															<div className="col-span-3">
-																<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-																	Description
-																</h5>
-																<h4 className="text-[#111] text-[1.2em]">
-																	{
-																		lecture.description
-																	}
-																</h4>
-															</div>
-														</div>
-													</div>
-												)
-											)}
-											<hr className="my-[1em]" />
-										</div>
-									</div>
-								))
-							)}
-						</div>
-					</div> */}
 				</div>
 			</DashboardLayout>
 		</>

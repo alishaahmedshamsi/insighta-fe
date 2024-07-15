@@ -99,7 +99,7 @@ export const onAddLecture = async (data: IAddLecture) => {
 export const fetchAssignments = async (subject?: string) => {
 	try {
 		const response = await api.get(
-			`/teacher/assignment?subject=${subject ? subject : undefined}`
+			`/teacher/assignment?subject=${subject}`
 		);
 		return response.data.data;
 	} catch (error: any) {

@@ -24,6 +24,7 @@ import { IAddQuiz } from "@/types/type";
 import { toast } from "sonner";
 import { onAddQuiz } from "@/services/apis/teacher.api";
 import { useCurrentUser } from "@/hooks/user.hook";
+import { useSearchParams } from "next/navigation";
 
 export default function AddQuizComponent() {
 	const [title, setTitle] = useState("");
@@ -48,12 +49,11 @@ export default function AddQuizComponent() {
 			}, 3000);
 		},
 	});
+	const searchParams = useSearchParams()
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-
-		let subId = user?.subject.find((item) => item.class == classId)?._id;
-
+		const subId = searchParams.get('subjectId')
 		console.log("subId: ", subId);
 
 		if (!title || !classId || !marks || !date)
@@ -65,13 +65,12 @@ export default function AddQuizComponent() {
 		const data: IAddQuiz = {
 			title,
 			class: classId,
-			subject: subId,
+			subject: subId!,
 			marks,
 			deadline: date!,
 			question: question.map((q) => q.text),
 		};
 
-		// console.log("quiz data: ", data);
 
 		const { success, response } = await mutateAsync(data);
 

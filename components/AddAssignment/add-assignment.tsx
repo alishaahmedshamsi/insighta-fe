@@ -74,14 +74,7 @@ export default function AddAssignmentComponent() {
 
 		let subId = user?.subject.find((item) => item.class == classId)?._id;
 
-		// const formData = new FormData();
-		// formData.append("title", title);
-		// formData.append("description", description);
-		// formData.append("class", classId);
-		// formData.append("subject", subjectId);
-		// // formData.append("marks", marks.toString());
-		// formData.append("deadline", date?.toISOString() || "");
-		// formData.append("assignmentFile", file);
+	
 
 		const data: IAddAssignment = {
 			title,

@@ -25,7 +25,7 @@ export default function TakeQuizOnline({
 	createdBy?: string;
 	quizId?: string;
 	quizDeadline?: string;
-	subject: string;
+	subject?: string;
 	gradingQA?:
 		| {
 				question: string;
@@ -69,16 +69,16 @@ export default function TakeQuizOnline({
 
 			// Prepare data for submission
 			const studentSubmission: ITakeQuiz = {
-				quizId: quizId,
-				teacher: createdBy,
-				isLate: isDeadlinePassed(quizDeadline),
+				quizId: quizId!,
+				teacher: createdBy!,
+				isLate: isDeadlinePassed(quizDeadline!),
 				isQuiz: true,
 				question: studentAnswers.map((question) => question.question),
 				answers: studentAnswers.map((answer) => answer.answer),
-				subject: subject,
+				subject: subject
 			};
-			console.log("studentAnswers: ", studentAnswers);
 
+			console.log("studentAnswers: ", studentAnswers);
 			console.log("Student Submission: ", studentSubmission);
 
 			const { success, response } = await mutateAsync(studentSubmission);

@@ -1,31 +1,13 @@
 "use client";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
 import DashboardLayout from "@/components/layouts/dashboard.layout";
 import { TEACHER_QUICK_START_LIST } from "@/utils/constant/constant";
 import { teacherLeftSidebarLinks } from "@/components/left-sidebar/teacher";
 import AddAssignmentComponent from "@/components/AddAssignment/add-assignment";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAssignments } from "@/services/apis/teacher.api";
-import { IUser } from "@/types/type";
 import { useCurrentUser } from "@/hooks/user.hook";
 import { Key } from "react";
-
-// const allAssignments = [
-// 	{
-// 		title: "Assignment #1",
-// 		deadline: "5 May 2024",
-// 		totalMarks: "10",
-// 		assignment: "#",
-// 	},
-// 	{
-// 		title: "Assignment #2",
-// 		deadline: "1 May 2024",
-// 		totalMarks: "10",
-// 		assignment: "#",
-// 	},
-// ];
+import { useSearchParams } from "next/navigation";
 
 export default function TeacherIndividualClassAddAssignments({
 	params,
@@ -35,22 +17,15 @@ export default function TeacherIndividualClassAddAssignments({
 	const { class: teacherClass } = params;
 	const mainSectionHeading = `Manage Assignments of Class: ${teacherClass}`;
 	const decodeMainSectionheading = decodeURI(mainSectionHeading);
-	const extractSubject = teacherClass.split("-")[1].trim();
-	const { user } = useCurrentUser();
 
-	const subjectId = user?.subject.find(
-		(subject) => subject.name == extractSubject
-	)?._id;
-
-	// console.log("user: ", user?.subject);
-	// console.log("subjectId: ", subjectId);
+	const searchParams = useSearchParams()
+	const subjectId = searchParams.get('subjectId')
 
 	const { data: allAssignments, isLoading } = useQuery({
 		queryKey: ["fetch-assignments"],
 		queryFn: () => fetchAssignments(subjectId!),
 	});
 
-	// console.log("All assignments: ", allAssignments)
 
 	if (isLoading) {
 		return <div>Loading...</div>;
