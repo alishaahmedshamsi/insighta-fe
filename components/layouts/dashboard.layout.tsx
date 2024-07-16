@@ -410,32 +410,56 @@ export default function DashboardLayout({
 						</p>
 						{user.role === "student" ? (
 							<div className="flex justify-evenly items-center w-full mt-[1em]">
-								<div className="flex flex-col items-center">
-									<p className="text-[#959BA5] text-[1.2em] align-middle">
-										Class
-									</p>
-									<p className="font-bold text-[#212121] align-middle text-[2em]">
-										{user.classes.map(
-											(cls: { className: any }) =>
-												cls.className[0]
-										)}
-									</p>
-								</div>
-								<div className="flex flex-col items-center">
-									<p className="text-[#959BA5] text-[1.2em] align-middle">
-										Section
-									</p>
-									<p className="font-bold text-[#212121] align-middle text-[2em]">
-										{/* {user.section[0].toUpperCase()} */}
-										{user.classes.map(
-											(cls: { className: any }) =>
-												cls.className[1]
-													? cls.className[1]
-													: "-"
-										)}
-									</p>
-								</div>
+							<div className="flex flex-col items-center">
+								<p className="text-[#959BA5] text-[1.2em] align-middle">
+									Class
+								</p>
+								<p className="font-bold text-[#212121] align-middle text-[2em]">
+									{user.classes.map((cls: { className: any }) => {
+										const classPart = cls.className.slice(0, -1);
+										return classPart;
+									})}
+								</p>
 							</div>
+							<div className="flex flex-col items-center">
+								<p className="text-[#959BA5] text-[1.2em] align-middle">
+									Section
+								</p>
+								<p className="font-bold text-[#212121] align-middle text-[2em]">
+									{user.classes.map((cls: { className: any }) => {
+										const sectionPart = cls.className.slice(-1);
+										return isNaN(Number(sectionPart)) ? sectionPart : '-';
+									})}
+								</p>
+							</div>
+						</div>
+							// <div className="flex justify-evenly items-center w-full mt-[1em]">
+							// 	<div className="flex flex-col items-center">
+							// 		<p className="text-[#959BA5] text-[1.2em] align-middle">
+							// 			Class
+							// 		</p>
+							// 		<p className="font-bold text-[#212121] align-middle text-[2em]">
+							// 			{user.classes.map(
+							// 				(cls: { className: any }) =>
+							// 					cls.className[0]
+							// 			)}
+							// 		</p>
+							// 	</div>
+							// 	<div className="flex flex-col items-center">
+							// 		<p className="text-[#959BA5] text-[1.2em] align-middle">
+							// 			Section
+							// 		</p>
+							// 		<p className="font-bold text-[#212121] align-middle text-[2em]">
+							// 			{/* {user.section[0].toUpperCase()} */}
+							// 			{user.classes.map(
+							// 				(cls: { className: any }) =>
+							// 					cls.className[1]
+							// 						? cls.className[1]
+							// 						: "-"
+							// 			)}
+							// 		</p>
+							// 	</div>
+							// </div>
 						) : (
 							<div className="flex justify-evenly items-center w-full mt-[1em]">
 								<h3 className="font-medium text-[#212121] align-middle text-[1.3em]">
