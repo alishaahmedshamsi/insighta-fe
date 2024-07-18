@@ -33,13 +33,11 @@ export default function TeacherIndividualClass({
 	// console.log("user: ", user);
 	// console.log("classId: ", classId);
 
-
-
-
 	const extractSubject = teacherClass.split("-")[1].trim();
+	// console.log("extractSubject: ", decodeURI(extractSubject));
 
 	const subjectId = user?.subject.find(
-		(subject) => subject.name == extractSubject
+		(subject) => subject.name == decodeURI(extractSubject)
 	)?._id;
 
 	const { data: allClassesLectures, isLoading } = useQuery({
@@ -47,14 +45,14 @@ export default function TeacherIndividualClass({
 		queryFn: () => fetchStudentLectures(subjectId),
 	});
 
-	console.log("Subject",subjectId);
+	console.log("Subject", subjectId);
 	console.log("All lectures:=== ", allClassesLectures);
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
 
-	console.log("Teacher-Subject",subjectId);
-	
+	console.log("Teacher-Subject", subjectId);
+
 	return (
 		<>
 			<DashboardLayout
@@ -69,10 +67,11 @@ export default function TeacherIndividualClass({
 						</h3>
 
 						<AddLectureComponent />
-						 <hr className="my-[1em]" />
+						<hr className="my-[1em]" />
 
 						<div className="rounded-[2em] flex flex-col gap-[2em] pb-[2em]">
-							{allClassesLectures?.length == 0 || allClassesLectures == null ? (
+							{allClassesLectures?.length == 0 ||
+							allClassesLectures == null ? (
 								<div>No lectures rightnow.</div>
 							) : (
 								allClassesLectures?.map((lecture: any) => (
@@ -96,9 +95,10 @@ export default function TeacherIndividualClass({
 															Date uploaded
 														</h5>
 														<h4 className="text-[#111] capitalize text-[1.2em]">
-															{
-																format(lecture.createdAt, "yyyy-MM-dd HH:mm:ss")
-															}
+															{format(
+																lecture.createdAt,
+																"yyyy-MM-dd HH:mm:ss"
+															)}
 														</h4>
 													</div>
 
@@ -108,7 +108,9 @@ export default function TeacherIndividualClass({
 														</h5>
 														<h4 className="text-[#111] underline capitalize text-[1.2em]">
 															<WatchLectureDialog
-															isTeacherWatch={true}
+																isTeacherWatch={
+																	true
+																}
 																lectureFile={
 																	lecture.lecture
 																}
@@ -130,19 +132,15 @@ export default function TeacherIndividualClass({
 															Class
 														</h5>
 														<h4 className="text-[#111] text-[1.2em]">
-															{
-																extractClass
-															}
+															{extractClass}
 														</h4>
 													</div>
 													<div className="col-span-1">
 														<h5 className="text-[#777] font-medium uppercase text-[.9em] tracking-wider">
-														Subject
+															Subject
 														</h5>
 														<h4 className="text-[#111] text-[1.2em]">
-															{
-																extractSubject
-															}
+															{decodeURI(extractSubject)}
 														</h4>
 													</div>
 												</div>
@@ -151,7 +149,7 @@ export default function TeacherIndividualClass({
 									</div>
 								))
 							)}
-						</div> 
+						</div>
 					</div>
 				</div>
 			</DashboardLayout>
