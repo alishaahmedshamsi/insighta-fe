@@ -18,6 +18,8 @@ export default function TeacherIndividualClassAddAssignments({
 	const { class: teacherClass } = params;
 
 	const mainSectionHeading = `Manage Quiz of Class: ${teacherClass}`;
+	const decodeMainSectionheading = decodeURI(mainSectionHeading);
+
 
 	const extractClass = teacherClass.split("-")[0].trim();
 	const { user } = useCurrentUser();
@@ -38,7 +40,7 @@ export default function TeacherIndividualClassAddAssignments({
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={mainSectionHeading}
+				mainSectionHeading={decodeMainSectionheading}
 				// pointsEarned={"400"}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}

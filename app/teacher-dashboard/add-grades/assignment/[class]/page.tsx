@@ -15,7 +15,7 @@ export default function Component({ params }: { params: { class: string } }) {
 	const { user } = useCurrentUser();
 
 	const subjectId = user?.subject.find(
-		(subject) => subject.name == extractSubject
+		(subject) => subject.name == decodeURI(extractSubject)
 	)?._id;
 
 	// console.log("user: ", user?.subject);
@@ -37,10 +37,12 @@ export default function Component({ params }: { params: { class: string } }) {
 		},
 	];
 	const mainSectionHeading = `Add Class: ${classes} Assignment Grades`;
+	const decodeMainSectionheading = decodeURI(mainSectionHeading);
+
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={mainSectionHeading}
+				mainSectionHeading={decodeMainSectionheading}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

@@ -34,10 +34,12 @@ export default function Component({ params }: { params: { class: string } }) {
 		},
 	];
 	const mainSectionHeading = `Add Class: ${classes} Quiz Grades`;
+	const decodeMainSectionheading = decodeURI(mainSectionHeading);
+
 	return (
 		<>
 			<DashboardLayout
-				mainSectionHeading={mainSectionHeading}
+				mainSectionHeading={decodeMainSectionheading}
 				quickStartList={TEACHER_QUICK_START_LIST}
 				leftSidebarLinks={teacherLeftSidebarLinks()}
 			>

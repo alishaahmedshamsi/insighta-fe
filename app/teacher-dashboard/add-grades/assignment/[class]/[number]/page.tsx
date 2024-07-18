@@ -19,7 +19,7 @@ export default function Component({
 	const { user } = useCurrentUser();
 
 	const subjectId = user?.subject.find(
-		(subject) => subject.name == extractSubject
+		(subject) => subject.name == decodeURI(extractSubject)
 	)?._id;
 
 	// console.log("user: ", user?.subject);
