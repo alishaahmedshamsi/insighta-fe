@@ -79,8 +79,8 @@ export default function AddQuizComponent() {
 		queryClient.invalidateQueries({ queryKey: ["user-points"] });
 		queryClient.invalidateQueries({ queryKey: ["fetch-quiz"] });
 
+		
 		reset();
-
 		setTitle("");
 		setDate(new Date());
 		setClassName("");

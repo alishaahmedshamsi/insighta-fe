@@ -38,11 +38,12 @@ export default function Login() {
 		
 		const { success, response } = await mutateAsync(data);
 
-		if (!success) return toast.error(response);
+		if (!success) return toast.error(response); // false 
 		if (success) toast.success("Login successful");
 
 		localStorage.setItem("accessToken", response.data.data.accessToken);
 		Cookies.set("accessToken", response.data.data.accessToken, { expires: 7 });
+		
         switch (response.data.data.user.role) {
             case ROLES.ADMIN:
                 router.push("/sup-admin");

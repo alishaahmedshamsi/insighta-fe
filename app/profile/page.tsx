@@ -19,27 +19,23 @@ import {
 import { userUpdateSchema } from "@/validation/user.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-	QueryClient,
 	useMutation,
-	useQuery,
 	useQueryClient,
 } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function Page() {
 	const router = useRouter();
 	const queryClient = useQueryClient();
-	const [coverFile, setCoverFile] = useState();
-	
+	const [coverFile, setCoverFile] = useState<File | null>(null);
+
 	const { user, isError, isLoading } = useCurrentUser();
-	const [name, setName] = useState(user?.fullname || "");
-	
-  console.log("user: ", user)
-  const [cover, setCover] = useState(user?.profilePicture || "");
+	const [cover, setCover] = useState(user?.profilePicture || "");
+
 	const { mutateAsync, error, reset, isPending } = useMutation({
 		mutationFn: updateUser,
 
@@ -51,7 +47,6 @@ export default function Page() {
 		},
 
 		onSuccess: () => {
-			// reset();
 			queryClient.invalidateQueries({ queryKey: ["current-user"] });
 		},
 	});
@@ -59,70 +54,78 @@ export default function Page() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isSubmitting }, // isSubmitting for loading state
+		formState: { errors, isSubmitting },
 		reset: resetForm,
+		setValue
 	} = useForm<IUserUpdate>({ resolver: zodResolver(userUpdateSchema) });
 
-	const onSubmit: SubmitHandler<IUserUpdate> = async (data, e) => {
+	useEffect(() => {
+		if (user) {
+			setValue("fullname", user.fullname);
+			setValue("location", user.location);
+			setCover(user.profilePicture || "");
+		}
+	}, [user, setValue]);
+
+	const onSubmit: SubmitHandler<IUserUpdate> = async (data) => {
 		const formData = new FormData();
 		formData.append("fullname", data.fullname);
 		formData.append("location", data.location);
-		formData.append("image", coverFile ?? "");
+		if (coverFile) formData.append("image", coverFile);
 
 		const { success, response } = await mutateAsync(formData);
 		if (!success) return toast.error(response);
 		if (success) {
 			toast.success("Profile updated successfully");
-			// setCoverFile();
+			setCoverFile(null);
 			setCover("");
-			resetForm(); // Reset the form fields
-      if(user?.role == "admin")
-        router.push("/sup-admin");
-      else if(user?.role == "school")
-        router.push("/school-admin");
-      else if(user?.role == "teacher")
-        router.push("/teacher-dashboard");
-      else if(user?.role == "student")
-        router.push("/student-dashboard");
+			resetForm();
+			if (user?.role == "admin")
+				router.push("/sup-admin");
+			else if (user?.role == "school")
+				router.push("/school-admin");
+			else if (user?.role == "teacher")
+				router.push("/teacher-dashboard");
+			else if (user?.role == "student")
+				router.push("/student-dashboard");
+
+
+
 		}
-		// setTimeout(() => {
-		// 	reset();
-		// }, 1000);
 	};
 
 	if (isLoading) return <div>Loading...</div>;
-	if (isError || !user) return <div>{isError || "user doesnt exst"}</div>;
+	if (isError || !user) return <div>{isError || "User doesn't exist"}</div>;
 
 	return (
 		<DashboardLayout
 			mainSectionHeading={"Profile"}
-			// pointsEarned={"400"}
 			quickStartList={
 				user.role === "school"
 					? SCHOOL_ADMIN_QUICK_START_LIST
 					: user.role === "admin"
-					? SUPER_ADMIN_QUICK_START_LIST
-					: user.role === "teacher"
-					? TEACHER_QUICK_START_LIST
-					: STUDENT_QUICK_START_LIST
+						? SUPER_ADMIN_QUICK_START_LIST
+						: user.role === "teacher"
+							? TEACHER_QUICK_START_LIST
+							: STUDENT_QUICK_START_LIST
 			}
 			leftSidebarLinks={
 				user.role === "school"
 					? schoolAdminLeftSidebarLinks()
 					: user.role === "admin"
-					? superAdminLeftSidebarLinks()
-					: user.role === "teacher"
-					? teacherLeftSidebarLinks()
-					: studentLeftSidebarLinks()
+						? superAdminLeftSidebarLinks()
+						: user.role === "teacher"
+							? teacherLeftSidebarLinks()
+							: studentLeftSidebarLinks()
 			}
 		>
 			<div className="p-6 bg-white rounded-lg shadow-md">
-				<form action="" onSubmit={handleSubmit(onSubmit)}>
+				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className="mb-4">
 						<GalleryUpload
-							setFile={setCoverFile} // Ensure this prop is correctly set to update the file state
-							cover={cover} // Ensure this prop is correctly set to display the image preview
-							setImage={setCover} // Ensure this prop is correctly set to update the image state
+							setFile={setCoverFile}
+							cover={cover}
+							setImage={setCover}
 							id="cover"
 							placeholder="Update Profile Picture"
 						/>
@@ -132,14 +135,11 @@ export default function Page() {
 							{...register("fullname")}
 							className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 							type="text"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
 							placeholder="Enter your name"
 						/>
 					</div>
 					<div className="mb-4">
 						<Input
-							value={user.location}
 							{...register("location")}
 							className="w-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-[1em] border border-[#ddd] bg-white p-[.8em] h-[3.5em]"
 							type="text"
@@ -147,20 +147,15 @@ export default function Page() {
 						/>
 					</div>
 
-					{/* <Button>{isSubmitting ? "Updating" : "Submit"}</Button> */}
-					{/* <Button>{isSubmitting ? "Updating" : "Submit"}</Button> */}
-
 					<Button
 						className="rounded-[1em] bg-brand-sea-green py-[.9em] px-[1.5em] text-white font-semibold transition duration-300 ease-in-out hover:bg-brand-pink focus:outline-none focus:ring focus:border-PrimaryColor"
 						type="submit"
 					>
 						{isPending ? (
-							<>
-								<div className="flex justify-center items-center">
-									<Loader2Icon className="mr-2 animate-spin" />
-									<span>Updating...</span>
-								</div>
-							</>
+							<div className="flex justify-center items-center">
+								<Loader2Icon className="mr-2 animate-spin" />
+								<span>Updating...</span>
+							</div>
 						) : (
 							"Submit"
 						)}

@@ -98,7 +98,7 @@ export default function AddAssignmentComponent() {
 		const { success, response } = await mutateAsync(data);
 
 		if (!success) return toast.error(response);
-		if (success) {
+		
 			toast.success("Assignment Added Successfully");
 			setClassName("");
 			setClassId(undefined);
@@ -108,7 +108,7 @@ export default function AddAssignmentComponent() {
 			setDescription("");
 			queryClient.invalidateQueries({ queryKey: ["user-points"] });
 			queryClient.invalidateQueries({ queryKey: ["fetch-assignments"] });
-		}
+		
 	};
 
 	if (isLoading) return <div>Loading...</div>;
